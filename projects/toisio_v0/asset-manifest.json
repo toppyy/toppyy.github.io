@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/projects/toisio/static/js/main.2ee02764.chunk.js",
-    "main.js.map": "/projects/toisio/static/js/main.2ee02764.chunk.js.map",
-    "runtime-main.js": "/projects/toisio/static/js/runtime-main.09168be5.js",
-    "runtime-main.js.map": "/projects/toisio/static/js/runtime-main.09168be5.js.map",
-    "static/js/2.436cb350.chunk.js": "/projects/toisio/static/js/2.436cb350.chunk.js",
-    "static/js/2.436cb350.chunk.js.map": "/projects/toisio/static/js/2.436cb350.chunk.js.map",
-    "index.html": "/projects/toisio/index.html",
-    "precache-manifest.c27568eb65c77959d70b7ae98aa823e1.js": "/projects/toisio/precache-manifest.c27568eb65c77959d70b7ae98aa823e1.js",
-    "service-worker.js": "/projects/toisio/service-worker.js",
-    "static/js/2.436cb350.chunk.js.LICENSE": "/projects/toisio/static/js/2.436cb350.chunk.js.LICENSE"
+    "main.js": "/projects/toisio_v0/static/js/main.bbaacf24.chunk.js",
+    "main.js.map": "/projects/toisio_v0/static/js/main.bbaacf24.chunk.js.map",
+    "runtime-main.js": "/projects/toisio_v0/static/js/runtime-main.72c1e79b.js",
+    "runtime-main.js.map": "/projects/toisio_v0/static/js/runtime-main.72c1e79b.js.map",
+    "static/js/2.436cb350.chunk.js": "/projects/toisio_v0/static/js/2.436cb350.chunk.js",
+    "static/js/2.436cb350.chunk.js.map": "/projects/toisio_v0/static/js/2.436cb350.chunk.js.map",
+    "index.html": "/projects/toisio_v0/index.html",
+    "precache-manifest.4bf1538b5a50c9eeb98a22ef2839d391.js": "/projects/toisio_v0/precache-manifest.4bf1538b5a50c9eeb98a22ef2839d391.js",
+    "service-worker.js": "/projects/toisio_v0/service-worker.js",
+    "static/js/2.436cb350.chunk.js.LICENSE": "/projects/toisio_v0/static/js/2.436cb350.chunk.js.LICENSE"
   },
   "entrypoints": [
-    "static/js/runtime-main.09168be5.js",
+    "static/js/runtime-main.72c1e79b.js",
     "static/js/2.436cb350.chunk.js",
-    "static/js/main.2ee02764.chunk.js"
+    "static/js/main.bbaacf24.chunk.js"
   ]
 }

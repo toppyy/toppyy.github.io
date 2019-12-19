@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "384e9d9efbe81e200362f31cda7172c8",
+    "revision": "eb25eee87d615fe55999d7648baca78f",
     "url": "/projects/toisio/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/projects/toisio/static/js/2.7c8fcb43.chunk.js.LICENSE"
   },
   {
-    "revision": "64d3ca3001adae801022",
-    "url": "/projects/toisio/static/js/main.4af864ba.chunk.js"
+    "revision": "66be9591642f86cb406d",
+    "url": "/projects/toisio/static/js/main.6e576602.chunk.js"
   },
   {
     "revision": "ba3a65225515113189d6",
