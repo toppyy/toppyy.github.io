@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/projects/toisio/precache-manifest.3173bb7250ad2dbb3982f479108bf24f.js"
+  "/projects/toisio/precache-manifest.c83059634b645e666a0ba32cf201e61e.js"
 );
 
 self.addEventListener('message', (event) => {
