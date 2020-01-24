@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeitzBart.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation</a> &gt; <span class="el_source">TeitzBart.java</span></div><h1>TeitzBart.java</h1><pre class="source lang-java linenums">
+
+/*
+* An implementation of the Teitz and Bart algorithm for solving the p-median problem
+* 
+*/
+
+package locationallocation;
+
+import locationallocation.Utils.Location;
+
+<span class="nc" id="L12">public class TeitzBart {</span>
+
+    
+
+    
+    /** 
+     * Returns the sum distances between demand locations and a set facilities.
+     * Distance is minimized by allocating each demand location to closest facility.
+     * 
+     * @param rowset: set of rows for which to find sum of minimums of distances. 
+     * @param dm: a distancematrix that holds distances between facilities and demand locations. Row = facility location.
+     * @return double
+     */
+    public static double sumOfDistanceMatrixMiminumRowset(int[] rowset, double[][] dm ) {
+<span class="fc" id="L26">        double rtrn = 0, min_tmp, tmp;</span>
+        
+
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        for (int col = 0; col &lt; dm[0].length; col++) {</span>
+            
+<span class="fc" id="L31">            min_tmp = Double.MAX_VALUE;</span>
+
+<span class="fc bfc" id="L33" title="All 2 branches covered.">            for (int row : rowset) {</span>
+
+<span class="fc" id="L35">                tmp = dm[row][col];</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">                if (tmp&lt;min_tmp) {</span>
+<span class="fc" id="L37">                    min_tmp = tmp;</span>
+                }
+            }
+<span class="fc" id="L40">            rtrn += min_tmp;</span>
+            
+        }
+
+<span class="fc" id="L44">        return rtrn;</span>
+    }
+
+    
+    /** 
+     * Returns a set of facilities consired as the &quot;optimal&quot; locations based on demand.
+     * 
+     * @param P: Number of facilities to locate
+     * @param distanceMatrix: distancematrix that holds distances between facilities and demand locations. Row = facility location.
+     * @return int[]: Array of facility location indices
+     */
+    public static int[] solveTeitzBart(int P, double[][] distanceMatrix  ) {
+
+<span class="fc" id="L57">        int numberOfTested = 0, possibleLocationCount = distanceMatrix.length, newcandidate;</span>
+        double toTestAgainst;
+
+
+        // Init with first P locations
+<span class="fc" id="L62">        int[] locationSet = new int[P];</span>
+
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        for (int i = 0; i &lt; P; i++) {</span>
+<span class="fc" id="L65">            locationSet[i] = i;</span>
+        }
+
+<span class="fc" id="L68">        int[] tmp = new int[locationSet.length];</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        while ( numberOfTested &lt;  possibleLocationCount ) {</span>
+<span class="fc" id="L71">            toTestAgainst = sumOfDistanceMatrixMiminumRowset(locationSet, distanceMatrix);</span>
+<span class="fc" id="L72">            newcandidate = numberOfTested;</span>
+<span class="fc" id="L73">            numberOfTested++;</span>
+
+<span class="fc" id="L75">            double minOfTests = Double.MAX_VALUE, testsum;</span>
+<span class="fc" id="L76">            int minOfTestsIndex = -1;</span>
+
+            // See if newcandidate is already in set
+<span class="fc" id="L79">            boolean newCandidateInSet  = false;</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">            for (int location : locationSet) {</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">                if (newcandidate == location) {</span>
+<span class="fc" id="L82">                    newCandidateInSet = true;</span>
+                }
+            }
+            // if so, continue without tests
+<span class="fc bfc" id="L86" title="All 2 branches covered.">            if (newCandidateInSet) {</span>
+<span class="fc" id="L87">                continue;</span>
+            }
+            
+            // Test by replacing each location in set with newcandidate
+            // Store minimum of tests
+<span class="fc bfc" id="L92" title="All 2 branches covered.">            for (int i = 0; i &lt; locationSet.length; i++) {</span>
+<span class="fc" id="L93">                tmp = locationSet.clone();</span>
+<span class="fc" id="L94">                tmp[i] = newcandidate;</span>
+<span class="fc" id="L95">                testsum = sumOfDistanceMatrixMiminumRowset(tmp, distanceMatrix);</span>
+                
+<span class="fc bfc" id="L97" title="All 2 branches covered.">                if ( testsum &lt; minOfTests  ) {</span>
+<span class="fc" id="L98">                    minOfTests      = i;</span>
+<span class="fc" id="L99">                    minOfTestsIndex = i;</span>
+                }
+            }
+            // If better solution is found, change set 
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">            if ( minOfTests &lt; toTestAgainst ) {</span>
+<span class="fc" id="L104">                locationSet[ minOfTestsIndex ] = newcandidate;</span>
+            }
+
+            
+
+<span class="fc" id="L109">        }</span>
+<span class="fc" id="L110">        System.out.println(&quot;Sum of distances: &quot; + sumOfDistanceMatrixMiminumRowset(locationSet, distanceMatrix));</span>
+
+<span class="fc" id="L112">        return locationSet;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
