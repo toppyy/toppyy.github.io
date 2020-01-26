@@ -5,64 +5,76 @@
 
 package locationallocation.Utils;
 
-public class Combinations {
+<span class="nc" id="L8">public class Combinations {</span>
+   
 
-    private int P;
-    private Location[] arr;
-    public int numberOfCombinations, comboCounter;
-    public Location[][] combinations;
-    
-
-    public int factorial(int n) {
-<span class="nc bnc" id="L17" title="All 2 branches missed.">        if (n == 1) {</span>
-<span class="nc" id="L18">            return 1;</span>
+    public static int factorial(int n) {
+<span class="fc bfc" id="L12" title="All 2 branches covered.">        if (n == 1) {</span>
+<span class="fc" id="L13">            return 1;</span>
         }
-<span class="nc" id="L20">        return n * factorial(n-1);</span>
+<span class="fc" id="L15">        return n * factorial(n-1);</span>
     }
 
-<span class="nc" id="L23">    public Combinations(int P,Location[] arr) {</span>
-<span class="nc" id="L24">        this.arr = arr;</span>
-<span class="nc" id="L25">        this.P   = P;</span>
 
-<span class="nc" id="L27">        int N = arr.length;</span>
+    public static int[][] createCombinations(int[] arr, int k) {
 
-<span class="nc" id="L29">        this.numberOfCombinations = factorial( N ) / (  factorial( N - P ) * factorial(P)) ;</span>
+<span class="fc" id="L21">        int pit = arr.length;</span>
 
-<span class="nc" id="L31">        this.combinations = new Location[this.numberOfCombinations][];</span>
-<span class="nc" id="L32">        this.comboCounter = 0;</span>
+<span class="fc" id="L23">        int komboja = factorial( pit ) / (  factorial( pit - k ) * factorial(k)) ;</span>
 
-<span class="nc" id="L34">    }</span>
-
-    public int[][] createCombinations(int[] arr, int P) {
-
-<span class="nc" id="L38">        int N = arr.length;</span>
-<span class="nc" id="L39">        int numberOfCombinations = factorial( N ) / (  factorial( N - P ) * factorial(P)) ;</span>
-
-<span class="nc" id="L41">        int[][] rtrn = new int[numberOfCombinations][P];</span>
-<span class="nc" id="L42">        int[] combo = new int[P];</span>
-        
-
-<span class="nc" id="L45">        int toKeepIndex = P-2;</span>
-<span class="nc" id="L46">        int combinations = 0;</span>
-<span class="nc bnc" id="L47" title="All 2 branches missed.">        while (combinations &lt; numberOfCombinations) {</span>
-            
-<span class="nc bnc" id="L49" title="All 2 branches missed.">            for (int i= 0; i&lt;toKeepIndex; i++) {</span>
-<span class="nc" id="L50">                combo[i] = arr[i];</span>
-            }
-<span class="nc bnc" id="L52" title="All 2 branches missed.">            for (int i = (toKeepIndex-1); i &lt; N; i++) {</span>
-<span class="nc" id="L53">                combo[(toKeepIndex+1)] = i;</span>
-<span class="nc" id="L54">                rtrn[combinations] = combo.clone();</span>
-<span class="nc" id="L55">                combinations  = combinations + 1;</span>
-            }
-
-<span class="nc" id="L58">            toKeepIndex = toKeepIndex - 1;</span>
-            
-
-            
-            
+<span class="fc" id="L25">        int[][] kombot      = new int[komboja][];</span>
+<span class="fc" id="L26">        int[] Kt            = new int[k]; </span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        for (int i = 0; i &lt; k; i++) {</span>
+<span class="fc" id="L28">            Kt[i] = i+1;</span>
         }
+
+
+       
+<span class="fc" id="L33">        int komboCounter = 0, i;</span>
+        boolean paivitetty;
         
-<span class="nc" id="L65">        return rtrn;</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        while (komboCounter &lt; komboja) {</span>
+            
+<span class="fc" id="L38">            kombot[komboCounter] = Kt.clone();</span>
+<span class="fc" id="L39">            komboCounter = komboCounter + 1;</span>
+
+<span class="fc bfc" id="L41" title="All 2 branches covered.">            if (komboCounter == komboja) {</span>
+<span class="fc" id="L42">                break;</span>
+            }
+
+            
+<span class="fc bfc" id="L46" title="All 2 branches covered.">            if (Kt[k-1] == pit) {</span>
+                
+<span class="fc" id="L48">                paivitetty = false;</span>
+<span class="fc" id="L49">                i = k-2;</span>
+                
+<span class="fc bfc" id="L51" title="All 2 branches covered.">                while(!paivitetty) {</span>
+                
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">                    if ( Kt[i+1] - Kt[i] &gt; 1 ) {</span>
+                        
+<span class="fc" id="L55">                        Kt[i] = Kt[i] + 1;</span>
+                    
+<span class="fc bfc" id="L57" title="All 2 branches covered.">                        while( i &lt; (k-1) ) {</span>
+<span class="fc" id="L58">                            i = i +1;</span>
+<span class="fc" id="L59">                            Kt[i] = Kt[i-1]+1;</span>
+                        }
+<span class="fc" id="L61">                        paivitetty=true;</span>
+                        
+                    }
+                    
+<span class="fc" id="L65">                    i = i - 1;</span>
+                    
+                }
+                
+            } else {
+                
+<span class="fc" id="L71">                Kt[k-1] = Kt[k-1] + 1;</span>
+                
+            }
+        }
+            
+        
+<span class="fc" id="L77">        return kombot;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

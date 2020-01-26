@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">/*
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">/**
  * Solves the p-median problem
  */
 package locationallocation;
@@ -8,32 +8,41 @@ import locationallocation.Utils.*;
 
 import static locationallocation.TeitzBart.*;
 
-<span class="fc" id="L11">public class App {</span>
-    public String getGreeting() {
-<span class="fc" id="L13">        return &quot;nonsense&quot;;</span>
+<span class="nc" id="L11">public class App {</span>
 
-    }
-
+    
     public static void main(String[] args) {
 
-<span class="nc" id="L19">        Location[] possibleFacilityLocations    = { new Location(1,1), new Location(5,9) , new Location(2,4),  new Location(11,3) };</span>
-<span class="nc" id="L20">        Location[] demandLocations              = { new Location(7,11), new Location(2,8) , new Location(7,3) };</span>
-<span class="nc" id="L21">        int P = 2;</span>
+<span class="nc" id="L16">        Location[] possibleFacilityLocations    = { new Location(1,1), new Location(5,9) , new Location(2,4),  new Location(11,3) };</span>
+<span class="nc" id="L17">        Location[] demandLocations              = { new Location(7,11), new Location(2,8) , new Location(7,3) };</span>
+<span class="nc" id="L18">        int P = 2;</span>
 
         // Calculate distance matrix
-<span class="nc" id="L24">        double[][] dist = calculateDistanceMatrix(possibleFacilityLocations, demandLocations);</span>
+<span class="nc" id="L21">        double[][] dist = calculateDistanceMatrix(possibleFacilityLocations, demandLocations);</span>
 
-<span class="nc" id="L26">        int[] answerTB = solveTeitzBart(P,dist);</span>
+<span class="nc" id="L23">        int[] answerTB = solveTeitzBart(P,dist);</span>
 
-<span class="nc" id="L28">        System.out.println(&quot;\nTeitzBart: &quot;);</span>
-<span class="nc bnc" id="L29" title="All 2 branches missed.">        for (int i : answerTB) {</span>
-<span class="nc" id="L30">            System.out.print(i + &quot; &quot;);</span>
+        /*
+        System.out.println(&quot;\nTeitzBart: &quot;);
+        for (int i : answerTB) {
+            System.out.print(i + &quot; &quot;);
         }
-<span class="nc" id="L32">        System.out.println();</span>
+        System.out.println();
+        */
+<span class="nc" id="L32">        int[] testArray = { 1,2,3 };</span>
+<span class="nc" id="L33">        Combinations testi = new Combinations();</span>
 
-        
+<span class="nc" id="L35">        int[][] kombot = testi.createCombinations(testArray,2);</span>
+
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        for ( int idx_a = 0; idx_a &lt; kombot.length; idx_a++ ) {</span>
+<span class="nc" id="L38">            System.out.println(&quot;&quot;);</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">            for ( int idx_b = 0; idx_b &lt; kombot[0].length; idx_b++ ) {</span>
+<span class="nc" id="L40">                System.out.print(  kombot[idx_a][idx_b]  + &quot; &quot; );</span>
+            }
+        }
+<span class="nc" id="L43">        System.out.println(&quot;\n\n&quot;);</span>
        
 
-<span class="nc" id="L37">    }</span>
+<span class="nc" id="L46">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
