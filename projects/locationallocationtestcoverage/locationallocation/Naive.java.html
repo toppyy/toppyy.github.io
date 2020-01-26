@@ -4,8 +4,10 @@
  */
 package locationallocation;
 
+import static locationallocation.Utils.Combinations.createCombinations;
+import static locationallocation.Utils.DistanceMatrix.sumOfDistanceMatrixMiminumRowset;
 
-<span class="nc" id="L8">public class Naive {</span>
+<span class="nc" id="L10">public class Naive {</span>
 
     
      /** 
@@ -17,9 +19,29 @@ package locationallocation;
      */
     public static int[] solveNaive(int P, double[][] distanceMatrix  ) {
 
-<span class="nc" id="L20">        int[] rtrn = { 1,2,3 };</span>
 
-<span class="nc" id="L22">        return rtrn;</span>
+<span class="fc" id="L23">        double  currentMinimum = Double.MAX_VALUE, toTestAgainst;</span>
+<span class="fc" id="L24">        int     indexOfCurrentMinimum = 0;</span>
+
+    
+        // Create all possible combinations of facilities of size P
+<span class="fc" id="L28">        int[] m = new int[distanceMatrix.length];</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        for (int i = 0; i &lt; m.length; i++) {</span>
+<span class="fc" id="L30">            m[i] = i+1;</span>
+        }
+<span class="fc" id="L32">        int[][] combinations = createCombinations(m,P);</span>
+
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        for (int i = 0; i &lt; combinations.length; i++) {</span>
+<span class="fc" id="L35">            toTestAgainst = sumOfDistanceMatrixMiminumRowset(combinations[i], distanceMatrix);</span>
+
+<span class="fc bfc" id="L37" title="All 2 branches covered.">            if (toTestAgainst &lt; currentMinimum) {</span>
+<span class="fc" id="L38">                currentMinimum = toTestAgainst;</span>
+<span class="fc" id="L39">                indexOfCurrentMinimum = i;</span>
+            }
+
+        }
+<span class="fc" id="L43">        System.out.println(&quot;Naive solution: &quot; + currentMinimum);</span>
+<span class="fc" id="L44">        return combinations[indexOfCurrentMinimum];</span>
 
     }
 
