@@ -7,38 +7,48 @@ import static locationallocation.Utils.Combinations.createCombinations;
 import static locationallocation.Utils.DistanceMatrix.*;
 import locationallocation.Utils.*;
 
+
 import static locationallocation.TeitzBart.*;
 import static locationallocation.Naive.*;
 
-<span class="nc" id="L13">public class App {</span>
+import java.io.*;
+
+<span class="nc" id="L16">public class App {</span>
 
     
     public static void main(String[] args) {
 
-<span class="nc" id="L18">        Location[] possibleFacilityLocations    = { new Location(1,1), new Location(5,9) , new Location(2,4),  new Location(11,3) };</span>
-<span class="nc" id="L19">        Location[] demandLocations              = { new Location(7,11), new Location(2,8) , new Location(7,3) };</span>
-<span class="nc" id="L20">        int P = 2;</span>
+<span class="nc" id="L21">        String path = &quot;.\\src\\test\\resources\\testdata_1_demand_locations.csv&quot;;</span>
+<span class="nc" id="L22">        LocationLoader testdataDemand = new LocationLoader(path,true);</span>
+<span class="nc" id="L23">        Location[] testDemandLocations = testdataDemand.loadAsLocations();</span>
+
+<span class="nc" id="L25">        path = &quot;.\\src\\test\\resources\\testdata_1_facility_locations.csv&quot;;</span>
+<span class="nc" id="L26">        LocationLoader testdataFacility = new LocationLoader(path,true);</span>
+<span class="nc" id="L27">        Location[] testFacilityLocations = testdataFacility.loadAsLocations();</span>
+
+<span class="nc" id="L29">        int P = 3;</span>
 
         // Calculate distance matrix
-<span class="nc" id="L23">        double[][] dist = calculateDistanceMatrix(possibleFacilityLocations, demandLocations);</span>
+<span class="nc" id="L32">        double[][] dist = calculateDistanceMatrix(testFacilityLocations, testDemandLocations );</span>
 
-<span class="nc" id="L25">        int[] answerTB = solveTeitzBart(P,dist);</span>
+<span class="nc" id="L34">        int[] answerTB = solveTeitzBart(P,dist);</span>
 
         
-<span class="nc" id="L28">        System.out.println(&quot;\nTeitzBart: &quot;);</span>
-<span class="nc bnc" id="L29" title="All 2 branches missed.">        for (int i : answerTB) {</span>
-<span class="nc" id="L30">            System.out.print(i + &quot; &quot;);</span>
+<span class="nc" id="L37">        System.out.println(&quot;\nTeitzBart: &quot;);</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        for (int i : answerTB) {</span>
+<span class="nc" id="L39">            System.out.print(i + &quot; &quot;);</span>
         }
-<span class="nc" id="L32">        System.out.println(&quot;\n\n&quot;);</span>
+<span class="nc" id="L41">        System.out.println(&quot;\n\n&quot;);</span>
 
-<span class="nc" id="L34">       int[] answerNaive = solveNaive(P,dist);</span>
-<span class="nc" id="L35">       System.out.println(&quot;Naive: &quot;);</span>
-<span class="nc bnc" id="L36" title="All 2 branches missed.">       for (int i : answerNaive) {</span>
-<span class="nc" id="L37">           System.out.print(i + &quot; &quot;);</span>
-       }
-<span class="nc" id="L39">       System.out.println();</span>
+<span class="nc" id="L43">        int[] answerNaive = solveNaive(P,dist);</span>
+<span class="nc" id="L44">        System.out.println(&quot;Naive: &quot;);</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        for (int i : answerNaive) {</span>
+<span class="nc" id="L46">            System.out.print(i + &quot; &quot;);</span>
+        }
+<span class="nc" id="L48">        System.out.println();</span>
+      
+    
 
-       
-<span class="nc" id="L42">    }</span>
+<span class="nc" id="L52">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
