@@ -1,94 +1,90 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeitzBart.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation</a> &gt; <span class="el_source">TeitzBart.java</span></div><h1>TeitzBart.java</h1><pre class="source lang-java linenums">
-
-/*
-* An implementation of the Teitz and Bart algorithm for solving the p-median problem
-* 
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeitzBart.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation</a> &gt; <span class="el_source">TeitzBart.java</span></div><h1>TeitzBart.java</h1><pre class="source lang-java linenums">/*
+* An implementation of the Teitz and Bart algorithm.
+* Solves the p-median problem.
 */
 
 package locationallocation;
 
+//import java.util.*;
 
-import java.util.*;
-
-import locationallocation.Utils.*;
+import locationallocation.Utils.IntegerSet;
 
 import static locationallocation.Utils.DistanceMatrix.sumOfDistanceMatrixMiminumRowset;
 
-<span class="nc" id="L17">public class TeitzBart {</span>
+public final class TeitzBart {
 
-    
+    private TeitzBart() {
 
-    
-    
-    
+    } 
+
     /** 
      * Returns a set of facilities consired as the &quot;optimal&quot; locations based on demand.
      * 
-     * @param P: Number of facilities to locate
-     * @param distanceMatrix: distancematrix that holds distances between facilities and demand locations. Row = facility location.
-     * @return int[]: Array of facility location indices
+     * @param pn Number of facilities to locate
+     * @param distanceMatrix distances between facilities and demand locations.
+     * @return int[] Array of facility location indices
      */
-    public static int[] solveTeitzBart(int P, double[][] distanceMatrix  ) {
+    public static int[] solveTeitzBart(final int pn, final double[][] distanceMatrix) {
 
-<span class="fc" id="L33">        int newcandidate = -1;</span>
+<span class="fc" id="L29">        int newcandidate = -1;</span>
         double toTestAgainst;
 
 
-        // Init with first P locations
-<span class="fc" id="L38">        int[] initialSet = new int[P];</span>
-<span class="fc" id="L39">        int[] initialCandidates = new int[distanceMatrix.length-P];</span>
+        // Init with first pn locations
+<span class="fc" id="L34">        int[] initialSet = new int[pn];</span>
+<span class="fc" id="L35">        int[] initialCandidates = new int[distanceMatrix.length - pn];</span>
 
-<span class="fc" id="L41">        int ci = 0;</span>
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        for (int i = 0; i &lt; distanceMatrix.length; i++) {</span>
-<span class="fc bfc" id="L43" title="All 2 branches covered.">            if (i&lt;P) {</span>
-<span class="fc" id="L44">                initialSet[i] = i;</span>
+<span class="fc" id="L37">        int ci = 0;</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (int i = 0; i &lt; distanceMatrix.length; i++) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">            if (i &lt; pn) {</span>
+<span class="fc" id="L40">                initialSet[i] = i;</span>
             } else {
-<span class="fc" id="L46">                initialCandidates[ci] = i;</span>
-<span class="fc" id="L47">                ci++;</span>
+<span class="fc" id="L42">                initialCandidates[ci] = i;</span>
+<span class="fc" id="L43">                ci++;</span>
             }
         }
 
 
-<span class="fc" id="L52">        IntegerSet solutions = new IntegerSet(initialSet);</span>
-<span class="fc" id="L53">        IntegerSet candidates = new IntegerSet(initialCandidates);</span>
+<span class="fc" id="L48">        IntegerSet solutions = new IntegerSet(initialSet);</span>
+<span class="fc" id="L49">        IntegerSet candidates = new IntegerSet(initialCandidates);</span>
         
-<span class="fc" id="L55">        double minOfTests = Double.MAX_VALUE, testsum;</span>
-<span class="fc" id="L56">        int toBeReplaced = -1;</span>
+<span class="fc" id="L51">        double minOfTests = Double.MAX_VALUE, testsum;</span>
+<span class="fc" id="L52">        int toBeReplaced = -1;</span>
 
 
-<span class="fc bfc" id="L59" title="All 2 branches covered.">        while (  !candidates.isEmpty() ) {</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        while (!candidates.isEmpty()) {</span>
             
         
-<span class="fc" id="L62">            toTestAgainst = sumOfDistanceMatrixMiminumRowset( solutions.getIntegerSet(), distanceMatrix);</span>
+<span class="fc" id="L58">            toTestAgainst = sumOfDistanceMatrixMiminumRowset(solutions.getIntegerSet(), distanceMatrix);</span>
 
-<span class="fc" id="L64">            newcandidate = candidates.pop();</span>
+<span class="fc" id="L60">            newcandidate = candidates.pop();</span>
 
-<span class="fc" id="L66">            int[] testSet = solutions.getIntegerSet();</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">            for (int i = 0; i &lt; testSet.length; i++) {</span>
+<span class="fc" id="L62">            int[] testSet = solutions.getIntegerSet();</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">            for (int i = 0; i &lt; testSet.length; i++) {</span>
 
 
-<span class="fc" id="L70">                int[] tmp = testSet.clone();</span>
-<span class="fc" id="L71">                tmp[i] = newcandidate;</span>
+<span class="fc" id="L66">                int[] tmp = testSet.clone();</span>
+<span class="fc" id="L67">                tmp[i] = newcandidate;</span>
 
-<span class="fc" id="L73">                testsum = sumOfDistanceMatrixMiminumRowset( tmp , distanceMatrix);</span>
+<span class="fc" id="L69">                testsum = sumOfDistanceMatrixMiminumRowset(tmp, distanceMatrix);</span>
                 
-<span class="fc bfc" id="L75" title="All 2 branches covered.">                if ( testsum &lt; minOfTests  ) {</span>
-<span class="fc" id="L76">                    minOfTests      = testsum;</span>
-<span class="fc" id="L77">                    toBeReplaced = testSet[i];</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">                if (testsum &lt; minOfTests) {</span>
+<span class="fc" id="L72">                    minOfTests      = testsum;</span>
+<span class="fc" id="L73">                    toBeReplaced = testSet[i];</span>
                 }
                 
             }
             // If better solution is found, change set 
-<span class="fc bfc" id="L82" title="All 2 branches covered.">            if ( minOfTests &lt; toTestAgainst ) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">            if (minOfTests &lt; toTestAgainst) {</span>
                 
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">                if ( solutions.setChange(toBeReplaced, newcandidate) ) {</span>
-<span class="fc" id="L85">                    candidates.add(toBeReplaced);</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">                if (solutions.setChange(toBeReplaced, newcandidate)) {</span>
+<span class="fc" id="L81">                    candidates.add(toBeReplaced);</span>
                 }
             }
-<span class="fc" id="L88">        }</span>
-<span class="fc" id="L89">        System.out.println(&quot;Sum of distances: &quot; + sumOfDistanceMatrixMiminumRowset( solutions.getIntegerSet() , distanceMatrix));</span>
+<span class="fc" id="L84">        }</span>
+<span class="fc" id="L85">        System.out.println(&quot;Sum of distances: &quot; + sumOfDistanceMatrixMiminumRowset(solutions.getIntegerSet(), distanceMatrix));</span>
 
-<span class="fc" id="L91">        return solutions.getIntegerSet();</span>
+<span class="fc" id="L87">        return solutions.getIntegerSet();</span>
     }
 
 }

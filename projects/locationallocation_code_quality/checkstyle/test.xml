@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="8.27">
+<file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\test\java\locationallocation\TestCombinations.java">
+</file>
+<file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\test\java\locationallocation\TestDistanceMatrix.java">
+</file>
+<file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\test\java\locationallocation\TestIntegerSet.java">
+</file>
+<file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\test\java\locationallocation\TestLocation.java">
+</file>
+<file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\test\java\locationallocation\TestNaive.java">
+</file>
+<file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\test\java\locationallocation\TestTeitzBart.java">
+</file>
+</checkstyle>

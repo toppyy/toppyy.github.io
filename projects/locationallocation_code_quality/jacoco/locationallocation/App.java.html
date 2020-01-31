@@ -3,54 +3,60 @@
  */
 package locationallocation;
 
-import static locationallocation.Utils.Combinations.createCombinations;
-import static locationallocation.Utils.DistanceMatrix.*;
-import locationallocation.Utils.*;
+import static locationallocation.Utils.DistanceMatrix.calculateDistanceMatrix;
+import locationallocation.Utils.LocationLoader;
+import locationallocation.Utils.Location;
+
+import static locationallocation.TeitzBart.solveTeitzBart;
+import static locationallocation.Naive.solveNaive;
 
 
-import static locationallocation.TeitzBart.*;
-import static locationallocation.Naive.*;
-import locationallocation.*;
+public final class App {
 
-import java.io.*;
+    private App() {
+    }
 
-<span class="nc" id="L17">public class App {</span>
+    /**
+     * Number of facilities to choose.
+     */
+    private static final int PN = 3;
 
-    
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
-<span class="nc" id="L22">        String path = &quot;.\\src\\test\\resources\\testdata_1_demand_locations.csv&quot;;</span>
-<span class="nc" id="L23">        LocationLoader testdataDemand = new LocationLoader(path,true);</span>
-<span class="nc" id="L24">        Location[] testDemandLocations = testdataDemand.loadAsLocations();</span>
+<span class="nc" id="L26">        String path = &quot;.\\src\\test\\resources\\testdata_1_demand_locations.csv&quot;;</span>
+<span class="nc" id="L27">        LocationLoader testdataDemand = new LocationLoader(path, true);</span>
+<span class="nc" id="L28">        Location[] testDemandLocations = testdataDemand.loadAsLocations();</span>
 
-<span class="nc" id="L26">        path = &quot;.\\src\\test\\resources\\testdata_1_facility_locations.csv&quot;;</span>
-<span class="nc" id="L27">        LocationLoader testdataFacility = new LocationLoader(path,true);</span>
-<span class="nc" id="L28">        Location[] testFacilityLocations = testdataFacility.loadAsLocations();</span>
+<span class="nc" id="L30">        path = &quot;.\\src\\test\\resources\\testdata_1_facility_locations.csv&quot;;</span>
+<span class="nc" id="L31">        LocationLoader testdataFacility = new LocationLoader(path, true);</span>
+<span class="nc" id="L32">        Location[] testFacilityLocations = testdataFacility.loadAsLocations();</span>
 
-<span class="nc" id="L30">        int P = 3;</span>
+        // pn for running algorithms
+        
+
 
         // Calculate distance matrix
-<span class="nc" id="L33">        double[][] dist = calculateDistanceMatrix(testFacilityLocations, testDemandLocations );</span>
+<span class="nc" id="L39">        double[][] dist = calculateDistanceMatrix(testFacilityLocations, testDemandLocations);</span>
 
-<span class="nc" id="L35">        int[] answerTB = solveTeitzBart(P,dist);</span>
+<span class="nc" id="L41">        int[] answerTB = solveTeitzBart(PN, dist);</span>
 
         
-<span class="nc" id="L38">        System.out.println(&quot;\nTeitzBart: &quot;);</span>
-<span class="nc bnc" id="L39" title="All 2 branches missed.">        for (int i : answerTB) {</span>
-<span class="nc" id="L40">            System.out.print(i + &quot; &quot;);</span>
+<span class="nc" id="L44">        System.out.println(&quot;\nTeitzBart: &quot;);</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        for (int i : answerTB) {</span>
+<span class="nc" id="L46">            System.out.print(i + &quot; &quot;);</span>
         }
-<span class="nc" id="L42">        System.out.println(&quot;\n\n&quot;);</span>
+<span class="nc" id="L48">        System.out.println(&quot;\n\n&quot;);</span>
 
-<span class="nc" id="L44">        int[] answerNaive = solveNaive(P,dist);</span>
-<span class="nc" id="L45">        System.out.println(&quot;Naive: &quot;);</span>
-<span class="nc bnc" id="L46" title="All 2 branches missed.">        for (int i : answerNaive) {</span>
-<span class="nc" id="L47">            System.out.print(i + &quot; &quot;);</span>
+<span class="nc" id="L50">        int[] answerNaive = solveNaive(PN, dist);</span>
+<span class="nc" id="L51">        System.out.println(&quot;Naive: &quot;);</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        for (int i : answerNaive) {</span>
+<span class="nc" id="L53">            System.out.print(i + &quot; &quot;);</span>
         }
-<span class="nc" id="L49">        System.out.println(&quot;\n\n&quot;);</span>
+<span class="nc" id="L55">        System.out.println(&quot;\n\n&quot;);</span>
         
-<span class="nc" id="L51">        GRIA griaSolver = new GRIA(P,dist);</span>
+<span class="nc" id="L57">        GRIA griaSolver = new GRIA(PN, dist);</span>
       
 
-<span class="nc" id="L54">    }</span>
+<span class="nc" id="L60">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

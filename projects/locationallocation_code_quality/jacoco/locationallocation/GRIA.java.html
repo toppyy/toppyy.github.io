@@ -10,139 +10,163 @@ import locationallocation.Utils.IntegerSet;
 
 public class GRIA {
 
+    /**
+     * Distancematrix of facilities vs demand locations.
+     */
+
     private double[][] distanceMatrix;
 
-<span class="nc" id="L15">    public GRIA(int P, double[][] distanceMatrix) {</span>
+    /**
+     * Solver for GRIA.
+     * @param pn number of facilities to choose
+     * @param distanceMatrixInput double[][] distancematrix between facilities and demand locations
+     */
 
-<span class="nc" id="L17">        this.distanceMatrix = distanceMatrix;</span>
+<span class="nc" id="L25">    public GRIA(final int pn, final double[][] distanceMatrixInput) {</span>
 
-<span class="nc" id="L19">        int[] emptyArray = {};</span>
+<span class="nc" id="L27">        this.distanceMatrix = distanceMatrixInput;</span>
 
+<span class="nc" id="L29">        int[] emptyArray = {};</span>
 
-<span class="nc" id="L22">        IntegerSet solution  = new IntegerSet(emptyArray), candidates = new IntegerSet(emptyArray);</span>
+<span class="nc" id="L31">        IntegerSet solution  = new IntegerSet(emptyArray), candidates = new IntegerSet(emptyArray);</span>
 
         // Create initial solution and candidates
         // Initial solution is the first P facilities, candidates are facilities not in the initial solution
 
-<span class="nc bnc" id="L27" title="All 2 branches missed.">        for (int i = 0; i &lt; distanceMatrix.length;i++) {</span>
-<span class="nc bnc" id="L28" title="All 2 branches missed.">            if (i &lt; P) {</span>
-<span class="nc" id="L29">                solution.add(i);</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        for (int i = 0; i &lt; distanceMatrix.length; i++) {</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">            if (i &lt; pn) {</span>
+<span class="nc" id="L38">                solution.add(i);</span>
             } else {
-<span class="nc" id="L31">                candidates.add(i);</span>
+<span class="nc" id="L40">                candidates.add(i);</span>
             }
         }
         
         // Global interchange
-<span class="nc" id="L36">        IntegerSet[] returnFromGlobalInterchange = GlobalExhance(solution, candidates);</span>
+<span class="nc" id="L45">        IntegerSet[] returnFromGlobalInterchange = globalExhance(solution, candidates);</span>
 
-<span class="nc" id="L38">        int[] tmp = returnFromGlobalInterchange[0].getIntegerSet();</span>
-
-<span class="nc" id="L40">        System.out.println(&quot;\n\nGLOBALPHSA: &quot;);</span>
-<span class="nc bnc" id="L41" title="All 2 branches missed.">        for (int i : tmp) {</span>
-<span class="nc" id="L42">            System.out.print(i+&quot;, &quot;);</span>
-        }
-<span class="nc" id="L44">        System.out.println(&quot;\n\n&quot;);</span>
-
-
-
-
-<span class="nc" id="L49">    }</span>
+<span class="nc" id="L47">    }</span>
 
 
 
     /** 
-     * Global interchange for (initial) solution: 
+     * Global interchange for (initial) solution. 
      *  1) Remove the facility which's removal increases total cost the least
      *  2) Add the facility which provides the greatest cost decrese
      *  3) If the swap lowers total cost, let it be. If not, reiterate phases 1-3 until it does.
      * 
-     * @param solution: Current solution
-     * @param candidates: Possible facilities not in the curren solution
-     * @return int[]: Solution after global interchange
+     * @param initialSolution Current solution
+     * @param initialCandidates Possible facilities not in the current solution
+     * @return int[] Solution and candidates after global interchange
      */
-    private IntegerSet[] GlobalExhance(IntegerSet solution, IntegerSet candidates) {
+    private IntegerSet[] globalExhance(final IntegerSet initialSolution, final IntegerSet initialCandidates) {
 
-<span class="nc" id="L65">        boolean BestObjectiveFunctionLessThanPreviousBest = true;</span>
+<span class="nc" id="L63">        IntegerSet solution = initialSolution, candidates = initialCandidates;</span>
+
+<span class="nc" id="L65">        boolean bestObjectiveFunctionLessThanPreviousBest = true;</span>
 <span class="nc" id="L66">        double beforeDrop, toDropMin = Double.MAX_VALUE, toAddMin = Double.MAX_VALUE, tmp, afterDropAdd;</span>
-<span class="nc" id="L67">        int  toDrop = 0, toAdd = 0,toDropIndex = 0, iterations = 0;</span>
+<span class="nc" id="L67">        int  toDrop = 0, toAdd = 0, toDropIndex = 0;</span>
 
-<span class="nc" id="L69">        int candidatesSize = candidates.setSize;</span>
+<span class="nc" id="L69">        int candidatesSize = candidates.getSetSize();</span>
 
 
- 
-<span class="nc bnc" id="L73" title="All 2 branches missed.">        while (BestObjectiveFunctionLessThanPreviousBest) {</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        while (bestObjectiveFunctionLessThanPreviousBest) {</span>
 
-<span class="nc" id="L75">            solution.print(&quot;At the start of while-loop&quot;);</span>
-
-<span class="nc" id="L77">            beforeDrop = sumOfDistanceMatrixMiminumRowset( solution.getIntegerSet(), this.distanceMatrix );</span>
+<span class="nc" id="L74">            beforeDrop = sumOfDistanceMatrixMiminumRowset(solution.getIntegerSet(), this.distanceMatrix);</span>
             
-<span class="nc" id="L79">            toDropMin = Double.MAX_VALUE;</span>
+<span class="nc" id="L76">            toDropMin = Double.MAX_VALUE;</span>
 
-<span class="nc bnc" id="L81" title="All 2 branches missed.">            for ( int i = 0; i &lt; solution.setSize ; i++ ) {</span>
-<span class="nc" id="L82">                IntegerSet withoutISolution = new IntegerSet( solution.getIntegerSet() );</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">            for (int i = 0; i &lt; solution.getSetSize(); i++) {</span>
+<span class="nc" id="L79">                IntegerSet withoutISolution = new IntegerSet(solution.getIntegerSet());</span>
                 
-<span class="nc" id="L84">                withoutISolution.removeByIndex(i);</span>
-<span class="nc" id="L85">                tmp =  sumOfDistanceMatrixMiminumRowset( withoutISolution.getIntegerSet(), this.distanceMatrix );</span>
+<span class="nc" id="L81">                withoutISolution.removeByIndex(i);</span>
+<span class="nc" id="L82">                tmp =  sumOfDistanceMatrixMiminumRowset(withoutISolution.getIntegerSet(), this.distanceMatrix);</span>
                 
                 
-<span class="nc bnc" id="L88" title="All 2 branches missed.">                if ( tmp &lt; toDropMin) {</span>
-<span class="nc" id="L89">                    toDropMin = tmp;</span>
-<span class="nc" id="L90">                    toDrop    = solution.getIntegerByIndex(i);</span>
-<span class="nc" id="L91">                    toDropIndex = i;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">                if (tmp &lt; toDropMin) {</span>
+<span class="nc" id="L86">                    toDropMin = tmp;</span>
+<span class="nc" id="L87">                    toDrop    = solution.getIntegerByIndex(i);</span>
+<span class="nc" id="L88">                    toDropIndex = i;</span>
                 }
             }
         
 
-<span class="nc" id="L96">            IntegerSet solutionAfterDrop = new IntegerSet( solution.getIntegerSet() );</span>
-<span class="nc" id="L97">            solutionAfterDrop.remove( toDrop );</span>
-
-            
-            //System.out.println(&quot;\nBefore drop: &quot; + beforeDrop);
+<span class="nc" id="L93">            IntegerSet solutionAfterDrop = new IntegerSet(solution.getIntegerSet());</span>
+<span class="nc" id="L94">            solutionAfterDrop.remove(toDrop);</span>
 
             // Find the best site to add
-<span class="nc bnc" id="L103" title="All 2 branches missed.">            for ( int i = 0; i &lt; candidates.setSize ; i++ ) {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">            for (int i = 0; i &lt; candidates.getSetSize(); i++) {</span>
 
-<span class="nc" id="L105">                IntegerSet withISolution = new IntegerSet( solutionAfterDrop.getIntegerSet() );</span>
+<span class="nc" id="L99">                IntegerSet withISolution = new IntegerSet(solutionAfterDrop.getIntegerSet());</span>
 
-<span class="nc" id="L107">                int candidate = candidates.getIntegerByIndex(i);</span>
-<span class="nc" id="L108">                withISolution.add( candidate );</span>
+<span class="nc" id="L101">                int candidate = candidates.getIntegerByIndex(i);</span>
+<span class="nc" id="L102">                withISolution.add(candidate);</span>
             
-<span class="nc" id="L110">                tmp =  sumOfDistanceMatrixMiminumRowset( withISolution.getIntegerSet(), this.distanceMatrix );</span>
+<span class="nc" id="L104">                tmp =  sumOfDistanceMatrixMiminumRowset(withISolution.getIntegerSet(), this.distanceMatrix);</span>
  
-<span class="nc bnc" id="L112" title="All 2 branches missed.">                if ( tmp &lt; toAddMin) {</span>
-<span class="nc" id="L113">                    toAddMin = tmp;</span>
-<span class="nc" id="L114">                    toAdd    = candidate;</span>
-                    
+<span class="nc bnc" id="L106" title="All 2 branches missed.">                if (tmp &lt; toAddMin) {</span>
+<span class="nc" id="L107">                    toAddMin = tmp;</span>
+<span class="nc" id="L108">                    toAdd    = candidate;</span>
                 }
             }
 
-<span class="nc" id="L119">            solutionAfterDrop.add(  toAdd  );</span>
-<span class="nc" id="L120">            afterDropAdd = sumOfDistanceMatrixMiminumRowset( solutionAfterDrop.getIntegerSet(), this.distanceMatrix );</span>
+<span class="nc" id="L112">            solutionAfterDrop.add(toAdd);</span>
+<span class="nc" id="L113">            afterDropAdd = sumOfDistanceMatrixMiminumRowset(solutionAfterDrop.getIntegerSet(), this.distanceMatrix);</span>
             
             // Cost before vs. after drop &amp; add
-<span class="nc bnc" id="L123" title="All 2 branches missed.">            if (afterDropAdd &lt;  beforeDrop) {</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">            if (afterDropAdd &lt;  beforeDrop) {</span>
  
-<span class="nc" id="L125">                solution    = new IntegerSet( solutionAfterDrop.getIntegerSet() );</span>
+<span class="nc" id="L118">                solution    = new IntegerSet(solutionAfterDrop.getIntegerSet());</span>
 
-<span class="nc" id="L127">                int[] candidates_tmp = new int[ candidatesSize ];</span>
-<span class="nc" id="L128">                int addedIdx = 0;</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">                for (int i = 0; i &lt; distanceMatrix.length; i++) {</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">                    if (! solution.inSet(i) ) {</span>
-<span class="nc" id="L131">                        candidates_tmp[addedIdx] = i;</span>
-<span class="nc" id="L132">                        addedIdx++;</span>
+                // Update candidates
+<span class="nc" id="L121">                int[] candidatesTMP = new int[candidatesSize];</span>
+<span class="nc" id="L122">                int addedIdx = 0;</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">                for (int i = 0; i &lt; distanceMatrix.length; i++) {</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">                    if (!solution.inSet(i)) {</span>
+<span class="nc" id="L125">                        candidatesTMP[addedIdx] = i;</span>
+<span class="nc" id="L126">                        addedIdx++;</span>
                     }
                 }
-<span class="nc" id="L135">                candidates = new IntegerSet(candidates_tmp);</span>
+<span class="nc" id="L129">                candidates = new IntegerSet(candidatesTMP);</span>
 
-<span class="nc" id="L137">            } else {</span>
-<span class="nc" id="L138">                BestObjectiveFunctionLessThanPreviousBest = false;</span>
+<span class="nc" id="L131">            } else {</span>
+<span class="nc" id="L132">                bestObjectiveFunctionLessThanPreviousBest = false;</span>
             }
             
-<span class="nc" id="L141">        } // while-end</span>
+<span class="nc" id="L135">        } // while-end</span>
 
-        // Resurn solution and candidats
-<span class="nc" id="L144">        IntegerSet[] rtrn = { solution, candidates };</span>
-<span class="nc" id="L145">        return rtrn;</span>
+        // Return solution and candidates
+<span class="nc" id="L138">        IntegerSet[] rtrn = {solution, candidates};</span>
+<span class="nc" id="L139">        return rtrn;</span>
+
+
+    }
+
+    
+
+    /** 
+     * Regional interchange for (initial) solution: 
+     *  1) Allocate each candidate facility to closest facility in solution
+     *  2) Swap each candidate with the facility it's allocated to. Count cost 
+     *  3) Find the swap that has the lowest total cost
+     * 
+     * @param solution Current solution
+     * @param candidates Possible facilities not in the curren solution
+     * @return IntegerSet Solution after regional interchange
+     */
+    private IntegerSet regionalExchange(final IntegerSet solution, final IntegerSet candidates) {
+
+
+        // Distancematrix between locations and locations
+        
+        // Allocate all candidates to solution facilities
+
+        // Swap each candidate with the facility it's allocated to
+
+        // See which provides the lowest overall cost
+
+        // Return solution and candidates
+<span class="nc" id="L168">        return solution;</span>
+
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

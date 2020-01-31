@@ -7,41 +7,42 @@ package locationallocation;
 import static locationallocation.Utils.Combinations.createCombinations;
 import static locationallocation.Utils.DistanceMatrix.sumOfDistanceMatrixMiminumRowset;
 
-<span class="nc" id="L10">public class Naive {</span>
+public final class Naive {
 
-    
+    private Naive() {
+    }
+
      /** 
      * Returns the optimal set of facility locations based on demand.
      * 
-     * @param P: Number of facilities to locate
-     * @param distanceMatrix: distancematrix that holds distances between facilities and demand locations. Row = facility location.
-     * @return int[]: Array of facility location indices
+     * @param pn Number of facilities to locate
+     * @param distanceMatrix distancematrix that holds distances between facilities and demand locations. Row = facility location.
+     * @return int[] Array of facility location indices
      */
-    public static int[] solveNaive(int P, double[][] distanceMatrix  ) {
+    public static int[] solveNaive(final int pn, final double[][] distanceMatrix) {
 
 
-<span class="fc" id="L23">        double  currentMinimum = Double.MAX_VALUE, toTestAgainst;</span>
-<span class="fc" id="L24">        int     indexOfCurrentMinimum = 0;</span>
+<span class="fc" id="L25">        double  currentMinimum = Double.MAX_VALUE, toTestAgainst;</span>
+<span class="fc" id="L26">        int     indexOfCurrentMinimum = 0;</span>
 
-    
-        // Create all possible combinations of facilities of size P
-<span class="fc" id="L28">        int[] m = new int[distanceMatrix.length];</span>
-<span class="fc bfc" id="L29" title="All 2 branches covered.">        for (int i = 0; i &lt; m.length; i++) {</span>
-<span class="fc" id="L30">            m[i] = i+1;</span>
+        // Create all possible combinations of facilities of size pn
+<span class="fc" id="L29">        int[] m = new int[distanceMatrix.length];</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        for (int i = 0; i &lt; m.length; i++) {</span>
+<span class="fc" id="L31">            m[i] = i + 1;</span>
         }
-<span class="fc" id="L32">        int[][] combinations = createCombinations(m,P);</span>
+<span class="fc" id="L33">        int[][] combinations = createCombinations(m, pn);</span>
 
-<span class="fc bfc" id="L34" title="All 2 branches covered.">        for (int i = 0; i &lt; combinations.length; i++) {</span>
-<span class="fc" id="L35">            toTestAgainst = sumOfDistanceMatrixMiminumRowset(combinations[i], distanceMatrix);</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        for (int i = 0; i &lt; combinations.length; i++) {</span>
+<span class="fc" id="L36">            toTestAgainst = sumOfDistanceMatrixMiminumRowset(combinations[i], distanceMatrix);</span>
 
-<span class="fc bfc" id="L37" title="All 2 branches covered.">            if (toTestAgainst &lt; currentMinimum) {</span>
-<span class="fc" id="L38">                currentMinimum = toTestAgainst;</span>
-<span class="fc" id="L39">                indexOfCurrentMinimum = i;</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">            if (toTestAgainst &lt; currentMinimum) {</span>
+<span class="fc" id="L39">                currentMinimum = toTestAgainst;</span>
+<span class="fc" id="L40">                indexOfCurrentMinimum = i;</span>
             }
 
         }
-<span class="fc" id="L43">        System.out.println(&quot;Naive solution: &quot; + currentMinimum);</span>
-<span class="fc" id="L44">        return combinations[indexOfCurrentMinimum];</span>
+<span class="fc" id="L44">        System.out.println(&quot;Naive solution: &quot; + currentMinimum);</span>
+<span class="fc" id="L45">        return combinations[indexOfCurrentMinimum];</span>
 
     }
 

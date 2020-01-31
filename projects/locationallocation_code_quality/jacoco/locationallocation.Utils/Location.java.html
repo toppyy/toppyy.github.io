@@ -2,25 +2,28 @@
 
 public class Location {
 
-    private double x, y;
+    /**
+     * A data structure to store a &quot;location&quot; which is a coordinate pair.
+     */
+    private final double x, y;
 
 
-<span class="fc" id="L8">    public Location(double x, double y) {</span>
-<span class="fc" id="L9">        this.x = x;</span>
-<span class="fc" id="L10">        this.y = y;</span>
-<span class="fc" id="L11">    }</span>
+<span class="fc" id="L11">    public Location(final double inputX, final double inputY) {</span>
+<span class="fc" id="L12">        this.x = inputX;</span>
+<span class="fc" id="L13">        this.y = inputY;</span>
+<span class="fc" id="L14">    }</span>
 
-    public double[] getCoordinates()  {
+    public final double[] getCoordinates()  {
 
-<span class="fc" id="L15">        double[] rtrn = { this.x,this.y };</span>
-<span class="fc" id="L16">        return rtrn;</span>
+<span class="fc" id="L18">        double[] rtrn = {this.x, this.y};</span>
+<span class="fc" id="L19">        return rtrn;</span>
     }
 
-    public double getX() {
-<span class="fc" id="L20">        return this.x;</span>
+    public final double getX() {
+<span class="fc" id="L23">        return this.x;</span>
     }
-    public double getY() {
-<span class="fc" id="L23">        return this.y;</span>
+    public final double getY() {
+<span class="fc" id="L26">        return this.y;</span>
     }
 
 

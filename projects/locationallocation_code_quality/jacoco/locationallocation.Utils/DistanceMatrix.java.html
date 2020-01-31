@@ -6,26 +6,29 @@
 
 package locationallocation.Utils;
 
-<span class="nc" id="L9">public class DistanceMatrix {</span>
+public final class DistanceMatrix {
 
-    public static double calculateEuclideanDistance(Location a, Location b ) {
-<span class="fc" id="L12">        return Math.sqrt( Math.pow( a.getX() - b.getX() , 2 ) + Math.pow( a.getY() - b.getY() , 2 ) );</span>
+    private DistanceMatrix() {
     }
 
-    public static double[][] calculateDistanceMatrix(Location[] setA, Location[] setB) {
+    public static double calculateEuclideanDistance(final Location a, final Location b) {
+<span class="fc" id="L15">        return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));</span>
+    }
 
-<span class="fc" id="L17">        double[][] dist = new double[setA.length][setB.length];</span>
+    public static double[][] calculateDistanceMatrix(final Location[] setA, final Location[] setB) {
 
-<span class="fc bfc" id="L19" title="All 2 branches covered.">        for ( int idx_a = 0; idx_a &lt; setA.length; idx_a++ ) {</span>
+<span class="fc" id="L20">        double[][] dist = new double[setA.length][setB.length];</span>
 
-<span class="fc bfc" id="L21" title="All 2 branches covered.">            for ( int idx_b = 0; idx_b &lt; setB.length; idx_b++ ) {</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        for (int idxA = 0; idxA &lt; setA.length; idxA++) {</span>
+
+<span class="fc bfc" id="L24" title="All 2 branches covered.">            for (int idxB = 0; idxB &lt; setB.length; idxB++) {</span>
             
-<span class="fc" id="L23">                dist[idx_a][idx_b]  = calculateEuclideanDistance(setA[idx_a], setB[idx_b]);</span>
+<span class="fc" id="L26">                dist[idxA][idxB]  = calculateEuclideanDistance(setA[idxA], setB[idxB]);</span>
 
             }
         }
 
-<span class="fc" id="L28">        return dist;</span>
+<span class="fc" id="L31">        return dist;</span>
 
     }
 
@@ -33,30 +36,30 @@ package locationallocation.Utils;
      * Returns the sum distances between demand locations and a set facilities.
      * Distance is minimized by allocating each demand location to closest facility.
      * 
-     * @param rowset: set of rows for which to find sum of minimums of distances. 
-     * @param dm: a distancematrix that holds distances between facilities and demand locations. Row = facility location.
+     * @param rowset set of rows for which to find sum of minimums of distances. 
+     * @param dm a distancematrix that holds distances between facilities and demand locations.
      * @return double
      */
-    public static double sumOfDistanceMatrixMiminumRowset(int[] rowset, double[][] dm ) {
-<span class="fc" id="L41">        double rtrn = 0, min_tmp, tmp;</span>
+    public static double sumOfDistanceMatrixMiminumRowset(final int[] rowset, final double[][] dm) {
         
+<span class="fc" id="L45">        double rtrn = 0, minTmp, tmp;</span>
+        
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        for (int col = 0; col &lt; dm[0].length; col++) {</span>
+        
+<span class="fc" id="L49">            minTmp = Double.MAX_VALUE;</span>
 
-<span class="fc bfc" id="L44" title="All 2 branches covered.">        for (int col = 0; col &lt; dm[0].length; col++) {</span>
-            
-<span class="fc" id="L46">            min_tmp = Double.MAX_VALUE;</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">            for (int row : rowset) {</span>
 
-<span class="fc bfc" id="L48" title="All 2 branches covered.">            for (int row : rowset) {</span>
-
-<span class="fc" id="L50">                tmp = dm[row][col];</span>
-<span class="fc bfc" id="L51" title="All 2 branches covered.">                if (tmp&lt;min_tmp) {</span>
-<span class="fc" id="L52">                    min_tmp = tmp;</span>
+<span class="fc" id="L53">                tmp = dm[row][col];</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">                if (tmp &lt; minTmp) {</span>
+<span class="fc" id="L55">                    minTmp = tmp;</span>
                 }
             }
-<span class="fc" id="L55">            rtrn += min_tmp;</span>
+<span class="fc" id="L58">            rtrn += minTmp;</span>
             
         }
 
-<span class="fc" id="L59">        return rtrn;</span>
+<span class="fc" id="L62">        return rtrn;</span>
     }
 
 
