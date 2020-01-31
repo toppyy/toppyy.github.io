@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IntegerSet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation.Utils</a> &gt; <span class="el_source">IntegerSet.java</span></div><h1>IntegerSet.java</h1><pre class="source lang-java linenums">/**
+ * Data structure set
+ */
+
+ package locationallocation.Utils;
+
+ public class IntegerSet {
+
+    private int[] integers; 
+    public int setSize;
+
+<span class="fc" id="L12">    public IntegerSet(int[] initialObjects) {</span>
+<span class="fc" id="L13">        this.integers = initialObjects;</span>
+<span class="fc" id="L14">        this.setSize = initialObjects.length;</span>
+<span class="fc" id="L15">    } </span>
+
+    public boolean setChange(int toReplace, int replaceByThis) {
+<span class="fc" id="L18">        boolean changed = false;</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">        for (int i = 0; i &lt; this.setSize; i++) {</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">            if (this.integers[i]==toReplace) {</span>
+<span class="fc" id="L21">                this.integers[i] = replaceByThis;</span>
+<span class="fc" id="L22">                changed = true;</span>
+            }
+        }
+<span class="fc" id="L25">        return changed;</span>
+    }
+
+    public void add(int toAdd) {
+
+<span class="fc" id="L30">        this.setSize = this.setSize+1;</span>
+
+<span class="fc" id="L32">        int[] replacement = new int[this.setSize];</span>
+
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        for (int i = 0; i &lt; (this.setSize-1); i++) {</span>
+<span class="fc" id="L35">            replacement[i] = this.integers[i];</span>
+        }
+<span class="fc" id="L37">        replacement[(this.setSize-1)] = toAdd;</span>
+<span class="fc" id="L38">        this.integers = replacement;</span>
+
+<span class="fc" id="L40">    }</span>
+
+    public void remove(int toRemove) {
+
+
+
+<span class="nc" id="L46">        int[] replacement = new int[this.setSize-1];</span>
+
+<span class="nc" id="L48">        int addedInt = 0;</span>
+        
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        for (int i = 0; i &lt; this.setSize; i++) {</span>
+        
+<span class="nc bnc" id="L52" title="All 2 branches missed.">            if (this.integers[i]!=toRemove) {</span>
+<span class="nc" id="L53">                replacement[addedInt] = this.integers[i];</span>
+<span class="nc" id="L54">                addedInt++;</span>
+            }
+        
+        }
+
+<span class="nc" id="L59">        this.setSize = this.setSize-1;</span>
+<span class="nc" id="L60">        this.integers = replacement;</span>
+        
+<span class="nc" id="L62">    }</span>
+    public void removeByIndex(int idx) {
+
+
+
+<span class="nc" id="L67">        int[] replacement = new int[this.setSize-1];</span>
+
+<span class="nc" id="L69">        int addedInt = 0;</span>
+        
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        for (int i = 0; i &lt; this.setSize; i++) {</span>
+        
+<span class="nc bnc" id="L73" title="All 2 branches missed.">            if (i != idx) {</span>
+<span class="nc" id="L74">                replacement[addedInt] = this.integers[i];</span>
+<span class="nc" id="L75">                addedInt++;</span>
+            }
+        
+        }
+
+<span class="nc" id="L80">        this.setSize = this.setSize-1;</span>
+<span class="nc" id="L81">        this.integers = replacement;</span>
+        
+<span class="nc" id="L83">    }</span>
+
+
+
+    public int pop() {
+
+
+<span class="fc" id="L90">        int rtrn = this.integers[this.setSize-1];</span>
+
+<span class="fc" id="L92">        this.setSize = this.setSize-1;</span>
+<span class="fc" id="L93">        int[] replacement = new int[this.setSize];</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        for (int i = 0; i &lt; this.setSize; i++) {</span>
+<span class="fc" id="L95">            replacement[i] = this.integers[i];</span>
+        }
+<span class="fc" id="L97">        this.integers = replacement;</span>
+
+<span class="fc" id="L99">        return rtrn;</span>
+    }
+
+    public int[] getIntegerSet() {
+<span class="fc" id="L103">        return this.integers;</span>
+    }
+
+    public int getIntegerByIndex(int toGet) {
+<span class="nc" id="L107">        return this.integers[toGet];</span>
+    }
+
+    public boolean isEmpty() {
+<span class="fc" id="L111">        boolean rtrn = false;</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (this.setSize==0) {</span>
+<span class="fc" id="L113">            return true;</span>
+        }
+<span class="fc" id="L115">        return rtrn;</span>
+    }
+
+    public boolean inSet(int toBeSearched) {
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        for (int i : this.integers) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">            if (toBeSearched == i) {</span>
+<span class="nc" id="L121">                return true;</span>
+            }
+        }
+<span class="nc" id="L124">        return false;</span>
+    }
+
+    public void print(String message) {
+<span class="nc" id="L128">        System.out.println(&quot;\n &quot; + message + &quot; &quot;);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        for (int i : this.integers) {</span>
+<span class="nc" id="L130">            System.out.print(i + &quot;, &quot;);</span>
+        }
+<span class="nc" id="L132">        System.out.println(&quot;\n&quot;);</span>
+<span class="nc" id="L133">    }</span>
+ }
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
