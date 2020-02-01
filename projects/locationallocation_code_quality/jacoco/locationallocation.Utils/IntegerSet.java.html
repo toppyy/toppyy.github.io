@@ -146,7 +146,7 @@
      * @return int[] set as an array of integers
      */
     public int[] getIntegerSet() {
-<span class="fc" id="L149">        return this.integers;</span>
+<span class="fc" id="L149">        return this.integers.clone();</span>
     }
 
     
@@ -193,14 +193,14 @@
      * Print set preceded by a message.
      * @param message message to be printed before the set
      */
-    /*
+    
     public void print(final String message) {
-        System.out.println(&quot;\n &quot; + message + &quot; &quot;);
-        for (int i : this.integers) {
-            System.out.print(i + &quot;, &quot;);
+<span class="nc" id="L198">        System.out.println(&quot;\n &quot; + message + &quot; &quot;);</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">        for (int i : this.integers) {</span>
+<span class="nc" id="L200">            System.out.print(i + &quot;, &quot;);</span>
         }
-        System.out.println(&quot;\n&quot;);
-    }
-    */
+<span class="nc" id="L202">        System.out.println(&quot;\n&quot;);</span>
+<span class="nc" id="L203">    }</span>
+    
  }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,15 +1,191 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="8.27">
 <file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\test\java\locationallocation\TestCombinations.java">
+<error line="6" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="8" column="30" severity="error" message="&apos;{&apos; is not preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck"/>
+<error line="12" column="27" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="12" column="30" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="12" column="32" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="12" column="33" severity="error" message="&apos;3&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="13" column="54" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="15" column="13" severity="error" message="&apos;int&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="16" column="14" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="17" column="13" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="17" column="13" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="17" column="14" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="18" column="13" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="18" column="13" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="18" column="14" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="21" column="64" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
 </file>
 <file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\test\java\locationallocation\TestDistanceMatrix.java">
+<error line="3" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - locationallocation.Utils.DistanceMatrix.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="7" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="13" column="40" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="13" column="56" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="13" column="74" severity="error" message="&apos;5&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="13" column="75" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="13" column="76" severity="error" message="&apos;9&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="13" column="79" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="13" column="95" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="13" column="96" severity="error" message="&apos;4&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="13" column="114" severity="error" message="&apos;11&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="13" column="116" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="13" column="117" severity="error" message="&apos;3&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="14" column="40" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="14" column="55" severity="error" message="&apos;7&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="14" column="56" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="14" column="57" severity="error" message="&apos;11&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="14" column="76" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="14" column="77" severity="error" message="&apos;8&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="14" column="80" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="14" column="95" severity="error" message="&apos;7&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="14" column="96" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="14" column="97" severity="error" message="&apos;3&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="20" column="12" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="20" column="14" severity="error" message="&apos;11.6619037896906&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="20" column="32" severity="error" message="&apos;7.07106781186548&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="20" column="50" severity="error" message="&apos;6.32455532033676&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="21" column="12" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="21" column="14" severity="error" message="&apos;2.82842712474619&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="21" column="30" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="21" column="31" severity="error" message="&apos;3.16227766016838&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="21" column="47" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="21" column="48" severity="error" message="&apos;6.32455532033676&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="22" column="12" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="22" column="14" severity="error" message="&apos;8.60232526704263&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="22" column="30" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="22" column="31" severity="error" message="&apos;4&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="22" column="32" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="22" column="33" severity="error" message="&apos;5.09901951359278&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="23" column="12" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="23" column="14" severity="error" message="&apos;8.94427190999916&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="23" column="30" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="23" column="31" severity="error" message="&apos;10.295630140987&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="23" column="46" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="23" column="47" severity="error" message="&apos;4&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="26" column="35" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="27" column="35" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="27" column="49" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="29" column="89" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="29" column="108" severity="error" message="&apos;)&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.ParenPadCheck"/>
+<error line="31" column="25" severity="error" message="&apos;;&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="32" column="86" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="32" column="98" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="32" column="100" severity="error" message="&apos;0.0001&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="32" column="107" severity="error" message="&apos;)&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.ParenPadCheck"/>
 </file>
 <file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\test\java\locationallocation\TestIntegerSet.java">
+<error line="11" column="25" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="11" column="27" severity="error" message="&apos;11&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="11" column="31" severity="error" message="&apos;22&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="11" column="35" severity="error" message="&apos;33&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="11" column="39" severity="error" message="&apos;44&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="11" column="43" severity="error" message="&apos;55&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="11" column="47" severity="error" message="&apos;66&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="11" column="51" severity="error" message="&apos;77&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="11" column="55" severity="error" message="&apos;88&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="16" column="17" severity="error" message="&apos;99&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="18" column="57" severity="error" message="&apos;99&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="19" column="58" severity="error" message="&apos;999&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="20" column="20" severity="error" message="&apos;11&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="21" column="58" severity="error" message="&apos;11&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="23" column="67" severity="error" message="&apos;22&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="25" column="68" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
 </file>
 <file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\test\java\locationallocation\TestLocation.java">
+<error line="6" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="11" column="27" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="11" column="29" severity="error" message="&apos;1.2&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="11" column="34" severity="error" message="&apos;9.7&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="13" column="55" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="17" column="69" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="17" column="101" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="17" column="103" severity="error" message="&apos;0.0001&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="17" column="110" severity="error" message="&apos;)&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.ParenPadCheck"/>
+<error line="18" column="46" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="18" column="57" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="18" column="79" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="18" column="81" severity="error" message="&apos;0.0001&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="18" column="88" severity="error" message="&apos;)&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.ParenPadCheck"/>
+<error line="19" column="46" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="19" column="57" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="19" column="79" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="19" column="81" severity="error" message="&apos;0.0001&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="19" column="88" severity="error" message="&apos;)&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.ParenPadCheck"/>
 </file>
 <file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\test\java\locationallocation\TestNaive.java">
+<error line="3" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - locationallocation.Utils.DistanceMatrix.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="6" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - locationallocation.Naive.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="9" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="15" column="40" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="15" column="56" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="15" column="74" severity="error" message="&apos;5&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="15" column="75" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="15" column="76" severity="error" message="&apos;9&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="15" column="79" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="15" column="95" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="15" column="96" severity="error" message="&apos;4&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="15" column="114" severity="error" message="&apos;11&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="15" column="116" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="15" column="117" severity="error" message="&apos;3&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="16" column="40" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="16" column="55" severity="error" message="&apos;7&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="16" column="56" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="16" column="57" severity="error" message="&apos;11&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="16" column="76" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="16" column="77" severity="error" message="&apos;8&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="16" column="80" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="16" column="95" severity="error" message="&apos;7&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="16" column="96" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="16" column="97" severity="error" message="&apos;3&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="21" severity="error" message="Comment matches to-do format &apos;TODO:&apos;." source="com.puppycrawl.tools.checkstyle.checks.TodoCommentCheck"/>
+<error line="21" column="32" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="21" column="35" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="21" column="36" severity="error" message="&apos;3&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="23" column="100" severity="error" message="&apos;)&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.ParenPadCheck"/>
 </file>
 <file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\test\java\locationallocation\TestTeitzBart.java">
+<error line="3" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - locationallocation.Utils.DistanceMatrix.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="6" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - locationallocation.TeitzBart.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="10" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - org.junit.Assert.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<error line="16" column="40" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="16" column="56" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="16" column="74" severity="error" message="&apos;5&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="16" column="75" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="16" column="76" severity="error" message="&apos;9&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="16" column="79" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="16" column="95" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="16" column="96" severity="error" message="&apos;4&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="16" column="114" severity="error" message="&apos;11&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="16" column="116" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="16" column="117" severity="error" message="&apos;3&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="17" column="40" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="17" column="55" severity="error" message="&apos;7&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="17" column="56" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="17" column="57" severity="error" message="&apos;11&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="17" column="76" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="17" column="77" severity="error" message="&apos;8&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="17" column="80" severity="error" message="&apos;,&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+<error line="17" column="95" severity="error" message="&apos;7&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="17" column="96" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="17" column="97" severity="error" message="&apos;3&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="22" severity="error" message="Comment matches to-do format &apos;TODO:&apos;." source="com.puppycrawl.tools.checkstyle.checks.TodoCommentCheck"/>
+<error line="22" column="32" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="22" column="34" severity="error" message="&apos;3&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="22" column="35" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="24" column="107" severity="error" message="&apos;)&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.ParenPadCheck"/>
+<error line="28" column="64" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="32" column="66" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="36" column="95" severity="error" message="&apos;)&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.ParenPadCheck"/>
+<error line="38" severity="error" message="Comment matches to-do format &apos;TODO:&apos;." source="com.puppycrawl.tools.checkstyle.checks.TodoCommentCheck"/>
+<error line="38" column="33" severity="error" message="&apos;{&apos; is followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck"/>
+<error line="38" column="35" severity="error" message="&apos;18&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="38" column="37" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="38" column="38" severity="error" message="&apos;8&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="38" column="39" severity="error" message="&apos;,&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+<error line="38" column="40" severity="error" message="&apos;4&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="40" column="98" severity="error" message="&apos;3&apos; is a magic number." source="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck"/>
+<error line="40" column="109" severity="error" message="&apos;)&apos; is preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.ParenPadCheck"/>
 </file>
 </checkstyle>
