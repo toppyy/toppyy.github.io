@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NaiveOLD.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation</a> &gt; <span class="el_source">NaiveOLD.java</span></div><h1>NaiveOLD.java</h1><pre class="source lang-java linenums">/**
+ * Naive/brute force solution for the p-median problem.
+ *  - Minimize distance by going through all possible combinatios
+ */
+package locationallocation;
+
+import static locationallocation.Utils.Combinations.createCombinations;
+import static locationallocation.Utils.DistanceMatrix.sumOfDistanceMatrixMiminumRowset;
+
+public final class NaiveOLD {
+
+    private NaiveOLD() {
+        
+    }
+  
+
+     /** 
+     * Returns the optimal set of facility locations based on demand.
+     * 
+     * @param pn Number of facilities to Allocate
+     * @param distanceMatrix distancematrix that holds distances between facilities and demand locations. Row = facility location.
+     * @return int[] Array of facility location indices
+     */
+    public static int[] solveNaive(final int pn, final double[][] distanceMatrix) {
+
+
+<span class="nc" id="L27">        double  currentMinimum = Double.MAX_VALUE, toTestAgainst;</span>
+<span class="nc" id="L28">        int     indexOfCurrentMinimum = 0;</span>
+
+        // Create all possible combinations of facilities of size pn
+<span class="nc" id="L31">        int[] m = new int[distanceMatrix.length];</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        for (int i = 0; i &lt; m.length; i++) {</span>
+<span class="nc" id="L33">            m[i] = i + 1;</span>
+        }
+<span class="nc" id="L35">        int[][] combinations = createCombinations(m, pn);</span>
+
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        for (int i = 0; i &lt; combinations.length; i++) {</span>
+<span class="nc" id="L38">            toTestAgainst = sumOfDistanceMatrixMiminumRowset(combinations[i], distanceMatrix);</span>
+
+<span class="nc bnc" id="L40" title="All 2 branches missed.">            if (toTestAgainst &lt; currentMinimum) {</span>
+<span class="nc" id="L41">                currentMinimum = toTestAgainst;</span>
+<span class="nc" id="L42">                indexOfCurrentMinimum = i;</span>
+            }
+
+        }
+<span class="nc" id="L46">        System.out.println(&quot;Naive solution: &quot; + currentMinimum);</span>
+<span class="nc" id="L47">        return combinations[indexOfCurrentMinimum];</span>
+
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CostMatrix.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation.Utils</a> &gt; <span class="el_source">CostMatrix.java</span></div><h1>CostMatrix.java</h1><pre class="source lang-java linenums">/*
+*   Creates a cost matrix
+*/
+
+
+package locationallocation.Utils;
+
+public final class CostMatrix {
+
+    /**
+     * Holds the matrix.
+     */
+    private double[][] costs;
+
+<span class="fc" id="L15">    public CostMatrix() {</span>
+
+<span class="fc" id="L17">    }</span>
+
+    /**
+     * Calculates euclidean distance between two Locations.
+     * @param a Location
+     * @param b Another Location
+     * @return Euclidean distance
+    */
+
+    private double calculateEuclideanDistance(final Location a, final Location b) {
+<span class="fc" id="L27">        return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));</span>
+    }
+
+    /**
+     * Calculates a cost matrix for given sets of locations.
+     * @param setA A set of locations
+     * @param setB A set of locations
+     */
+    public void calculateDistanceMatrix(final Location[] setA, final Location[] setB) {
+
+<span class="fc" id="L37">        double[][] dist = new double[setA.length][setB.length];</span>
+
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        for (int idxA = 0; idxA &lt; setA.length; idxA++) {</span>
+
+<span class="fc bfc" id="L41" title="All 2 branches covered.">            for (int idxB = 0; idxB &lt; setB.length; idxB++) {</span>
+            
+<span class="fc" id="L43">                dist[idxA][idxB]  = this.calculateEuclideanDistance(setA[idxA], setB[idxB]);</span>
+
+            }
+        }
+
+<span class="fc" id="L48">        this.costs = dist;</span>
+
+<span class="fc" id="L50">    }</span>
+
+    /** 
+     * Returns the sum of costs for a given set of rows given as a IntegerSet.
+     * For each row, the minumum cost is chosen.
+     * 
+     * @param rowset set of rows for which to find sum of minimums of costs.
+     * @return double
+     */
+    public double costSumForRowset(final IntegerSet rowset) {
+<span class="fc" id="L60">        return this.costSumForRowset(rowset.getIntegers());</span>
+    }
+
+    /** 
+     * Returns the sum of costs for a given set of rows.
+     * For each row, the minumum cost is chosen.
+     * 
+     * @param rowset set of rows for which to find sum of minimums of costs.
+     * @return double
+     */
+    public double costSumForRowset(final int[] rowset) {
+        
+<span class="fc" id="L72">        double rtrn = 0, minTmp, tmp;</span>
+
+        
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        for (int col = 0; col &lt; this.costs[0].length; col++) {</span>
+        
+<span class="fc" id="L77">            minTmp = Double.MAX_VALUE;</span>
+
+<span class="fc bfc" id="L79" title="All 2 branches covered.">            for (int row : rowset) {</span>
+
+<span class="fc" id="L81">                tmp = this.costs[row][col];</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">                if (tmp &lt; minTmp) {</span>
+<span class="fc" id="L83">                    minTmp = tmp;</span>
+                }
+            }
+<span class="fc" id="L86">            rtrn += minTmp;</span>
+            
+        }
+
+<span class="fc" id="L90">        return rtrn;</span>
+    }
+    /**
+     * Getter for cost matrix.
+     * @return cost matrix.
+     */
+    public double[][] getCosts() {
+<span class="fc" id="L97">        return this.costs;</span>
+    }
+    /**
+     * Setter for cost matrix.
+     * @param costsInput cost matrix.
+     */
+    public void setCosts(final double[][] costsInput) {
+<span class="nc" id="L104">        this.costs = costsInput;</span>
+<span class="nc" id="L105">    }</span>
+
+    /**
+     * Getter for row count.
+     * @return Row count of matrix.
+     */
+    public int getRowCount() {
+<span class="fc" id="L112">        return this.costs.length;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="8.27">
-<file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\main\java\locationallocation\App.java">
+<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/App.java">
 </file>
-<file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\main\java\locationallocation\GRIA.java">
+<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/GRIA.java">
 </file>
-<file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\main\java\locationallocation\Naive.java">
+<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/Naive.java">
 </file>
-<file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\main\java\locationallocation\TeitzBart.java">
+<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/Solver.java">
 </file>
-<file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\main\java\locationallocation\Utils\Combinations.java">
+<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/TeitzBart.java">
 </file>
-<file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\main\java\locationallocation\Utils\DistanceMatrix.java">
+<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/Utils/Combinations.java">
 </file>
-<file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\main\java\locationallocation\Utils\IntegerSet.java">
+<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/Utils/CostMatrix.java">
 </file>
-<file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\main\java\locationallocation\Utils\Location.java">
+<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/Utils/IntegerSet.java">
 </file>
-<file name="C:\Users\Omistaja\Desktop\HY\Kurssit\Tiralabra\locationallocation\locationallocation\src\main\java\locationallocation\Utils\LocationLoader.java">
+<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/Utils/Location.java">
+</file>
+<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/Utils/LocationLoader.java">
 </file>
 </checkstyle>
