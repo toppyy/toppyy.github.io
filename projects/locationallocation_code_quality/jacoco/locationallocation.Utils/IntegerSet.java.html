@@ -19,10 +19,10 @@
 <span class="fc" id="L19">        this.integers = initialObjects;</span>
 <span class="fc" id="L20">        this.setSize = initialObjects.length;</span>
 <span class="fc" id="L21">    }</span>
-<span class="nc" id="L22">    public IntegerSet(final IntegerSet initialObjects) {</span>
-<span class="nc" id="L23">        this.integers = initialObjects.getIntegers(); // Get as int[]</span>
-<span class="nc" id="L24">        this.setSize = this.integers.length;</span>
-<span class="nc" id="L25">    }</span>
+<span class="fc" id="L22">    public IntegerSet(final IntegerSet initialObjects) {</span>
+<span class="fc" id="L23">        this.integers = initialObjects.getIntegers(); // Get as int[]</span>
+<span class="fc" id="L24">        this.setSize = this.integers.length;</span>
+<span class="fc" id="L25">    }</span>
 
     /**
      * Get set size.
@@ -176,21 +176,6 @@
 <span class="fc" id="L176">        return rtrn;</span>
     }
 
-    
-    /** 
-     * Check if an integer is in set.
-     * 
-     * @param toBeSearched integer to search
-     * @return boolean true if integer is in set, false if not
-     */
-    public boolean inSet(final int toBeSearched) {
-<span class="fc bfc" id="L187" title="All 2 branches covered.">        for (int i : this.integers) {</span>
-<span class="fc bfc" id="L188" title="All 2 branches covered.">            if (toBeSearched == i) {</span>
-<span class="fc" id="L189">                return true;</span>
-            }
-        }
-<span class="fc" id="L192">        return false;</span>
-    }
 
     
     /** 
@@ -199,12 +184,12 @@
      */
     
     public void print(final String message) {
-<span class="nc" id="L202">        System.out.println(&quot;\n &quot; + message + &quot; &quot;);</span>
-<span class="nc bnc" id="L203" title="All 2 branches missed.">        for (int i : this.integers) {</span>
-<span class="nc" id="L204">            System.out.print(i + &quot;, &quot;);</span>
+<span class="nc" id="L187">        System.out.println(&quot;\n &quot; + message + &quot; &quot;);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">        for (int i : this.integers) {</span>
+<span class="nc" id="L189">            System.out.print(i + &quot;, &quot;);</span>
         }
-<span class="nc" id="L206">        System.out.println(&quot;\n&quot;);</span>
-<span class="nc" id="L207">    }</span>
+<span class="nc" id="L191">        System.out.println(&quot;\n&quot;);</span>
+<span class="nc" id="L192">    }</span>
     
  }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

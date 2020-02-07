@@ -51,48 +51,53 @@ public class TeitzBart extends Solver {
         }
 
 
-<span class="fc" id="L54">        IntegerSet solutions = new IntegerSet(initialSet);</span>
+<span class="fc" id="L54">        IntegerSet solutions  = new IntegerSet(initialSet);</span>
 <span class="fc" id="L55">        IntegerSet candidates = new IntegerSet(initialCandidates);</span>
         
 <span class="fc" id="L57">        double minOfTests = Double.MAX_VALUE, testsum;</span>
 <span class="fc" id="L58">        int toBeReplaced = -1;</span>
 
 
-<span class="fc bfc" id="L61" title="All 2 branches covered.">        while (!candidates.isEmpty()) {</span>
+        // For each candidate
+        //  - Replace each facility on solution one by one
+        //  - Find minimum cost
+        //  - If lower than before any replacement, persist change
+
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        while (!candidates.isEmpty()) {</span>
             
         
-<span class="fc" id="L64">            toTestAgainst = costs.costSumForRowset(solutions);</span>
+<span class="fc" id="L69">            toTestAgainst = costs.costSumForRowset(solutions);</span>
 
-<span class="fc" id="L66">            newcandidate = candidates.pop();</span>
+<span class="fc" id="L71">            newcandidate = candidates.pop();</span>
 
-<span class="fc" id="L68">            int[] testSet = solutions.getIntegers();</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">            for (int i = 0; i &lt; testSet.length; i++) {</span>
+<span class="fc" id="L73">            int[] testSet = solutions.getIntegers();</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">            for (int i = 0; i &lt; testSet.length; i++) {</span>
 
 
-<span class="fc" id="L72">                int[] tmp = testSet.clone();</span>
-<span class="fc" id="L73">                tmp[i] = newcandidate;</span>
+<span class="fc" id="L77">                int[] tmp = testSet.clone();</span>
+<span class="fc" id="L78">                tmp[i] = newcandidate;</span>
 
-<span class="fc" id="L75">                testsum = costs.costSumForRowset(tmp);</span>
+<span class="fc" id="L80">                testsum = costs.costSumForRowset(tmp);</span>
                 
-<span class="fc bfc" id="L77" title="All 2 branches covered.">                if (testsum &lt; minOfTests) {</span>
-<span class="fc" id="L78">                    minOfTests      = testsum;</span>
-<span class="fc" id="L79">                    toBeReplaced = testSet[i];</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">                if (testsum &lt; minOfTests) {</span>
+<span class="fc" id="L83">                    minOfTests      = testsum;</span>
+<span class="fc" id="L84">                    toBeReplaced = testSet[i];</span>
                 }
                 
             }
             // If better solution is found, change set 
-<span class="fc bfc" id="L84" title="All 2 branches covered.">            if (minOfTests &lt; toTestAgainst) {</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">            if (minOfTests &lt; toTestAgainst) {</span>
                 
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">                if (solutions.setChange(toBeReplaced, newcandidate)) {</span>
-<span class="fc" id="L87">                    candidates.add(toBeReplaced);</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">                if (solutions.setChange(toBeReplaced, newcandidate)) {</span>
+<span class="fc" id="L92">                    candidates.add(toBeReplaced);</span>
                 }
             }
-<span class="fc" id="L90">        }</span>
+<span class="fc" id="L95">        }</span>
         
-<span class="fc" id="L92">        this.setResultCost(costs.costSumForRowset(solutions));</span>
-<span class="fc" id="L93">        this.setResult(solutions);</span>
+<span class="fc" id="L97">        this.setResultCost(costs.costSumForRowset(solutions));</span>
+<span class="fc" id="L98">        this.setResult(solutions);</span>
 
-<span class="fc" id="L95">       return this.getResult();</span>
+<span class="fc" id="L100">       return this.getResult();</span>
     }
 
 }
