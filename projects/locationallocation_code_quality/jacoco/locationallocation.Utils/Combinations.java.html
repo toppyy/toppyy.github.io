@@ -23,7 +23,10 @@ public final class Combinations {
 <span class="fc" id="L23">        return n * factorial(n - 1);</span>
     }
 
-
+    /**
+     * Initial size of combinations array.
+     */
+    private static final int INITIAL_SIZE = 10000000;
     
     /** 
      * Creates an array of arrays holding all k combinations of &quot;arr&quot;.
@@ -33,72 +36,80 @@ public final class Combinations {
      */
     public static int[][] createCombinations(final int[] arr, final int k) {
 
-<span class="fc" id="L36">        int pit = arr.length;</span>
+<span class="fc" id="L39">        int pit = arr.length;</span>
 
-<span class="fc" id="L38">        long numberOfCombinations = factorial(pit) / (factorial(pit - k) * factorial(k));</span>
+
+<span class="fc" id="L42">        long numberOfCombinations = factorial(pit) / (factorial(pit - k) * factorial(k));</span>
         
-
-<span class="fc" id="L41">        int[][] combinations = new int[(int) numberOfCombinations][]; </span>
-<span class="fc" id="L42">        int[] kt = new int[k]; </span>
-<span class="fc bfc" id="L43" title="All 2 branches covered.">        for (int i = 0; i &lt; k; i++) {</span>
-<span class="fc" id="L44">            kt[i] = i + 1;</span>
+<span class="fc" id="L44">        int[][] combinations = new int[INITIAL_SIZE][]; </span>
+<span class="fc" id="L45">        int[] kt = new int[k]; </span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        for (int i = 0; i &lt; k; i++) {</span>
+<span class="fc" id="L47">            kt[i] = i + 1;</span>
         }
-
-
        
-<span class="fc" id="L49">        int komboCounter = 0, i;</span>
-        boolean updated;
+<span class="fc" id="L50">        int komboCounter = 0, i;</span>
+<span class="fc" id="L51">        boolean updated, notFinished = true;</span>
         
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        while (komboCounter &lt; numberOfCombinations) {</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        while (notFinished) {</span>
             
-<span class="fc" id="L54">            combinations[komboCounter] = kt.clone();</span>
-<span class="fc" id="L55">            komboCounter = komboCounter + 1;</span>
+<span class="fc" id="L55">            combinations[komboCounter] = kt.clone();</span>
+<span class="fc" id="L56">            komboCounter = komboCounter + 1;</span>
 
-<span class="fc bfc" id="L57" title="All 2 branches covered.">            if (komboCounter == numberOfCombinations) {</span>
-<span class="fc" id="L58">                break;</span>
+            // Test if array last and first difference + 1 equals k
+            // True means no other combinations exist
+<span class="fc bfc" id="L60" title="All 6 branches covered.">            if (kt[k - 1] == pit &amp; (kt[k - 1] - kt[0] + 1)  == k) {</span>
+<span class="fc" id="L61">                notFinished = false;</span>
+<span class="fc" id="L62">                break;</span>
             }
 
             
-<span class="fc bfc" id="L62" title="All 2 branches covered.">            if (kt[k - 1] == pit) {</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">            if (kt[k - 1] == pit) {</span>
                 
-<span class="fc" id="L64">                updated = false;</span>
-<span class="fc" id="L65">                i = k - 2;</span>
+<span class="fc" id="L68">                updated = false;</span>
+<span class="fc" id="L69">                i = k - 2;</span>
                 
-<span class="fc bfc" id="L67" title="All 2 branches covered.">                while (!updated) {</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">                while (!updated) {</span>
                 
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">                    if (kt[i + 1] - kt[i] &gt; 1) {</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">                    if (kt[i + 1] - kt[i] &gt; 1) {</span>
                         
-<span class="fc" id="L71">                        kt[i] = kt[i] + 1;</span>
+<span class="fc" id="L75">                        kt[i] = kt[i] + 1;</span>
                     
-<span class="fc bfc" id="L73" title="All 2 branches covered.">                        while (i &lt; (k - 1)) {</span>
-<span class="fc" id="L74">                            i = i + 1;</span>
-<span class="fc" id="L75">                            kt[i] = kt[i - 1] + 1;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">                        while (i &lt; (k - 1)) {</span>
+<span class="fc" id="L78">                            i = i + 1;</span>
+<span class="fc" id="L79">                            kt[i] = kt[i - 1] + 1;</span>
                         }
-<span class="fc" id="L77">                        updated = true;</span>
+<span class="fc" id="L81">                        updated = true;</span>
                         
                     }
                     
-<span class="fc" id="L81">                    i = i - 1;</span>
+<span class="fc" id="L85">                    i = i - 1;</span>
                     
                 }
                 
             } else {
                 
-<span class="fc" id="L87">                kt[k - 1] = kt[k - 1] + 1;</span>
+<span class="fc" id="L91">                kt[k - 1] = kt[k - 1] + 1;</span>
                 
             }
         }
 
-        // Fix this, but: -1 for all elements in all combinations
-<span class="fc bfc" id="L93" title="All 2 branches covered.">        for (int a = 0; a &lt; combinations.length; a++) {</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">            for (int b = 0; b &lt; combinations[0].length; b++) {</span>
-<span class="fc" id="L95">                combinations[a][b] =  combinations[a][b] - 1;</span>
+        // Create an array of the size that was actually needed
+<span class="fc" id="L97">        int[][] combinationsToReturn = new int[komboCounter][]; </span>
+
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        for (int a = 0; a &lt; komboCounter; a++) {</span>
+
+<span class="fc" id="L101">            combinationsToReturn[a] = combinations[a].clone();</span>
+
+<span class="fc bfc" id="L103" title="All 2 branches covered.">            for (int b = 0; b &lt; combinations[0].length; b++) {</span>
+
+                // Fix this, but: -1 for all elements in all combinations for indexing purposes.
+<span class="fc" id="L106">                combinationsToReturn[a][b] =  combinations[a][b] - 1;</span>
             
             }
         }
             
         
-<span class="fc" id="L101">        return combinations;</span>
+<span class="fc" id="L112">        return combinationsToReturn;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

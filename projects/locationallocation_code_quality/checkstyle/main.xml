@@ -2,13 +2,17 @@
 <checkstyle version="8.27">
 <file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/App.java">
 </file>
-<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/GRIA.java">
+<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/Domain/GRIA.java">
 </file>
-<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/Naive.java">
+<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/Domain/Naive.java">
 </file>
-<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/Solver.java">
+<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/Domain/Solver.java">
 </file>
-<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/TeitzBart.java">
+<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/Domain/TeitzBart.java">
+</file>
+<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/Qualitytest/Reporter.java">
+</file>
+<file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/Qualitytest/Testresult.java">
 </file>
 <file name="/home/tob/Documents/HY/tiralabra/locationallocation/locationallocation/src/main/java/locationallocation/Utils/Combinations.java">
 </file>

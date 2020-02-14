@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Naive.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation.Domain</a> &gt; <span class="el_source">Naive.java</span></div><h1>Naive.java</h1><pre class="source lang-java linenums">/**
+ * Naive/brute force solution for the p-median problem.
+ *  - Minimize distance by going through all possible combinatios
+ */
+
+package locationallocation.Domain;
+
+import static locationallocation.Utils.Combinations.createCombinations;
+import locationallocation.Utils.CostMatrix;
+
+public class Naive extends Solver {
+
+
+    /**
+     * Solves the P-median problem with a brute force method.
+     * @param pnInput Number of facilities to allocate
+     * @param costMatrixInput Matrix that holds costs (eg. distances) between facilities and demand locations.
+     */
+    public Naive(final CostMatrix costMatrixInput, final int pnInput) {
+<span class="fc" id="L20">        super(costMatrixInput, pnInput);</span>
+<span class="fc" id="L21">    }</span>
+
+
+     /** 
+     * Returns the optimal set of facility locations based on demand.
+     *
+     * @return int[] Array of facility location indices
+     */
+    public int[] solve() {
+
+
+<span class="fc" id="L32">        double  currentMinimum = Double.MAX_VALUE, toTestAgainst;</span>
+<span class="fc" id="L33">        int     indexOfCurrentMinimum = 0;</span>
+
+<span class="fc" id="L35">        CostMatrix costs = this.getCosts();</span>
+
+        // Create all possible combinations of facilities of size pn
+<span class="fc" id="L38">        int[] m = new int[costs.getRowCount()];</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        for (int i = 0; i &lt; m.length; i++) {</span>
+<span class="fc" id="L40">            m[i] = i + 1;</span>
+        }
+<span class="fc" id="L42">        int[][] combinations = createCombinations(m, this.getP());</span>
+
+
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        for (int i = 0; i &lt; combinations.length; i++) {</span>
+<span class="fc" id="L46">            toTestAgainst = costs.costSumForRowset(combinations[i]);</span>
+
+<span class="fc bfc" id="L48" title="All 2 branches covered.">            if (toTestAgainst &lt; currentMinimum) {</span>
+<span class="fc" id="L49">                currentMinimum = toTestAgainst;</span>
+<span class="fc" id="L50">                indexOfCurrentMinimum = i;</span>
+            }
+
+        }
+<span class="fc" id="L54">        this.setResultCost(currentMinimum);</span>
+<span class="fc" id="L55">        this.setResult(combinations[indexOfCurrentMinimum]);</span>
+
+<span class="fc" id="L57">        return this.getResult();</span>
+
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

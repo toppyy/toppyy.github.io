@@ -24,9 +24,9 @@ public final class Writer {
      * @throws IOException Output error
      */
 
-<span class="fc" id="L27">    public Writer(final String pathInput) throws IOException {</span>
-<span class="fc" id="L28">        this.fileWriter = new FileWriter(pathInput);</span>
-<span class="fc" id="L29">    }</span>
+<span class="nc" id="L27">    public Writer(final String pathInput) throws IOException {</span>
+<span class="nc" id="L28">        this.fileWriter = new FileWriter(pathInput);</span>
+<span class="nc" id="L29">    }</span>
 
     /**
      * Writes an array of strings to given path.
@@ -36,16 +36,16 @@ public final class Writer {
 
     public void write(final String st) throws IOException  {
         
-<span class="fc" id="L39">        this.fileWriter.write(st);</span>
+<span class="nc" id="L39">        this.fileWriter.write(st);</span>
         
-<span class="fc" id="L41">    }</span>
+<span class="nc" id="L41">    }</span>
     /**
      * Close connection to file.
      * @throws IOException Output error
      */
 
     public void close() throws IOException {
-<span class="fc" id="L48">        this.fileWriter.close();</span>
-<span class="fc" id="L49">    }</span>
+<span class="nc" id="L48">        this.fileWriter.close();</span>
+<span class="nc" id="L49">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

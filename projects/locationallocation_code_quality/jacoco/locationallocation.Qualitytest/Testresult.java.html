@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Testresult.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation.Qualitytest</a> &gt; <span class="el_source">Testresult.java</span></div><h1>Testresult.java</h1><pre class="source lang-java linenums">package locationallocation.Qualitytest;
+
+
+public class Testresult {
+
+
+    /**
+     * Inputs.
+     */
+    private int p, candidates, demandlocations;
+
+    /**
+     * Cost.
+     */
+    private double cost;
+
+    /**
+     * Runtime.
+     */
+    private long timeElapsed;
+
+    /**
+     * Input strings.
+     */
+    private String algorithmName;
+
+    /**
+     * Test result. Holds test results.
+     * @param pInput Number of facilities to allocate in test.
+     * @param candidatesInput Number of candidates in test.
+     * @param demandlocationsInput Number of demand locations in test.
+     * @param costInput Cost for solution.
+     * @param timeElapsedInput Run time of solution.
+     * @param algorithmNameInput Name/abbrevation of tested algorithm.
+     */
+
+<span class="fc" id="L37">    public Testresult(final int pInput, final int candidatesInput, final int demandlocationsInput, final double costInput, final long timeElapsedInput, final String algorithmNameInput) {</span>
+
+<span class="fc" id="L39">        this.p = pInput;</span>
+<span class="fc" id="L40">        this.candidates = candidatesInput;</span>
+<span class="fc" id="L41">        this.demandlocations = demandlocationsInput;</span>
+<span class="fc" id="L42">        this.cost = costInput;</span>
+<span class="fc" id="L43">        this.timeElapsed = timeElapsedInput;</span>
+<span class="fc" id="L44">        this.algorithmName = algorithmNameInput;</span>
+
+<span class="fc" id="L46">    }</span>
+
+
+
+    /**
+     * Returns the test result in a String form. String contains results separated by &quot;;&quot;.s
+     * @return String Test results separated by &quot;;&quot;.
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L56">        return this.p + &quot;;&quot; + this.candidates + &quot;;&quot; + this.demandlocations + &quot;;&quot; + this.cost + &quot;;&quot; + this.timeElapsed + &quot;;&quot; + this.algorithmName;</span>
+
+    }
+
+
+    /**
+     * Getter for P.
+     * @return P.
+     */
+    public int getP() {
+<span class="fc" id="L66">        return this.p;</span>
+    }
+
+    /**
+     * Getter for candidates.
+     * @return candidates.
+     */
+    public int getCandidates() {
+<span class="fc" id="L74">        return this.candidates;</span>
+    }
+
+    /**
+     * Getter for demandlocations.
+     * @return demandlocations.
+     */
+    public int getDemandlocations() {
+<span class="fc" id="L82">        return this.demandlocations;</span>
+    }
+
+
+    /**
+     * Getter for cost.
+     * @return cost.
+     */
+    public double getCost() {
+<span class="fc" id="L91">        return this.cost;</span>
+    }
+
+    /**
+     * Getter for time elapsed.
+     * @return Time elapsed.
+     */
+    public long getTimeElapsed() {
+<span class="fc" id="L99">        return this.timeElapsed;</span>
+    }
+
+     /**
+     * Getter for algorithm.
+     * @return Algorithm.
+     */
+    public String getAlgorithmName() {
+<span class="fc" id="L107">        return this.algorithmName;</span>
+    }
+
+
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

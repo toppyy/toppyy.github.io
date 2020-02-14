@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Reporter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation.Qualitytest</a> &gt; <span class="el_source">Reporter.java</span></div><h1>Reporter.java</h1><pre class="source lang-java linenums">package locationallocation.Qualitytest;
+
+import locationallocation.Utils.CostMatrix;
+import locationallocation.Utils.Location;
+import locationallocation.Utils.Writer;
+
+import java.util.Random;
+import java.io.IOException;
+
+import locationallocation.Domain.GRIA;
+import locationallocation.Domain.Naive;
+import locationallocation.Domain.Solver;
+import locationallocation.Domain.TeitzBart;
+
+
+
+
+public class Reporter {
+
+    /**
+     * Bunds for values of P to be tested.
+     */
+    private int[] pLimits;
+
+    /**
+     * Cost matrix to test against.
+     */
+    private CostMatrix costs;
+
+    /**
+     * Candidate facilities.
+     */
+    private Location[] facilities;
+
+
+    /**
+     * Random number generation.
+     */
+    private Random random;
+
+    /**
+     * Test results as a set of strings for writing to a flatfile.
+     */
+    private Testresult[] results;
+
+    /**
+     * Number of candidate facilities and demand locations.
+     */
+    private int candidates, demandlocations;
+
+    /**
+     * Writes data on performance and quality.
+     */
+<span class="fc" id="L54">    public Reporter() {</span>
+
+<span class="fc" id="L56">        int[] defaultPlimits = {2};</span>
+<span class="fc" id="L57">        this.pLimits    = defaultPlimits;</span>
+<span class="fc" id="L58">        this.random = new Random();</span>
+        
+<span class="fc" id="L60">    }</span>
+
+    /**
+     * Create a random number between a specific range.
+     * @return A random number.
+     */
+
+    private double randomNumber() {
+<span class="fc" id="L68">        double rangeMin = 1;</span>
+<span class="fc" id="L69">        double rangeMax = 200;</span>
+
+<span class="fc" id="L71">        return rangeMin + (rangeMax - rangeMin) * this.random.nextDouble();</span>
+
+    }
+
+    /**
+     * Test setup. Create a random problem of given size.
+     */
+    private void init() {
+
+<span class="fc" id="L80">        Location[] testLocations1    = new Location[this.candidates];</span>
+<span class="fc" id="L81">        Location[] testLocations2    = new Location[this.demandlocations];</span>
+
+<span class="fc" id="L83">        this.facilities = testLocations1; // GRIA needs these.</span>
+
+
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (int i = 0; i &lt; candidates; i++) {</span>
+<span class="fc" id="L87">            testLocations1[i] = new Location(this.randomNumber(), this.randomNumber());</span>
+        }
+
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        for (int i = 0; i &lt; demandlocations; i++) {</span>
+<span class="fc" id="L91">            testLocations2[i] = new Location(this.randomNumber(), this.randomNumber());</span>
+        }
+      
+        // Calculate distance matrix
+<span class="fc" id="L95">        CostMatrix costsOfRandom = new CostMatrix(testLocations1, testLocations2);</span>
+
+<span class="fc" id="L97">        this.costs = costsOfRandom;</span>
+
+<span class="fc" id="L99">    }</span>
+
+    /**
+     * Runs a single test for given parameters.
+     * @param p P.
+     * @param algorithmName Name of algorithm to test.
+     * @return String containting test info.
+     */
+    private Testresult runTest(final int p, final String algorithmName) {
+
+<span class="fc" id="L109">        Solver a = new Naive(costs, p);</span>
+        
+<span class="fc bfc" id="L111" title="All 2 branches covered.">        if (algorithmName == &quot;TB&quot;) {</span>
+<span class="fc" id="L112">            a = new TeitzBart(costs, p);</span>
+        } 
+        
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        if (algorithmName == &quot;GRIA&quot;) {</span>
+<span class="fc" id="L116">            a = new GRIA(costs, p, this.facilities);</span>
+        }
+        
+<span class="fc" id="L119">        long startTime = System.currentTimeMillis();</span>
+<span class="fc" id="L120">        a.solve();</span>
+<span class="fc" id="L121">        long endTime = System.currentTimeMillis();</span>
+<span class="fc" id="L122">		long timeElapsed = (endTime - startTime);</span>
+
+<span class="fc" id="L124">        return new Testresult(p, this.candidates, this.demandlocations, a.getResultCost(), timeElapsed, algorithmName);</span>
+
+        //return p + &quot;;&quot; + this.candidates + &quot;;&quot; + this.demandlocations + &quot;;&quot; + a.getResultCost() + &quot;;&quot; + timeElapsed + &quot;;&quot; + algorithmName;
+
+    }
+
+    
+    /**
+     * Runs test for specified algorithm.
+     * @param algorithmsToTest Names of algorithm to test. Can be one of three: TB, GRIA or Naive.  
+     * @param candidatesInput Number of candidates.
+     * @param demandlocationsInput Number of demandlocations.
+     * @param iterationsInput How many times to run the tests.
+     * @return Testresult[] A set of strings containing test results in a 
+     */
+    public Testresult[] runTests(final String[] algorithmsToTest, final int candidatesInput, final int demandlocationsInput,  final int iterationsInput) {
+
+
+<span class="fc" id="L142">        int start = this.pLimits[0];</span>
+<span class="fc" id="L143">        int end   = this.pLimits[1];</span>
+
+<span class="fc" id="L145">        this.candidates = candidatesInput;</span>
+<span class="fc" id="L146">        this.demandlocations = demandlocationsInput;</span>
+
+       
+
+<span class="fc" id="L150">        int idx = 0;</span>
+
+        // +1 to end to make it inclusive
+<span class="fc" id="L153">        Testresult[] testResults   = new Testresult[((1 + end) - start) * iterationsInput * algorithmsToTest.length];</span>
+
+        // For each P between start - end
+        // Solve with each algorithm as many times as requested(=iterations)
+        // Create a new random problem for each iteration
+
+<span class="fc bfc" id="L159" title="All 2 branches covered.">        for (int i = start; i &lt;= end; i++) {</span>
+
+<span class="fc" id="L161">            int iterations = iterationsInput;</span>
+            
+<span class="fc bfc" id="L163" title="All 2 branches covered.">            while (iterations &gt; 0) {</span>
+<span class="fc" id="L164">                this.init();</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">                for (String algorithmName : algorithmsToTest) {</span>
+<span class="fc" id="L166">                    testResults[idx]   = this.runTest(i, algorithmName);</span>
+<span class="fc" id="L167">                    idx++;</span>
+                }
+<span class="fc" id="L169">                iterations--;</span>
+            
+            }
+        }
+
+<span class="fc" id="L174">        this.results = testResults;</span>
+<span class="fc" id="L175">        return testResults;</span>
+    }
+
+    /**
+     * Write results to a flatfile.
+     * @param outputpathInput Path (inc. filename) of file to write results to.
+    */
+    public void writeResults(final String outputpathInput) {
+       
+        try {
+<span class="nc" id="L185">            String filename = outputpathInput;</span>
+<span class="nc" id="L186">            Writer w = new Writer(filename);</span>
+           
+<span class="nc bnc" id="L188" title="All 2 branches missed.">            for (Testresult s : this.results) {</span>
+                
+<span class="nc" id="L190">                w.write(s.toString() + &quot;\n&quot;);</span>
+              
+            }
+
+<span class="nc" id="L194">            w.close();</span>
+<span class="nc" id="L195">            System.out.println(&quot;Wrote results to: &quot; + filename);</span>
+
+<span class="nc" id="L197">        } catch (IOException e) { </span>
+      
+<span class="nc" id="L199">          System.out.println(&quot;Problem with writing the results&quot;);</span>
+<span class="nc" id="L200">          e.printStackTrace(); </span>
+          
+          
+<span class="nc" id="L203">        } </span>
+<span class="nc" id="L204">    }</span>
+
+
+
+    /**
+    * Setter for P-limits.
+    * @param pLimitsInput P-limits. An array of two integers, [start, end]. Tests are run from start to end.
+    */
+
+    public void setPlimits(final int[] pLimitsInput) {
+<span class="fc" id="L214">        this.pLimits = pLimitsInput;</span>
+<span class="fc" id="L215">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
