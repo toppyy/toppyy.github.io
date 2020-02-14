@@ -182,10 +182,18 @@ summary {
 
 
 <p><br></p>
+<p>Both GRIA and TeitzBart are tested on the following topics:</p>
+<ul>
+<li>Performance<br />
+</li>
+<li>Solution quality</li>
+</ul>
+<p>The motivation for the first part is self-evident. The “quality” of the solution demands some explanation. It is tested due to the fact that neither algorithm is guaranteed to provide an optimal solution. However, both are said to provide “good results”. The quality is tested by calculating the difference in cost to an optimal solution.</p>
+<p>(See <a href="https://link.springer.com/article/10.1007/BF01434270">this article</a> for description of the problem and algorithms) <br> <br></p>
 <div id="test-info" class="section level4">
 <h4><strong>Test info</strong></h4>
 <p>All algorithms were tested on the same data that consisted of a varying number of possible facility locations and demand locations.</p>
-<p>The coordinates of locations are random double numbers ranging from 1 to 200. These were created with <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html">Java’s Random-class</a>. <br> <br> (See <a href="https://link.springer.com/article/10.1007/BF01434270">this article</a> for description of the problem and algorithms) <br></p>
+<p>The coordinates of locations are random double numbers ranging from 1 to 200. These were created with <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html">Java’s Random-class</a>. <br> <br></p>
 </div>
 <div id="smaller-tests-brute-force-vs.gria-vs.teitzbart" class="section level3">
 <h3><strong>1. Smaller tests: Brute force vs. GRIA vs. TeitzBart</strong></h3>
@@ -402,7 +410,7 @@ summary {
 </tr>
 </tbody>
 </table>
-<p><br> <br> <br> <br></p>
+<p><br> <br></p>
 </div>
 </div>
 <div id="bigger-tests-gria-vs.teitzbart" class="section level3">
