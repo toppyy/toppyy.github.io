@@ -16,6 +16,9 @@ import locationallocation.Qualitytest.Reporter;
 import locationallocation.Qualitytest.Testresult;
 
 
+
+
+
 public final class App {
 
     private App() {
@@ -28,49 +31,51 @@ public final class App {
 
     public static void main(final String[] args) {
 
-<span class="nc" id="L31">        String path = &quot;src/test/resources/testdata_1_demand_locations.csv&quot;;</span>
-<span class="nc" id="L32">        LocationLoader testdataDemand = new LocationLoader(path, true);</span>
-<span class="nc" id="L33">        Location[] testDemandLocations = testdataDemand.loadAsLocations();</span>
+<span class="nc" id="L34">        String path = &quot;src/test/resources/testdata_1_demand_locations.csv&quot;;</span>
+<span class="nc" id="L35">        LocationLoader testdataDemand = new LocationLoader(path, true);</span>
+<span class="nc" id="L36">        Location[] testDemandLocations = testdataDemand.loadAsLocations();</span>
 
-<span class="nc" id="L35">        path = &quot;src/test/resources/testdata_1_facility_locations.csv&quot;;</span>
-<span class="nc" id="L36">        LocationLoader testdataFacility = new LocationLoader(path, true);</span>
-<span class="nc" id="L37">        Location[] testFacilityLocations = testdataFacility.loadAsLocations();</span>
+<span class="nc" id="L38">        path = &quot;src/test/resources/testdata_1_facility_locations.csv&quot;;</span>
+<span class="nc" id="L39">        LocationLoader testdataFacility = new LocationLoader(path, true);</span>
+<span class="nc" id="L40">        Location[] testFacilityLocations = testdataFacility.loadAsLocations();</span>
+
+        
        
         
         // Calculate cost matrix of euclidean distances
-<span class="nc" id="L41">        CostMatrix costs = new CostMatrix(testFacilityLocations, testDemandLocations);</span>
+<span class="nc" id="L46">        CostMatrix costs = new CostMatrix(testFacilityLocations, testDemandLocations);</span>
 
-<span class="nc" id="L43">        TeitzBart teitzbart = new TeitzBart(costs, PN);</span>
-<span class="nc" id="L44">        teitzbart.solve();</span>
-<span class="nc" id="L45">        System.out.println(&quot;\nTeitzBart: &quot;);</span>
-<span class="nc" id="L46">        teitzbart.printResults();</span>
+<span class="nc" id="L48">        TeitzBart teitzbart = new TeitzBart(costs, PN);</span>
+<span class="nc" id="L49">        teitzbart.solve();</span>
+<span class="nc" id="L50">        System.out.println(&quot;\nTeitzBart: &quot;);</span>
+<span class="nc" id="L51">        teitzbart.printResults();</span>
     
-<span class="nc" id="L48">        Naive naive = new Naive(costs, PN);</span>
+<span class="nc" id="L53">        Naive naive = new Naive(costs, PN);</span>
 
-<span class="nc" id="L50">        naive.solve();</span>
-<span class="nc" id="L51">        System.out.println(&quot;\nNaive: &quot;);</span>
-<span class="nc" id="L52">        naive.printResults();</span>
+<span class="nc" id="L55">        naive.solve();</span>
+<span class="nc" id="L56">        System.out.println(&quot;\nNaive: &quot;);</span>
+<span class="nc" id="L57">        naive.printResults();</span>
 
-<span class="nc" id="L54">        GRIA griaSolver = new GRIA(costs, PN, testFacilityLocations);</span>
+<span class="nc" id="L59">        GRIA griaSolver = new GRIA(costs, PN, testFacilityLocations);</span>
 
-<span class="nc" id="L56">        griaSolver.solve();</span>
-<span class="nc" id="L57">        System.out.println(&quot;\nGRIA: &quot;);</span>
-<span class="nc" id="L58">        griaSolver.printResults();</span>
+<span class="nc" id="L61">        griaSolver.solve();</span>
+<span class="nc" id="L62">        System.out.println(&quot;\nGRIA: &quot;);</span>
+<span class="nc" id="L63">        griaSolver.printResults();</span>
         
-
+      
 
         // Test quality and performance
-<span class="nc" id="L63">        System.out.println(&quot;Running tests..&quot;);</span>
+<span class="nc" id="L68">        System.out.println(&quot;Running tests..&quot;);</span>
 
-<span class="nc" id="L65">        Reporter report = new Reporter();</span>
+<span class="nc" id="L70">        Reporter report = new Reporter();</span>
 
         // Large tests
         
-<span class="nc" id="L69">        String[] algorithms = {&quot;TB&quot;, &quot;GRIA&quot;};</span>
-<span class="nc" id="L70">        int[] limits = {2, 25};</span>
+<span class="nc" id="L74">        String[] algorithms = {&quot;TB&quot;, &quot;GRIA&quot;};</span>
+<span class="nc" id="L75">        int[] limits = {2, 25};</span>
 
-<span class="nc" id="L72">        report.setPlimits(limits);</span>
-<span class="nc" id="L73">        Testresult[] largeTests = report.runTests(algorithms, 50, 300, 50);</span>
+<span class="nc" id="L77">        report.setPlimits(limits);</span>
+<span class="nc" id="L78">        Testresult[] largeTests = report.runTests(algorithms, 50, 300, 50);</span>
 
         // Change path!
         //report.writeResults(&quot;/home/large tests with iterations.txt&quot;);
@@ -79,18 +84,18 @@ public final class App {
         // Small tests
 
 
-<span class="nc" id="L82">        String[] algorithmsSmall = {&quot;TB&quot;, &quot;GRIA&quot;, &quot;Naive&quot;};</span>
-<span class="nc" id="L83">        int[] limitsSmall = {2, 5};</span>
+<span class="nc" id="L87">        String[] algorithmsSmall = {&quot;TB&quot;, &quot;GRIA&quot;, &quot;Naive&quot;};</span>
+<span class="nc" id="L88">        int[] limitsSmall = {2, 5};</span>
 
-<span class="nc" id="L85">        report.setPlimits(limitsSmall);</span>
-<span class="nc" id="L86">        Testresult[] smallTests = report.runTests(algorithmsSmall, 10, 300, 10);</span>
+<span class="nc" id="L90">        report.setPlimits(limitsSmall);</span>
+<span class="nc" id="L91">        Testresult[] smallTests = report.runTests(algorithmsSmall, 10, 300, 10);</span>
         // Change path!
         //report.writeResults(&quot;/home/small tests with iterations.txt&quot;);
 
-<span class="nc" id="L90">        System.out.println(&quot;... tests done.&quot;);</span>
-    
+<span class="nc" id="L95">        System.out.println(&quot;... tests done.&quot;);</span>
+       
         
 
-<span class="nc" id="L94">    }</span>
+<span class="nc" id="L99">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

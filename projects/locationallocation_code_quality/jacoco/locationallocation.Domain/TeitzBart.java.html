@@ -1,13 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeitzBart.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation.Domain</a> &gt; <span class="el_source">TeitzBart.java</span></div><h1>TeitzBart.java</h1><pre class="source lang-java linenums">/*
-* An implementation of the Teitz and Bart algorithm.
-* Solves the p-median problem.
-*/
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeitzBart.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation.Domain</a> &gt; <span class="el_source">TeitzBart.java</span></div><h1>TeitzBart.java</h1><pre class="source lang-java linenums">
 
 package locationallocation.Domain;
 
 
 import locationallocation.Utils.IntegerSet;
 import locationallocation.Utils.CostMatrix;
+/**
+* An implementation of the Teitz and Bart algorithm.
+* Solves the p-median problem.
+*/
 
 
 public class TeitzBart extends Solver {
@@ -18,9 +19,9 @@ public class TeitzBart extends Solver {
      * @param costMatrixInput Matrix that holds costs (eg. distances) between facilities and demand locations.
      */
     public TeitzBart(final CostMatrix costMatrixInput, final int pnInput) {
-<span class="fc" id="L21">        super(costMatrixInput, pnInput);</span>
+<span class="fc" id="L22">        super(costMatrixInput, pnInput);</span>
 
-<span class="fc" id="L23">    }</span>
+<span class="fc" id="L24">    }</span>
 
     /** 
      * Returns a set of facilities consired as the &quot;optimal&quot; locations based on demand.
@@ -29,33 +30,33 @@ public class TeitzBart extends Solver {
      */
     public int[] solve() {
 
-<span class="fc" id="L32">        int newcandidate = -1;</span>
+<span class="fc" id="L33">        int newcandidate = -1;</span>
         double toTestAgainst;
 
-<span class="fc" id="L35">        CostMatrix costs = this.getCosts();</span>
-<span class="fc" id="L36">        int pn = this.getP();</span>
+<span class="fc" id="L36">        CostMatrix costs = this.getCosts();</span>
+<span class="fc" id="L37">        int pn = this.getP();</span>
 
 
         // Init with first pn locations
-<span class="fc" id="L40">        int[] initialSet = new int[pn];</span>
-<span class="fc" id="L41">        int[] initialCandidates = new int[costs.getRowCount() - pn];</span>
+<span class="fc" id="L41">        int[] initialSet = new int[pn];</span>
+<span class="fc" id="L42">        int[] initialCandidates = new int[costs.getRowCount() - pn];</span>
 
-<span class="fc" id="L43">        int ci = 0;</span>
-<span class="fc bfc" id="L44" title="All 2 branches covered.">        for (int i = 0; i &lt; costs.getRowCount(); i++) {</span>
-<span class="fc bfc" id="L45" title="All 2 branches covered.">            if (i &lt; pn) {</span>
-<span class="fc" id="L46">                initialSet[i] = i;</span>
+<span class="fc" id="L44">        int ci = 0;</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        for (int i = 0; i &lt; costs.getRowCount(); i++) {</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">            if (i &lt; pn) {</span>
+<span class="fc" id="L47">                initialSet[i] = i;</span>
             } else {
-<span class="fc" id="L48">                initialCandidates[ci] = i;</span>
-<span class="fc" id="L49">                ci++;</span>
+<span class="fc" id="L49">                initialCandidates[ci] = i;</span>
+<span class="fc" id="L50">                ci++;</span>
             }
         }
 
 
-<span class="fc" id="L54">        IntegerSet solutions  = new IntegerSet(initialSet);</span>
-<span class="fc" id="L55">        IntegerSet candidates = new IntegerSet(initialCandidates);</span>
+<span class="fc" id="L55">        IntegerSet solutions  = new IntegerSet(initialSet);</span>
+<span class="fc" id="L56">        IntegerSet candidates = new IntegerSet(initialCandidates);</span>
         
-<span class="fc" id="L57">        double minOfTests = Double.MAX_VALUE, testsum;</span>
-<span class="fc" id="L58">        int toBeReplaced = -1;</span>
+<span class="fc" id="L58">        double minOfTests = Double.MAX_VALUE, testsum;</span>
+<span class="fc" id="L59">        int toBeReplaced = -1;</span>
 
 
         // For each candidate
@@ -63,41 +64,41 @@ public class TeitzBart extends Solver {
         //  - Find minimum cost
         //  - If lower than before any replacement, persist change
 
-<span class="fc bfc" id="L66" title="All 2 branches covered.">        while (!candidates.isEmpty()) {</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        while (!candidates.isEmpty()) {</span>
             
         
-<span class="fc" id="L69">            toTestAgainst = costs.costSumForRowset(solutions);</span>
+<span class="fc" id="L70">            toTestAgainst = costs.costSumForRowset(solutions);</span>
 
-<span class="fc" id="L71">            newcandidate = candidates.pop();</span>
+<span class="fc" id="L72">            newcandidate = candidates.pop();</span>
 
-<span class="fc" id="L73">            int[] testSet = solutions.getIntegers();</span>
-<span class="fc bfc" id="L74" title="All 2 branches covered.">            for (int i = 0; i &lt; testSet.length; i++) {</span>
+<span class="fc" id="L74">            int[] testSet = solutions.getIntegers();</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">            for (int i = 0; i &lt; testSet.length; i++) {</span>
 
 
-<span class="fc" id="L77">                int[] tmp = testSet.clone();</span>
-<span class="fc" id="L78">                tmp[i] = newcandidate;</span>
+<span class="fc" id="L78">                int[] tmp = testSet.clone();</span>
+<span class="fc" id="L79">                tmp[i] = newcandidate;</span>
 
-<span class="fc" id="L80">                testsum = costs.costSumForRowset(tmp);</span>
+<span class="fc" id="L81">                testsum = costs.costSumForRowset(tmp);</span>
                 
-<span class="fc bfc" id="L82" title="All 2 branches covered.">                if (testsum &lt; minOfTests) {</span>
-<span class="fc" id="L83">                    minOfTests      = testsum;</span>
-<span class="fc" id="L84">                    toBeReplaced = testSet[i];</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">                if (testsum &lt; minOfTests) {</span>
+<span class="fc" id="L84">                    minOfTests      = testsum;</span>
+<span class="fc" id="L85">                    toBeReplaced = testSet[i];</span>
                 }
                 
             }
             // If better solution is found, change set 
-<span class="fc bfc" id="L89" title="All 2 branches covered.">            if (minOfTests &lt; toTestAgainst) {</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">            if (minOfTests &lt; toTestAgainst) {</span>
                 
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">                if (solutions.setChange(toBeReplaced, newcandidate)) {</span>
-<span class="fc" id="L92">                    candidates.add(toBeReplaced);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">                if (solutions.setChange(toBeReplaced, newcandidate)) {</span>
+<span class="fc" id="L93">                    candidates.add(toBeReplaced);</span>
                 }
             }
-<span class="fc" id="L95">        }</span>
+<span class="fc" id="L96">        }</span>
         
-<span class="fc" id="L97">        this.setResultCost(costs.costSumForRowset(solutions));</span>
-<span class="fc" id="L98">        this.setResult(solutions);</span>
+<span class="fc" id="L98">        this.setResultCost(costs.costSumForRowset(solutions));</span>
+<span class="fc" id="L99">        this.setResult(solutions);</span>
 
-<span class="fc" id="L100">       return this.getResult();</span>
+<span class="fc" id="L101">       return this.getResult();</span>
     }
 
 }

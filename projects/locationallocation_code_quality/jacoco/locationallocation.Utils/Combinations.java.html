@@ -1,27 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Combinations.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation.Utils</a> &gt; <span class="el_source">Combinations.java</span></div><h1>Combinations.java</h1><pre class="source lang-java linenums">/*
-*   Returns k-sized combinations of a given array
-*/
-
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Combinations.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation.Utils</a> &gt; <span class="el_source">Combinations.java</span></div><h1>Combinations.java</h1><pre class="source lang-java linenums">
 
 package locationallocation.Utils;
+/**
+ *   Returns k-sized combinations of a given array.
+ */
+
 
 public final class Combinations {
    
     private Combinations() {
     }
 
-    
-    /**
-     * Factorial of n.
-     * @param n
-     * @return int
-     */
-    private static long factorial(final long n) {
-<span class="fc bfc" id="L20" title="All 2 branches covered.">        if (n == 1) {</span>
-<span class="fc" id="L21">            return 1;</span>
-        }
-<span class="fc" id="L23">        return n * factorial(n - 1);</span>
-    }
 
     /**
      * Initial size of combinations array.
@@ -36,80 +25,78 @@ public final class Combinations {
      */
     public static int[][] createCombinations(final int[] arr, final int k) {
 
-<span class="fc" id="L39">        int pit = arr.length;</span>
+<span class="fc" id="L28">        int pit = arr.length;</span>
 
-
-<span class="fc" id="L42">        long numberOfCombinations = factorial(pit) / (factorial(pit - k) * factorial(k));</span>
         
-<span class="fc" id="L44">        int[][] combinations = new int[INITIAL_SIZE][]; </span>
-<span class="fc" id="L45">        int[] kt = new int[k]; </span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">        for (int i = 0; i &lt; k; i++) {</span>
-<span class="fc" id="L47">            kt[i] = i + 1;</span>
+<span class="fc" id="L31">        int[][] combinations = new int[INITIAL_SIZE][]; </span>
+<span class="fc" id="L32">        int[] kt = new int[k]; </span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        for (int i = 0; i &lt; k; i++) {</span>
+<span class="fc" id="L34">            kt[i] = i + 1;</span>
         }
        
-<span class="fc" id="L50">        int komboCounter = 0, i;</span>
-<span class="fc" id="L51">        boolean updated, notFinished = true;</span>
+<span class="fc" id="L37">        int komboCounter = 0, i;</span>
+<span class="fc" id="L38">        boolean updated, notFinished = true;</span>
         
-<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        while (notFinished) {</span>
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">        while (notFinished) {</span>
             
-<span class="fc" id="L55">            combinations[komboCounter] = kt.clone();</span>
-<span class="fc" id="L56">            komboCounter = komboCounter + 1;</span>
+<span class="fc" id="L42">            combinations[komboCounter] = kt.clone();</span>
+<span class="fc" id="L43">            komboCounter = komboCounter + 1;</span>
 
             // Test if array last and first difference + 1 equals k
             // True means no other combinations exist
-<span class="fc bfc" id="L60" title="All 6 branches covered.">            if (kt[k - 1] == pit &amp; (kt[k - 1] - kt[0] + 1)  == k) {</span>
-<span class="fc" id="L61">                notFinished = false;</span>
-<span class="fc" id="L62">                break;</span>
+<span class="fc bfc" id="L47" title="All 6 branches covered.">            if (kt[k - 1] == pit &amp; (kt[k - 1] - kt[0] + 1)  == k) {</span>
+<span class="fc" id="L48">                notFinished = false;</span>
+<span class="fc" id="L49">                break;</span>
             }
 
             
-<span class="fc bfc" id="L66" title="All 2 branches covered.">            if (kt[k - 1] == pit) {</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">            if (kt[k - 1] == pit) {</span>
                 
-<span class="fc" id="L68">                updated = false;</span>
-<span class="fc" id="L69">                i = k - 2;</span>
+<span class="fc" id="L55">                updated = false;</span>
+<span class="fc" id="L56">                i = k - 2;</span>
                 
-<span class="fc bfc" id="L71" title="All 2 branches covered.">                while (!updated) {</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">                while (!updated) {</span>
                 
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">                    if (kt[i + 1] - kt[i] &gt; 1) {</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">                    if (kt[i + 1] - kt[i] &gt; 1) {</span>
                         
-<span class="fc" id="L75">                        kt[i] = kt[i] + 1;</span>
+<span class="fc" id="L62">                        kt[i] = kt[i] + 1;</span>
                     
-<span class="fc bfc" id="L77" title="All 2 branches covered.">                        while (i &lt; (k - 1)) {</span>
-<span class="fc" id="L78">                            i = i + 1;</span>
-<span class="fc" id="L79">                            kt[i] = kt[i - 1] + 1;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">                        while (i &lt; (k - 1)) {</span>
+<span class="fc" id="L65">                            i = i + 1;</span>
+<span class="fc" id="L66">                            kt[i] = kt[i - 1] + 1;</span>
                         }
-<span class="fc" id="L81">                        updated = true;</span>
+<span class="fc" id="L68">                        updated = true;</span>
                         
                     }
                     
-<span class="fc" id="L85">                    i = i - 1;</span>
+<span class="fc" id="L72">                    i = i - 1;</span>
                     
                 }
                 
             } else {
                 
-<span class="fc" id="L91">                kt[k - 1] = kt[k - 1] + 1;</span>
+<span class="fc" id="L78">                kt[k - 1] = kt[k - 1] + 1;</span>
                 
             }
         }
 
         // Create an array of the size that was actually needed
-<span class="fc" id="L97">        int[][] combinationsToReturn = new int[komboCounter][]; </span>
+<span class="fc" id="L84">        int[][] combinationsToReturn = new int[komboCounter][]; </span>
 
-<span class="fc bfc" id="L99" title="All 2 branches covered.">        for (int a = 0; a &lt; komboCounter; a++) {</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (int a = 0; a &lt; komboCounter; a++) {</span>
 
-<span class="fc" id="L101">            combinationsToReturn[a] = combinations[a].clone();</span>
+<span class="fc" id="L88">            combinationsToReturn[a] = combinations[a].clone();</span>
 
-<span class="fc bfc" id="L103" title="All 2 branches covered.">            for (int b = 0; b &lt; combinations[0].length; b++) {</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">            for (int b = 0; b &lt; combinations[0].length; b++) {</span>
 
                 // Fix this, but: -1 for all elements in all combinations for indexing purposes.
-<span class="fc" id="L106">                combinationsToReturn[a][b] =  combinations[a][b] - 1;</span>
+<span class="fc" id="L93">                combinationsToReturn[a][b] =  combinations[a][b] - 1;</span>
             
             }
         }
             
         
-<span class="fc" id="L112">        return combinationsToReturn;</span>
+<span class="fc" id="L99">        return combinationsToReturn;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
