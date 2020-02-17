@@ -86,23 +86,26 @@
 <span class="fc" id="L86">        int addedInt = 0;</span>
         
 <span class="fc bfc" id="L88" title="All 2 branches covered.">        for (int i = 0; i &lt; this.setSize; i++) {</span>
-
-<span class="fc bfc" id="L90" title="All 2 branches covered.">            if (addedInt == this.setSize - 1) {</span>
-<span class="fc" id="L91">                return false;</span>
+            
+            
+<span class="fc bfc" id="L91" title="All 6 branches covered.">            if (addedInt == this.setSize - 1 &amp; this.integers[i]  !=  toRemove) {</span>
+<span class="fc" id="L92">                return false;</span>
             }
+            
+            
         
-<span class="fc bfc" id="L94" title="All 2 branches covered.">            if (this.integers[i]  !=  toRemove) {</span>
-<span class="fc" id="L95">                replacement[addedInt] = this.integers[i];</span>
-<span class="fc" id="L96">                addedInt++;</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">            if (this.integers[i]  !=  toRemove) {</span>
+<span class="fc" id="L98">                replacement[addedInt] = this.integers[i];</span>
+<span class="fc" id="L99">                addedInt++;</span>
             }
         
         }
         
 
-<span class="fc" id="L102">        this.setSize = this.setSize - 1;</span>
-<span class="fc" id="L103">        this.integers = replacement;</span>
+<span class="fc" id="L105">        this.setSize = this.setSize - 1;</span>
+<span class="fc" id="L106">        this.integers = replacement;</span>
 
-<span class="fc" id="L105">        return true;</span>
+<span class="fc" id="L108">        return true;</span>
         
     }
     
@@ -113,33 +116,36 @@
      */
     public boolean removeByIndex(final int idx) {
 
+
         // Sanity check
-<span class="fc bfc" id="L117" title="All 6 branches covered.">        if (idx &gt; (this.setSize - 1) | idx &lt; 0) {</span>
-<span class="fc" id="L118">            return false;</span>
-        }
-
-<span class="fc" id="L121">        int[] replacement = new int[this.setSize - 1];</span>
-
-<span class="fc" id="L123">        int addedInt = 0;</span>
         
-<span class="fc bfc" id="L125" title="All 2 branches covered.">        for (int i = 0; i &lt; this.setSize; i++) {</span>
-
-<span class="fc bfc" id="L127" title="All 2 branches covered.">            if (addedInt == this.setSize - 1) {</span>
-<span class="fc" id="L128">                return false;</span>
-            }
-        
-<span class="fc bfc" id="L131" title="All 2 branches covered.">            if (i != idx) {</span>
-<span class="fc" id="L132">                replacement[addedInt] = this.integers[i];</span>
-<span class="fc" id="L133">                addedInt++;</span>
-            }
-        
+<span class="fc bfc" id="L122" title="All 6 branches covered.">        if (idx &gt; (this.setSize - 1) | idx &lt; 0) {</span>
+<span class="fc" id="L123">            return false;</span>
         }
         
 
-<span class="fc" id="L139">        this.setSize = this.setSize - 1;</span>
-<span class="fc" id="L140">        this.integers = replacement;</span>
+<span class="fc" id="L127">        int[] replacement = new int[this.setSize - 1];</span>
+
+<span class="fc" id="L129">        int addedInt = 0;</span>
         
-<span class="fc" id="L142">        return true;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        for (int i = 0; i &lt; this.setSize; i++) {</span>
+
+            
+        
+<span class="fc bfc" id="L135" title="All 2 branches covered.">            if (i != idx) {</span>
+<span class="fc" id="L136">                replacement[addedInt] = this.integers[i];</span>
+<span class="fc" id="L137">                addedInt++;</span>
+            }
+            
+        
+        }
+        
+        
+
+<span class="fc" id="L145">        this.setSize = this.setSize - 1;</span>
+<span class="fc" id="L146">        this.integers = replacement;</span>
+        
+<span class="fc" id="L148">        return true;</span>
     }
 
 
@@ -153,16 +159,16 @@
     public int pop() {
 
 
-<span class="fc" id="L156">        int rtrn = this.integers[this.setSize - 1];</span>
+<span class="fc" id="L162">        int rtrn = this.integers[this.setSize - 1];</span>
 
-<span class="fc" id="L158">        this.setSize = this.setSize - 1;</span>
-<span class="fc" id="L159">        int[] replacement = new int[this.setSize];</span>
-<span class="fc bfc" id="L160" title="All 2 branches covered.">        for (int i = 0; i &lt; this.setSize; i++) {</span>
-<span class="fc" id="L161">            replacement[i] = this.integers[i];</span>
+<span class="fc" id="L164">        this.setSize = this.setSize - 1;</span>
+<span class="fc" id="L165">        int[] replacement = new int[this.setSize];</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">        for (int i = 0; i &lt; this.setSize; i++) {</span>
+<span class="fc" id="L167">            replacement[i] = this.integers[i];</span>
         }
-<span class="fc" id="L163">        this.integers = replacement;</span>
+<span class="fc" id="L169">        this.integers = replacement;</span>
 
-<span class="fc" id="L165">        return rtrn;</span>
+<span class="fc" id="L171">        return rtrn;</span>
     }
 
     
@@ -171,7 +177,7 @@
      * @return int[] set as an array of integers
      */
     public int[] getIntegers() {
-<span class="fc" id="L174">        return this.integers.clone();</span>
+<span class="fc" id="L180">        return this.integers.clone();</span>
     }
 
     
@@ -181,7 +187,7 @@
      * @return int integer at asked position
      */
     public int getIntegerByIndex(final int toGet) {
-<span class="fc" id="L184">        return this.integers[toGet];</span>
+<span class="fc" id="L190">        return this.integers[toGet];</span>
     }
 
     
@@ -190,11 +196,11 @@
      * @return boolean true if set size is zero
      */
     public boolean isEmpty() {
-<span class="fc" id="L193">        boolean rtrn = false;</span>
-<span class="fc bfc" id="L194" title="All 2 branches covered.">        if (this.setSize == 0) {</span>
-<span class="fc" id="L195">            return true;</span>
+<span class="fc" id="L199">        boolean rtrn = false;</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">        if (this.setSize == 0) {</span>
+<span class="fc" id="L201">            return true;</span>
         }
-<span class="fc" id="L197">        return rtrn;</span>
+<span class="fc" id="L203">        return rtrn;</span>
     }
 
 
@@ -205,12 +211,12 @@
      */
     
     public void print(final String message) {
-<span class="nc" id="L208">        System.out.println(&quot;\n &quot; + message + &quot; &quot;);</span>
-<span class="nc bnc" id="L209" title="All 2 branches missed.">        for (int i : this.integers) {</span>
-<span class="nc" id="L210">            System.out.print(i + &quot;, &quot;);</span>
+<span class="nc" id="L214">        System.out.println(&quot;\n &quot; + message + &quot; &quot;);</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">        for (int i : this.integers) {</span>
+<span class="nc" id="L216">            System.out.print(i + &quot;, &quot;);</span>
         }
-<span class="nc" id="L212">        System.out.println(&quot;\n&quot;);</span>
-<span class="nc" id="L213">    }</span>
+<span class="nc" id="L218">        System.out.println(&quot;\n&quot;);</span>
+<span class="nc" id="L219">    }</span>
     
  }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

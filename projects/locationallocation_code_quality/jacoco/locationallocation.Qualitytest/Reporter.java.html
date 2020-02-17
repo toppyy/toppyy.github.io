@@ -160,21 +160,23 @@ public class Reporter {
 
 <span class="fc bfc" id="L161" title="All 2 branches covered.">        for (int i = start; i &lt;= end; i++) {</span>
 
-<span class="fc" id="L163">            int iterations = iterationsInput;</span>
+
             
-<span class="fc bfc" id="L165" title="All 2 branches covered.">            while (iterations &gt; 0) {</span>
-<span class="fc" id="L166">                this.init();</span>
-<span class="fc bfc" id="L167" title="All 2 branches covered.">                for (String algorithmName : algorithmsToTest) {</span>
-<span class="fc" id="L168">                    testResults[idx]   = this.runTest(i, algorithmName);</span>
-<span class="fc" id="L169">                    idx++;</span>
+<span class="fc" id="L165">            int iterations = iterationsInput;</span>
+            
+<span class="fc bfc" id="L167" title="All 2 branches covered.">            while (iterations &gt; 0) {</span>
+<span class="fc" id="L168">                this.init();                </span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">                for (String algorithmName : algorithmsToTest) {</span>
+<span class="fc" id="L170">                    testResults[idx]   = this.runTest(i, algorithmName);</span>
+<span class="fc" id="L171">                    idx++;</span>
                 }
-<span class="fc" id="L171">                iterations--;</span>
+<span class="fc" id="L173">                iterations--;</span>
             
             }
         }
 
-<span class="fc" id="L176">        this.results = testResults;</span>
-<span class="fc" id="L177">        return testResults;</span>
+<span class="fc" id="L178">        this.results = testResults;</span>
+<span class="fc" id="L179">        return testResults;</span>
     }
 
     /**
@@ -184,26 +186,26 @@ public class Reporter {
     public void writeResults(final String outputpathInput) {
        
         try {
-<span class="nc" id="L187">            String filename = outputpathInput;</span>
-<span class="nc" id="L188">            Writer w = new Writer(filename);</span>
+<span class="nc" id="L189">            String filename = outputpathInput;</span>
+<span class="nc" id="L190">            Writer w = new Writer(filename);</span>
            
-<span class="nc bnc" id="L190" title="All 2 branches missed.">            for (Testresult s : this.results) {</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">            for (Testresult s : this.results) {</span>
                 
-<span class="nc" id="L192">                w.write(s.toString() + &quot;\n&quot;);</span>
+<span class="nc" id="L194">                w.write(s.toString() + &quot;\n&quot;);</span>
               
             }
 
-<span class="nc" id="L196">            w.close();</span>
-<span class="nc" id="L197">            System.out.println(&quot;Wrote results to: &quot; + filename);</span>
+<span class="nc" id="L198">            w.close();</span>
+<span class="nc" id="L199">            System.out.println(&quot;Wrote results to: &quot; + filename);</span>
 
-<span class="nc" id="L199">        } catch (IOException e) { </span>
+<span class="nc" id="L201">        } catch (IOException e) { </span>
       
-<span class="nc" id="L201">          System.out.println(&quot;Problem with writing the results&quot;);</span>
-<span class="nc" id="L202">          e.printStackTrace(); </span>
+<span class="nc" id="L203">          System.out.println(&quot;Problem with writing the results&quot;);</span>
+<span class="nc" id="L204">          e.printStackTrace(); </span>
           
           
-<span class="nc" id="L205">        } </span>
-<span class="nc" id="L206">    }</span>
+<span class="nc" id="L207">        } </span>
+<span class="nc" id="L208">    }</span>
 
 
 
@@ -213,8 +215,8 @@ public class Reporter {
     */
 
     public void setPlimits(final int[] pLimitsInput) {
-<span class="fc" id="L216">        this.pLimits = pLimitsInput;</span>
-<span class="fc" id="L217">    }</span>
+<span class="fc" id="L218">        this.pLimits = pLimitsInput;</span>
+<span class="fc" id="L219">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

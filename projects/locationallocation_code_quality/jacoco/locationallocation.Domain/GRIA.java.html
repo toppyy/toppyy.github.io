@@ -215,8 +215,8 @@ public class GRIA extends Solver {
       
         
         // If found best swap is lower than total cost before regional interchange, persist it
-<span class="pc bpc" id="L218" title="1 of 2 branches missed.">        if (minSwapCost &lt; this.costs.costSumForRowset(solution)) {</span>
-<span class="nc" id="L219">            solution.setChange(minSwapCostToReplace, minSwapCostReplaceBy);</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">        if (minSwapCost &lt; this.costs.costSumForRowset(solution)) {</span>
+<span class="fc" id="L219">            solution.setChange(minSwapCostToReplace, minSwapCostReplaceBy);</span>
         }
         
         // Return solution
