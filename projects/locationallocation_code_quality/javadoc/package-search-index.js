@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"locationallocation"},{"l":"locationallocation.Domain"},{"l":"locationallocation.Qualitytest"},{"l":"locationallocation.Utils"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"locationallocation"},{"l":"locationallocation.Domain"},{"l":"locationallocation.Qualitytest"},{"l":"locationallocation.UI"},{"l":"locationallocation.Utils"}]
