@@ -219,32 +219,31 @@ public class GUI extends JFrame  {
 <span class="nc" id="L219">        this.app.loadPossiblelocations(&quot;src/test/resources/testdata_1_facility_locations.csv&quot;);</span>
 <span class="nc" id="L220">        this.app.setP(7);</span>
 <span class="nc" id="L221">        this.app.calculateCostMatrix();</span>
-<span class="nc" id="L222">        this.app.setSolver(this.algorithmButton.getSelection().getActionCommand());</span>
-<span class="nc" id="L223">        this.updateStatus();</span>
+<span class="nc" id="L222">        this.updateStatus();</span>
 
-<span class="nc" id="L225">    }</span>
+<span class="nc" id="L224">    }</span>
 
     /**
      * Solve problem.
      */
-<span class="nc" id="L230">    class SolveListener implements ActionListener {</span>
+<span class="nc" id="L229">    class SolveListener implements ActionListener {</span>
         public void actionPerformed(final ActionEvent e) {
 
             
-<span class="nc" id="L234">            GUI.this.app.solve();</span>
-<span class="nc" id="L235">            GUI.this.updateStatus();</span>
+<span class="nc" id="L233">            GUI.this.app.solve();</span>
+<span class="nc" id="L234">            GUI.this.updateStatus();</span>
 
             
-<span class="nc" id="L238">        }</span>
+<span class="nc" id="L237">        }</span>
     }
     /**
      * Load example data to app. Dev-purposes in mind.
      */
 
-<span class="nc" id="L244">    class ExampleListener implements ActionListener {</span>
+<span class="nc" id="L243">    class ExampleListener implements ActionListener {</span>
         public void actionPerformed(final ActionEvent e) {
-<span class="nc" id="L246">            GUI.this.loadExample();</span>
-<span class="nc" id="L247">        }</span>
+<span class="nc" id="L245">            GUI.this.loadExample();</span>
+<span class="nc" id="L246">        }</span>
 
     }
 
@@ -258,17 +257,17 @@ public class GUI extends JFrame  {
          */
         private JTextField pInputField;
 
-<span class="nc" id="L261">        ChoosePListener(final JTextField pInput) {</span>
-<span class="nc" id="L262">            this.pInputField = pInput;</span>
-<span class="nc" id="L263">        }</span>
+<span class="nc" id="L260">        ChoosePListener(final JTextField pInput) {</span>
+<span class="nc" id="L261">            this.pInputField = pInput;</span>
+<span class="nc" id="L262">        }</span>
         public void actionPerformed(final ActionEvent e) {
 
-<span class="nc" id="L266">            Integer chosenP = Integer.parseInt(this.pInputField.getText());</span>
-<span class="nc" id="L267">            GUI.this.app.setP(chosenP);</span>
+<span class="nc" id="L265">            Integer chosenP = Integer.parseInt(this.pInputField.getText());</span>
+<span class="nc" id="L266">            GUI.this.app.setP(chosenP);</span>
 
-<span class="nc" id="L269">            GUI.this.updateStatus();</span>
+<span class="nc" id="L268">            GUI.this.updateStatus();</span>
 
-<span class="nc" id="L271">        }</span>
+<span class="nc" id="L270">        }</span>
     }
     /**
      * Action listener for radio button choosing the algorithm to use.
@@ -279,17 +278,17 @@ public class GUI extends JFrame  {
          */
         private JRadioButton button;
 
-<span class="nc" id="L282">        AlgorithmListener(final JRadioButton buttonInput) {</span>
-<span class="nc" id="L283">            this.button = buttonInput;</span>
-<span class="nc" id="L284">        }</span>
+<span class="nc" id="L281">        AlgorithmListener(final JRadioButton buttonInput) {</span>
+<span class="nc" id="L282">            this.button = buttonInput;</span>
+<span class="nc" id="L283">        }</span>
 
         public void actionPerformed(final ActionEvent e) {
-<span class="nc" id="L287">            System.out.println();</span>
+<span class="nc" id="L286">            System.out.println();</span>
 
-<span class="nc" id="L289">            String command = button.getActionCommand();</span>
-<span class="nc" id="L290">            System.out.println(&quot;Solver set to &quot; + command);       </span>
-<span class="nc" id="L291">            GUI.this.app.setSolver(command);</span>
-<span class="nc" id="L292">        }</span>
+<span class="nc" id="L288">            String command = button.getActionCommand();</span>
+<span class="nc" id="L289">            System.out.println(&quot;Solver set to &quot; + command);       </span>
+<span class="nc" id="L290">            GUI.this.app.setSolver(command);</span>
+<span class="nc" id="L291">        }</span>
 
     }
 
@@ -302,31 +301,31 @@ public class GUI extends JFrame  {
          */
         private String which;
 
-<span class="nc" id="L305">        InputFileChooserListener(final String whichInput) {</span>
-<span class="nc" id="L306">            this.which = whichInput;</span>
-<span class="nc" id="L307">        }</span>
+<span class="nc" id="L304">        InputFileChooserListener(final String whichInput) {</span>
+<span class="nc" id="L305">            this.which = whichInput;</span>
+<span class="nc" id="L306">        }</span>
 
         public void actionPerformed(final ActionEvent e) {
             
-<span class="nc" id="L311">            JFileChooser fileChooser = new JFileChooser();</span>
+<span class="nc" id="L310">            JFileChooser fileChooser = new JFileChooser();</span>
 
-<span class="nc" id="L313">            int result = fileChooser.showOpenDialog(GUI.this);</span>
-<span class="nc bnc" id="L314" title="All 2 branches missed.">            if (result == JFileChooser.APPROVE_OPTION) {</span>
+<span class="nc" id="L312">            int result = fileChooser.showOpenDialog(GUI.this);</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">            if (result == JFileChooser.APPROVE_OPTION) {</span>
 
-<span class="nc" id="L316">                File selectedFile = fileChooser.getSelectedFile();</span>
-<span class="nc bnc" id="L317" title="All 2 branches missed.">                if (this.which.equals(&quot;demand&quot;)) {</span>
-<span class="nc" id="L318">                    GUI.this.app.loadDemandlocations(selectedFile.getAbsolutePath());</span>
+<span class="nc" id="L315">                File selectedFile = fileChooser.getSelectedFile();</span>
+<span class="nc bnc" id="L316" title="All 2 branches missed.">                if (this.which.equals(&quot;demand&quot;)) {</span>
+<span class="nc" id="L317">                    GUI.this.app.loadDemandlocations(selectedFile.getAbsolutePath());</span>
                 }
-<span class="nc bnc" id="L320" title="All 2 branches missed.">                if (this.which.equals(&quot;possible&quot;)) {</span>
-<span class="nc" id="L321">                    GUI.this.app.loadPossiblelocations(selectedFile.getAbsolutePath());</span>
+<span class="nc bnc" id="L319" title="All 2 branches missed.">                if (this.which.equals(&quot;possible&quot;)) {</span>
+<span class="nc" id="L320">                    GUI.this.app.loadPossiblelocations(selectedFile.getAbsolutePath());</span>
                 }
 
-<span class="nc" id="L324">                GUI.this.updateStatus();</span>
+<span class="nc" id="L323">                GUI.this.updateStatus();</span>
 
             }
 
             
-<span class="nc" id="L329">        }</span>
+<span class="nc" id="L328">        }</span>
     }
     /**
      * Radio button.
@@ -334,9 +333,9 @@ public class GUI extends JFrame  {
      * @return A radiobutton.
      */
     private JRadioButton createRadioButton(final String text) {
-<span class="nc" id="L337">        JRadioButton butt = new JRadioButton(text);</span>
-<span class="nc" id="L338">        butt.setActionCommand(text);</span>
-<span class="nc" id="L339">        return butt;</span>
+<span class="nc" id="L336">        JRadioButton butt = new JRadioButton(text);</span>
+<span class="nc" id="L337">        butt.setActionCommand(text);</span>
+<span class="nc" id="L338">        return butt;</span>
     }
 
     

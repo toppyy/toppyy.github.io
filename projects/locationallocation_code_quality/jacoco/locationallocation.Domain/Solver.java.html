@@ -2,6 +2,7 @@
 
 package locationallocation.Domain;
 import locationallocation.Utils.CostMatrix;
+import locationallocation.Utils.Location;
 import locationallocation.Utils.IntegerSet;
 /**
  * Generic solver class.
@@ -25,24 +26,21 @@ public abstract class Solver {
     /**
      * Holds cost of result.
      */
-<span class="fc" id="L28">    private double resultCost = -1;</span>
+<span class="fc" id="L29">    private double resultCost = -1;</span>
 
     /**
      * Name of algorithm.
      */
     private String nameOfAlgorithm;
+   
 
     /**
      * Constuctor.
-     * @param pnInput Number of facilities to allocate
-     * @param costMatrixInput Matrix that holds costs (eg. distances) between facilities and demand locations.
      * @param nameInput Name of algorithm.
      */
-<span class="fc" id="L41">    public Solver(final CostMatrix costMatrixInput, final int pnInput, final String nameInput) {</span>
-<span class="fc" id="L42">        this.pn = pnInput;</span>
-<span class="fc" id="L43">        this.costMatrix = costMatrixInput;</span>
-<span class="fc" id="L44">        this.nameOfAlgorithm = nameInput;</span>
-<span class="fc" id="L45">    }</span>
+<span class="fc" id="L41">    public Solver(final String nameInput) {</span>
+<span class="fc" id="L42">        this.nameOfAlgorithm = nameInput;</span>
+<span class="fc" id="L43">    }</span>
 
     
     /**
@@ -50,14 +48,21 @@ public abstract class Solver {
      * @return P
      */
     public int getP() {
-<span class="fc" id="L53">        return this.pn;</span>
+<span class="fc" id="L51">        return this.pn;</span>
     }
+    /**
+     * Setter for pn.
+     * @param pInput
+     */
+    public void setP(final int pInput) {
+<span class="fc" id="L58">        this.pn = pInput;</span>
+<span class="fc" id="L59">    }</span>
     /**
      * Getter for name.
      * @return Name of algorithm.
      */
     public String getName() {
-<span class="nc" id="L60">        return this.nameOfAlgorithm;</span>
+<span class="nc" id="L65">        return this.nameOfAlgorithm;</span>
     }
 
 
@@ -66,69 +71,68 @@ public abstract class Solver {
      * @return Matrix of costs between facilities and demand facilities.
      */
     public CostMatrix getCosts() {
-<span class="fc" id="L69">        return this.costMatrix;</span>
+<span class="fc" id="L74">        return this.costMatrix;</span>
     }
     /**
      * Setter for cost matrix.
      * @param inputCostMatrix 
      */
     public void setCosts(final CostMatrix inputCostMatrix) {
-<span class="nc" id="L76">        this.costMatrix = inputCostMatrix;</span>
-<span class="nc" id="L77">        System.out.println(&quot;Setted!&quot;);</span>
-<span class="nc" id="L78">    }</span>
+<span class="fc" id="L81">        this.costMatrix = inputCostMatrix;</span>
+<span class="fc" id="L82">    }</span>
     /**
      * Print result.
      */
     public void printResults() {
 
-<span class="nc bnc" id="L84" title="All 2 branches missed.">        if (resultCost &lt; 0) {</span>
-<span class="nc" id="L85">            System.out.println(&quot;No results yet. Try .solve() first.&quot;);</span>
-<span class="nc" id="L86">            return;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (resultCost &lt; 0) {</span>
+<span class="nc" id="L89">            System.out.println(&quot;No results yet. Try .solve() first.&quot;);</span>
+<span class="nc" id="L90">            return;</span>
         }
 
         
         
-<span class="nc bnc" id="L91" title="All 2 branches missed.">        for (int i : this.result) {</span>
-<span class="nc" id="L92">            System.out.print(i + &quot; &quot;);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        for (int i : this.result) {</span>
+<span class="nc" id="L96">            System.out.print(i + &quot; &quot;);</span>
         }
-<span class="nc" id="L94">        System.out.println(&quot;\nCostsum: &quot; + this.resultCost);</span>
+<span class="nc" id="L98">        System.out.println(&quot;\nCostsum: &quot; + this.resultCost);</span>
             
-<span class="nc" id="L96">    }</span>
+<span class="nc" id="L100">    }</span>
     /**
      * Getter for result.
      * @return Result (a set of integers).
      */
     public int[] getResult() {
-<span class="fc" id="L102">        return this.result;</span>
+<span class="fc" id="L106">        return this.result;</span>
     }
     /**
      * Setter for result.
      * @param resultInput A set of integers.
      */
     public void setResult(final int[] resultInput) {
-<span class="fc" id="L109">        this.result = resultInput;</span>
-<span class="fc" id="L110">    }</span>
+<span class="fc" id="L113">        this.result = resultInput;</span>
+<span class="fc" id="L114">    }</span>
     /**
      * Setter for result as a IntegerSet.
      * @param resultInput A set of integers.
      */
     public void setResult(final IntegerSet resultInput) {
-<span class="fc" id="L116">        this.result = resultInput.getIntegers();</span>
-<span class="fc" id="L117">    }</span>
+<span class="fc" id="L120">        this.result = resultInput.getIntegers();</span>
+<span class="fc" id="L121">    }</span>
     /**
      * Getter for result cost.
      * @return Sum of result costs.
      */
     public double getResultCost() {
-<span class="fc" id="L123">        return this.resultCost;</span>
+<span class="fc" id="L127">        return this.resultCost;</span>
     }
     /**
      * Setter for result cost.
      * @param resultCostInput Sum of result costs.
      */
     public void setResultCost(final double resultCostInput) {
-<span class="fc" id="L130">        this.resultCost = resultCostInput;</span>
-<span class="fc" id="L131">    }</span>
+<span class="fc" id="L134">        this.resultCost = resultCostInput;</span>
+<span class="fc" id="L135">    }</span>
     
     
     /**
@@ -136,5 +140,19 @@ public abstract class Solver {
      * @return Set of demand locations to allocate P facilities to.
      */
     public abstract int[] solve();
+
+    /**
+     * Solve with params.
+     * @param pnInput Number of facilities to allocate
+     * @param costMatrixInput Matrix that holds costs (eg. distances) between facilities and demand locations.
+     * @return Set of demand locations to allocate P facilities to.
+     */
+    public abstract int[] solveWithParams(CostMatrix costMatrixInput, int pnInput);
+
+    /**
+     * Setter for possible facilities.
+     * @param facilitiesInput Possible facilities to allocate.
+     */
+    public abstract void setPossibleLocations(Location[] facilitiesInput);
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

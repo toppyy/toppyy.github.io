@@ -118,43 +118,43 @@ public class Pmedian {
      * Use naive solution to solve.
      */
     public void setSolverToNaive() {
-<span class="nc" id="L121">        this.algorithm = new Naive(this.costs, this.p);</span>
+<span class="nc" id="L121">        this.algorithm = new Naive();</span>
 <span class="nc" id="L122">    }</span>
     /**
      * Use GRIA to solve.
      */
     public void setSolverToGRIA() {
-<span class="nc" id="L127">        this.algorithm = new GRIA(this.costs, this.p, this.possibleLocations);</span>
-<span class="nc" id="L128">    }</span>
+<span class="nc" id="L127">        this.algorithm = new GRIA();</span>
+<span class="nc" id="L128">        this.algorithm.setPossibleLocations(this.possibleLocations);</span>
+<span class="nc" id="L129">    }</span>
     /**
      * Use TeitzBart to solve.
      */
     public void setSolverToTeitzBart() {
-<span class="nc" id="L133">        this.algorithm = new TeitzBart(this.costs, this.p);</span>
-<span class="nc" id="L134">    }</span>
+<span class="nc" id="L134">        this.algorithm = new TeitzBart();</span>
+<span class="nc" id="L135">    }</span>
     /**
      * Choose solver by name.
      * @param chosenAlgorithm Algorithm. One of three: Naive, TeitzBart, GRIA.
      */
     public void setSolver(final String chosenAlgorithm) {
-<span class="nc bnc" id="L140" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;Naive&quot;) {</span>
-<span class="nc" id="L141">            this.setSolverToNaive();</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;Naive&quot;) {</span>
+<span class="nc" id="L142">            this.setSolverToNaive();</span>
         }
-<span class="nc bnc" id="L143" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;GRIA&quot;) {</span>
-<span class="nc" id="L144">            this.setSolverToGRIA();</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;GRIA&quot;) {</span>
+<span class="nc" id="L145">            this.setSolverToGRIA();</span>
         }
-<span class="nc bnc" id="L146" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;TeitzBart&quot;) {</span>
-<span class="nc" id="L147">            this.setSolverToTeitzBart();</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;TeitzBart&quot;) {</span>
+<span class="nc" id="L148">            this.setSolverToTeitzBart();</span>
         }
-<span class="nc" id="L149">    }</span>
+<span class="nc" id="L150">    }</span>
 
 
     /**
      * Solve the problem specified.
      */
     public void solve() {
-<span class="nc" id="L156">        System.out.println(&quot;Solving with &quot; + this.algorithm.getName());</span>
-<span class="nc" id="L157">        this.algorithm.solve();</span>
+<span class="nc" id="L157">        this.algorithm.solveWithParams(this.costs, this.p);</span>
 
 <span class="nc" id="L159">    }</span>
 

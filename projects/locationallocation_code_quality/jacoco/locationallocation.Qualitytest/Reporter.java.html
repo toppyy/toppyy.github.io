@@ -108,22 +108,23 @@ public class Reporter {
      */
     private Testresult runTest(final int p, final String algorithmName) {
 
-<span class="fc" id="L111">        Solver a = new Naive(costs, p);</span>
+<span class="fc" id="L111">        Solver a = new Naive();</span>
         
 <span class="fc bfc" id="L113" title="All 2 branches covered.">        if (algorithmName == &quot;TB&quot;) {</span>
-<span class="fc" id="L114">            a = new TeitzBart(costs, p);</span>
+<span class="fc" id="L114">            a = new TeitzBart();</span>
         } 
         
 <span class="fc bfc" id="L117" title="All 2 branches covered.">        if (algorithmName == &quot;GRIA&quot;) {</span>
-<span class="fc" id="L118">            a = new GRIA(costs, p, this.facilities);</span>
+<span class="fc" id="L118">            a = new GRIA();</span>
+<span class="fc" id="L119">            a.setPossibleLocations(this.facilities);</span>
         }
         
-<span class="fc" id="L121">        long startTime = System.currentTimeMillis();</span>
-<span class="fc" id="L122">        a.solve();</span>
-<span class="fc" id="L123">        long endTime = System.currentTimeMillis();</span>
-<span class="fc" id="L124">		long timeElapsed = (endTime - startTime);</span>
+<span class="fc" id="L122">        long startTime = System.currentTimeMillis();</span>
+<span class="fc" id="L123">        a.solveWithParams(costs, p);</span>
+<span class="fc" id="L124">        long endTime = System.currentTimeMillis();</span>
+<span class="fc" id="L125">		long timeElapsed = (endTime - startTime);</span>
 
-<span class="fc" id="L126">        return new Testresult(p, this.candidates, this.demandlocations, a.getResultCost(), timeElapsed, algorithmName);</span>
+<span class="fc" id="L127">        return new Testresult(p, this.candidates, this.demandlocations, a.getResultCost(), timeElapsed, algorithmName);</span>
 
     }
 
@@ -139,43 +140,43 @@ public class Reporter {
     public Testresult[] runTests(final String[] algorithmsToTest, final int candidatesInput, final int demandlocationsInput,  final int iterationsInput) {
 
 
-<span class="fc" id="L142">        int start = this.pLimits[0];</span>
-<span class="fc" id="L143">        int end   = this.pLimits[1];</span>
+<span class="fc" id="L143">        int start = this.pLimits[0];</span>
+<span class="fc" id="L144">        int end   = this.pLimits[1];</span>
 
-<span class="fc" id="L145">        this.candidates = candidatesInput;</span>
-<span class="fc" id="L146">        this.demandlocations = demandlocationsInput;</span>
+<span class="fc" id="L146">        this.candidates = candidatesInput;</span>
+<span class="fc" id="L147">        this.demandlocations = demandlocationsInput;</span>
 
        
 
-<span class="fc" id="L150">        int idx = 0;</span>
+<span class="fc" id="L151">        int idx = 0;</span>
 
         // +1 to end to make it inclusive
-<span class="fc" id="L153">        Testresult[] testResults   = new Testresult[((1 + end) - start) * iterationsInput * algorithmsToTest.length];</span>
+<span class="fc" id="L154">        Testresult[] testResults   = new Testresult[((1 + end) - start) * iterationsInput * algorithmsToTest.length];</span>
 
         // For each P between start - end
         // Solve with each algorithm as many times as requested(=iterations)
         // Create a new random problem for each iteration
 
-<span class="fc bfc" id="L159" title="All 2 branches covered.">        for (int i = start; i &lt;= end; i++) {</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        for (int i = start; i &lt;= end; i++) {</span>
 
 
             
-<span class="fc" id="L163">            int iterations = iterationsInput;</span>
+<span class="fc" id="L164">            int iterations = iterationsInput;</span>
 
-<span class="fc bfc" id="L165" title="All 2 branches covered.">            while (iterations &gt; 0) {</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">            while (iterations &gt; 0) {</span>
                 
-<span class="fc" id="L167">                this.init();                </span>
-<span class="fc bfc" id="L168" title="All 2 branches covered.">                for (String algorithmName : algorithmsToTest) {</span>
-<span class="fc" id="L169">                    testResults[idx]   = this.runTest(i, algorithmName);</span>
-<span class="fc" id="L170">                    idx++;</span>
+<span class="fc" id="L168">                this.init();                </span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">                for (String algorithmName : algorithmsToTest) {</span>
+<span class="fc" id="L170">                    testResults[idx]   = this.runTest(i, algorithmName);</span>
+<span class="fc" id="L171">                    idx++;</span>
                 }
-<span class="fc" id="L172">                iterations--;</span>
+<span class="fc" id="L173">                iterations--;</span>
             
             }
         }
 
-<span class="fc" id="L177">        this.results = testResults;</span>
-<span class="fc" id="L178">        return testResults;</span>
+<span class="fc" id="L178">        this.results = testResults;</span>
+<span class="fc" id="L179">        return testResults;</span>
     }
 
     /**
@@ -185,26 +186,26 @@ public class Reporter {
     public void writeResults(final String outputpathInput) {
        
         try {
-<span class="nc" id="L188">            String filename = outputpathInput;</span>
-<span class="nc" id="L189">            Writer w = new Writer(filename);</span>
+<span class="nc" id="L189">            String filename = outputpathInput;</span>
+<span class="nc" id="L190">            Writer w = new Writer(filename);</span>
            
-<span class="nc bnc" id="L191" title="All 2 branches missed.">            for (Testresult s : this.results) {</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">            for (Testresult s : this.results) {</span>
                 
-<span class="nc" id="L193">                w.write(s.toString() + &quot;\n&quot;);</span>
+<span class="nc" id="L194">                w.write(s.toString() + &quot;\n&quot;);</span>
               
             }
 
-<span class="nc" id="L197">            w.close();</span>
-<span class="nc" id="L198">            System.out.println(&quot;Wrote results to: &quot; + filename);</span>
+<span class="nc" id="L198">            w.close();</span>
+<span class="nc" id="L199">            System.out.println(&quot;Wrote results to: &quot; + filename);</span>
 
-<span class="nc" id="L200">        } catch (IOException e) { </span>
+<span class="nc" id="L201">        } catch (IOException e) { </span>
       
-<span class="nc" id="L202">          System.out.println(&quot;Problem with writing the results&quot;);</span>
-<span class="nc" id="L203">          e.printStackTrace(); </span>
+<span class="nc" id="L203">          System.out.println(&quot;Problem with writing the results&quot;);</span>
+<span class="nc" id="L204">          e.printStackTrace(); </span>
           
           
-<span class="nc" id="L206">        } </span>
-<span class="nc" id="L207">    }</span>
+<span class="nc" id="L207">        } </span>
+<span class="nc" id="L208">    }</span>
 
 
 
@@ -214,8 +215,8 @@ public class Reporter {
     */
 
     public void setPlimits(final int[] pLimitsInput) {
-<span class="fc" id="L217">        this.pLimits = pLimitsInput;</span>
-<span class="fc" id="L218">    }</span>
+<span class="fc" id="L218">        this.pLimits = pLimitsInput;</span>
+<span class="fc" id="L219">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
