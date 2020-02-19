@@ -21,21 +21,22 @@ public final class CostMatrix {
      * @param setB A set of locations
      */
 <span class="fc" id="L23">    public CostMatrix(final Location[] setA, final Location[] setB) {</span>
+
         
-<span class="fc" id="L25">        double[][] dist = new double[setA.length][setB.length];</span>
+<span class="fc" id="L26">        double[][] dist = new double[setA.length][setB.length];</span>
 
-<span class="fc bfc" id="L27" title="All 2 branches covered.">        for (int idxA = 0; idxA &lt; setA.length; idxA++) {</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        for (int idxA = 0; idxA &lt; setA.length; idxA++) {</span>
 
-<span class="fc bfc" id="L29" title="All 2 branches covered.">            for (int idxB = 0; idxB &lt; setB.length; idxB++) {</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">            for (int idxB = 0; idxB &lt; setB.length; idxB++) {</span>
             
-<span class="fc" id="L31">                dist[idxA][idxB]  = this.calculateEuclideanDistance(setA[idxA], setB[idxB]);</span>
+<span class="fc" id="L32">                dist[idxA][idxB]  = this.calculateEuclideanDistance(setA[idxA], setB[idxB]);</span>
 
             }
         }
 
-<span class="fc" id="L36">        this.costs = dist;</span>
+<span class="fc" id="L37">        this.costs = dist;</span>
 
-<span class="fc" id="L38">    }   </span>
+<span class="fc" id="L39">    }   </span>
 
 
     /**
@@ -46,7 +47,7 @@ public final class CostMatrix {
     */
 
     private double calculateEuclideanDistance(final Location a, final Location b) {
-<span class="fc" id="L49">        return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));</span>
+<span class="fc" id="L50">        return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));</span>
     }
 
     /** 
@@ -57,7 +58,7 @@ public final class CostMatrix {
      * @return double
      */
     public double costSumForRowset(final IntegerSet rowset) {
-<span class="fc" id="L60">        return this.costSumForRowset(rowset.getIntegers());</span>
+<span class="fc" id="L61">        return this.costSumForRowset(rowset.getIntegers());</span>
     }
 
     /** 
@@ -69,47 +70,47 @@ public final class CostMatrix {
      */
     public double costSumForRowset(final int[] rowset) {
         
-<span class="fc" id="L72">        double rtrn = 0, minTmp, tmp;</span>
+<span class="fc" id="L73">        double rtrn = 0, minTmp, tmp;</span>
 
         
-<span class="fc bfc" id="L75" title="All 2 branches covered.">        for (int col = 0; col &lt; this.costs[0].length; col++) {</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        for (int col = 0; col &lt; this.costs[0].length; col++) {</span>
         
-<span class="fc" id="L77">            minTmp = Double.MAX_VALUE;</span>
+<span class="fc" id="L78">            minTmp = Double.MAX_VALUE;</span>
 
-<span class="fc bfc" id="L79" title="All 2 branches covered.">            for (int row : rowset) {</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">            for (int row : rowset) {</span>
 
-<span class="fc" id="L81">                tmp = this.costs[row][col];</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">                if (tmp &lt; minTmp) {</span>
-<span class="fc" id="L83">                    minTmp = tmp;</span>
+<span class="fc" id="L82">                tmp = this.costs[row][col];</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">                if (tmp &lt; minTmp) {</span>
+<span class="fc" id="L84">                    minTmp = tmp;</span>
                 }
             }
-<span class="fc" id="L86">            rtrn += minTmp;</span>
+<span class="fc" id="L87">            rtrn += minTmp;</span>
             
         }
 
-<span class="fc" id="L90">        return rtrn;</span>
+<span class="fc" id="L91">        return rtrn;</span>
     }
     /**
      * Getter for cost matrix.
      * @return cost matrix.
      */
     public double[][] getCosts() {
-<span class="fc" id="L97">        return this.costs;</span>
+<span class="fc" id="L98">        return this.costs;</span>
     }
     /**
      * Setter for cost matrix.
      * @param costsInput cost matrix.
      */
     public void setCosts(final double[][] costsInput) {
-<span class="nc" id="L104">        this.costs = costsInput;</span>
-<span class="nc" id="L105">    }</span>
+<span class="nc" id="L105">        this.costs = costsInput;</span>
+<span class="nc" id="L106">    }</span>
 
     /**
      * Getter for row count.
      * @return Row count of matrix.
      */
     public int getRowCount() {
-<span class="fc" id="L112">        return this.costs.length;</span>
+<span class="fc" id="L113">        return this.costs.length;</span>
     }
 
 }

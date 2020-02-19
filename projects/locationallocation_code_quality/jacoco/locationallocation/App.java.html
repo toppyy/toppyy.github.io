@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">package locationallocation;
 
 
-import locationallocation.Utils.LocationLoader;
-import locationallocation.Utils.Location;
-import locationallocation.Utils.CostMatrix;
-
-import locationallocation.Domain.GRIA;
-import locationallocation.Domain.Naive;
-import locationallocation.Domain.TeitzBart;
-
 import locationallocation.Qualitytest.Reporter;
 import locationallocation.Qualitytest.Testresult;
 
-
+import locationallocation.UI.GUI;
 /**
  * Solves the p-median problem.
  */
@@ -23,84 +15,90 @@ public final class App {
     private App() {
     }
 
-    /**
-     * Number of facilities to choose.
-     */
-    private static final int PN = 7;
 
     public static void main(final String[] args) {
 
-<span class="nc" id="L33">        String path = &quot;src/test/resources/testdata_1_demand_locations.csv&quot;;</span>
-<span class="nc" id="L34">        LocationLoader testdataDemand = new LocationLoader(path, true);</span>
-<span class="nc" id="L35">        Location[] testDemandLocations = testdataDemand.loadAsLocations();</span>
+<span class="nc" id="L21">        Pmedian app = new Pmedian();</span>
 
-<span class="nc" id="L37">        path = &quot;src/test/resources/testdata_1_facility_locations.csv&quot;;</span>
-<span class="nc" id="L38">        LocationLoader testdataFacility = new LocationLoader(path, true);</span>
-<span class="nc" id="L39">        Location[] testFacilityLocations = testdataFacility.loadAsLocations();</span>
+        // To run a simple example, try: gradle run --args &quot;example 8&quot;
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        if (args.length &gt; 0) {</span>
 
-        
-       
-        
-        // Calculate cost matrix of euclidean distances
-<span class="nc" id="L45">        CostMatrix costs = new CostMatrix(testFacilityLocations, testDemandLocations);</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">            if (args[0].equals(&quot;example&quot;)) {</span>
 
-<span class="nc" id="L47">        TeitzBart teitzbart = new TeitzBart(costs, PN);</span>
-<span class="nc" id="L48">        teitzbart.solve();</span>
-<span class="nc" id="L49">        System.out.println(&quot;\nTeitzBart: &quot;);</span>
-<span class="nc" id="L50">        teitzbart.printResults();</span>
+<span class="nc" id="L28">                Integer p = Integer.parseInt(args[1]);</span>
+
+                // Set up
+<span class="nc" id="L31">                app.setP(p);</span>
+                
+<span class="nc" id="L33">                app.loadDemandlocations(&quot;src/test/resources/testdata_1_demand_locations.csv&quot;);</span>
+<span class="nc" id="L34">                app.loadPossiblelocations(&quot;src/test/resources/testdata_1_facility_locations.csv&quot;);</span>
+
+<span class="nc" id="L36">                app.calculateCostMatrix();</span>
+
+                // Solve with all algorithms
+<span class="nc" id="L39">                app.setSolverToTeitzBart();</span>
+<span class="nc" id="L40">                app.solve();</span>
+<span class="nc" id="L41">                double costTB = app.getResultCost();</span>
+
+<span class="nc" id="L43">                app.setSolverToGRIA();</span>
+<span class="nc" id="L44">                app.solve();</span>
+<span class="nc" id="L45">                double costGRIA = app.getResultCost();</span>
+
+<span class="nc" id="L47">                app.setSolverToNaive();</span>
+<span class="nc" id="L48">                app.solve();</span>
+<span class="nc" id="L49">                double costNaive = app.getResultCost();</span>
+
+<span class="nc" id="L51">                System.out.println(&quot;Total cost of solution:&quot;);</span>
+<span class="nc" id="L52">                System.out.println(&quot;TB: &quot; + costTB);</span>
+<span class="nc" id="L53">                System.out.println(&quot;GRIA: &quot; + costGRIA);</span>
+<span class="nc" id="L54">                System.out.println(&quot;Naive: &quot; + costNaive);</span>
+                
+            }
+
+<span class="nc bnc" id="L58" title="All 2 branches missed.">            if (args[0].equals(&quot;perf&quot;)) {</span>
+
+<span class="nc" id="L60">                String outputfolder = args[1];                </span>
+
+                // Test quality and performance
+<span class="nc" id="L63">                System.out.println(&quot;Running performance tests..&quot;);</span>
+
+<span class="nc" id="L65">                Reporter report = new Reporter();</span>
+
+                // Large tests
+                
+<span class="nc" id="L69">                String[] algorithms = {&quot;TB&quot;, &quot;GRIA&quot;};</span>
+<span class="nc" id="L70">                int[] limits = {2, 25};</span>
+
+<span class="nc" id="L72">                report.setPlimits(limits);</span>
+<span class="nc" id="L73">                Testresult[] largeTests = report.runTests(algorithms, 50, 300, 10);</span>
+
+                
+<span class="nc" id="L76">                report.writeResults(outputfolder + &quot;/large tests with iterations.txt&quot;);</span>
+
+            
+                // Small tests
+
+
+<span class="nc" id="L82">                String[] algorithmsSmall = {&quot;TB&quot;, &quot;GRIA&quot;, &quot;Naive&quot;};</span>
+<span class="nc" id="L83">                int[] limitsSmall = {2, 7};</span>
+
+<span class="nc" id="L85">                report.setPlimits(limitsSmall);</span>
+
+<span class="nc" id="L87">                Testresult[] smallTests = report.runTests(algorithmsSmall, 20, 300, 10);</span>
+                
+<span class="nc" id="L89">                report.writeResults(outputfolder + &quot;/small tests with iterations.txt&quot;);</span>
+
+<span class="nc" id="L91">                System.out.println(&quot;... tests done.&quot;);</span>
+            
+
+<span class="nc" id="L94">            }</span>
     
-<span class="nc" id="L52">        Naive naive = new Naive(costs, PN);</span>
+        } else {
 
-<span class="nc" id="L54">        naive.solve();</span>
-<span class="nc" id="L55">        System.out.println(&quot;\nNaive: &quot;);</span>
-<span class="nc" id="L56">        naive.printResults();</span>
+<span class="nc" id="L98">            GUI application = new GUI(app);</span>
 
-<span class="nc" id="L58">        GRIA griaSolver = new GRIA(costs, PN, testFacilityLocations);</span>
-
-<span class="nc" id="L60">        griaSolver.solve();</span>
-<span class="nc" id="L61">        System.out.println(&quot;\nGRIA: &quot;);</span>
-<span class="nc" id="L62">        griaSolver.printResults();</span>
-        
-      
-
-        // Test quality and performance
-<span class="nc" id="L67">        System.out.println(&quot;Running performance tests..&quot;);</span>
-
-<span class="nc" id="L69">        Reporter report = new Reporter();</span>
-
-
-        // Change path!
-<span class="nc" id="L73">        String outputfolder = &quot;//home/&quot;;</span>
-        
-
-        // Large tests
-        
-<span class="nc" id="L78">        String[] algorithms = {&quot;TB&quot;, &quot;GRIA&quot;};</span>
-<span class="nc" id="L79">        int[] limits = {2, 25};</span>
-
-<span class="nc" id="L81">        report.setPlimits(limits);</span>
-<span class="nc" id="L82">        Testresult[] largeTests = report.runTests(algorithms, 50, 300, 10);</span>
-
-        
-        //report.writeResults(outputfolder + &quot;/large tests with iterations.txt&quot;);
-
-    
-        // Small tests
-
-
-<span class="nc" id="L91">        String[] algorithmsSmall = {&quot;TB&quot;, &quot;GRIA&quot;, &quot;Naive&quot;};</span>
-<span class="nc" id="L92">        int[] limitsSmall = {1, 8};</span>
-
-<span class="nc" id="L94">        report.setPlimits(limitsSmall);</span>
-
-<span class="nc" id="L96">        Testresult[] smallTests = report.runTests(algorithmsSmall, 25, 100, 10);</span>
-        
-        //report.writeResults(outputfolder + &quot;/small tests with iterations.txt&quot;);
-
-<span class="nc" id="L100">        System.out.println(&quot;... tests done.&quot;);</span>
-       
-        
-
-<span class="nc" id="L104">    }</span>
+<span class="nc" id="L100">            application.start();</span>
+        }
+<span class="nc" id="L102">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

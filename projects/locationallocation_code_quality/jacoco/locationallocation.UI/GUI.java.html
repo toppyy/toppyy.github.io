@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GUI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation.UI</a> &gt; <span class="el_source">GUI.java</span></div><h1>GUI.java</h1><pre class="source lang-java linenums">package locationallocation.UI;
+
+import java.io.File;
+
+import locationallocation.Pmedian;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
+import javax.swing.JTextField;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+
+/**
+ * A simple GUI for the application.
+ */
+
+// A lot is borrowed from here:
+// https://github.com/yussiv/Compress/blob/master/squash/src/main/java/fi/yussiv/squash/ui/GUI.java
+
+
+public class GUI extends JFrame  {
+
+    /**
+     * Class containing application logic.
+     */
+    private Pmedian app;
+
+    /**
+     * Holds status of GUI.
+     */
+    private JLabel statusDemandLocations, statusPossibleLocations, statusP, statusSolutionCost, statusCostMatrix;
+
+    /**
+     * Button group specifying algorithm.
+     */
+    private ButtonGroup algorithmButton;
+
+    /**
+     * Graphical interface for application.
+     * @param inputApp Application logic.
+     */
+<span class="nc" id="L53">    public GUI(final Pmedian inputApp) {</span>
+<span class="nc" id="L54">        this.app = inputApp;</span>
+
+<span class="nc" id="L56">    }</span>
+   
+    /**
+     * Run application.
+     */
+    public void start() {
+        // Create and set up a frame window
+<span class="nc" id="L63">        JFrame.setDefaultLookAndFeelDecorated(true);</span>
+<span class="nc" id="L64">        JFrame frame = new JFrame(&quot;P-median solver&quot;);</span>
+<span class="nc" id="L65">        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+                 
+       
+        // Panels
+<span class="nc" id="L69">        JPanel panel1 = new JPanel();</span>
+<span class="nc" id="L70">        JPanel panel2 = new JPanel();</span>
+<span class="nc" id="L71">        JPanel panel3 = new JPanel();</span>
+<span class="nc" id="L72">        JPanel panel4 = new JPanel();</span>
+         
+        // Set up the title for different panels
+<span class="nc" id="L75">        panel1.setBorder(BorderFactory.createTitledBorder(&quot;Input:&quot;));</span>
+<span class="nc" id="L76">        panel2.setBorder(BorderFactory.createTitledBorder(&quot;Parameters:&quot;));</span>
+<span class="nc" id="L77">        panel3.setBorder(BorderFactory.createTitledBorder(&quot;Choose algorithm:&quot;));</span>
+<span class="nc" id="L78">        panel4.setBorder(BorderFactory.createTitledBorder(&quot;Actions:&quot;));</span>
+
+
+         
+        // Set up the BoxLayout
+<span class="nc" id="L83">        BoxLayout layout1 = new BoxLayout(panel1, BoxLayout.Y_AXIS);</span>
+<span class="nc" id="L84">        BoxLayout layout2 = new BoxLayout(panel2, BoxLayout.Y_AXIS);</span>
+<span class="nc" id="L85">        BoxLayout layout3 = new BoxLayout(panel3, BoxLayout.Y_AXIS);</span>
+<span class="nc" id="L86">        BoxLayout layout4 = new BoxLayout(panel4, BoxLayout.Y_AXIS);</span>
+<span class="nc" id="L87">        panel1.setLayout(layout1);</span>
+<span class="nc" id="L88">        panel2.setLayout(layout2);</span>
+<span class="nc" id="L89">        panel3.setLayout(layout3);</span>
+<span class="nc" id="L90">        panel4.setLayout(layout4);</span>
+
+         
+        // Input
+
+<span class="nc" id="L95">        JButton inputDemandLocations = new JButton(&quot;Load demand locations&quot;);        </span>
+<span class="nc" id="L96">        JButton inputPossibleFacilities = new JButton(&quot;Load possible facility locations&quot;);</span>
+
+<span class="nc" id="L98">        inputDemandLocations.addActionListener(new InputFileChooserListener(&quot;demand&quot;));</span>
+<span class="nc" id="L99">        inputPossibleFacilities.addActionListener(new InputFileChooserListener(&quot;possible&quot;));</span>
+
+        // Texts for inputs
+<span class="nc" id="L102">        this.statusDemandLocations = new JLabel();</span>
+<span class="nc" id="L103">        this.statusPossibleLocations = new JLabel();</span>
+<span class="nc" id="L104">        this.statusCostMatrix = new JLabel();</span>
+
+<span class="nc" id="L106">        inputPossibleFacilities.setAlignmentX(Component.LEFT_ALIGNMENT);</span>
+<span class="nc" id="L107">        inputDemandLocations.setAlignmentX(Component.LEFT_ALIGNMENT);</span>
+<span class="nc" id="L108">        panel1.add(inputDemandLocations);</span>
+<span class="nc" id="L109">        panel1.add(statusDemandLocations);</span>
+<span class="nc" id="L110">        panel1.add(inputPossibleFacilities);</span>
+<span class="nc" id="L111">        panel1.add(statusPossibleLocations);</span>
+<span class="nc" id="L112">        panel1.add(statusCostMatrix);</span>
+
+        // Parameters
+         
+            
+<span class="nc" id="L117">        JTextField pChooser = new JTextField(3);</span>
+<span class="nc" id="L118">        pChooser.setToolTipText(&quot;Choose the number of facilities to allocate.&quot;);</span>
+
+<span class="nc" id="L120">        pChooser.addActionListener(new ChoosePListener(pChooser));</span>
+
+<span class="nc" id="L122">        this.statusP = new JLabel();</span>
+        
+<span class="nc" id="L124">        panel2.add(pChooser);</span>
+<span class="nc" id="L125">        panel2.add(statusP);</span>
+        
+        // Radio buttons for algorithm choice
+        //Group for the radio buttons.
+<span class="nc" id="L129">        this.algorithmButton = new ButtonGroup();</span>
+
+<span class="nc" id="L131">        String[] algorithms = this.app.getAlgorithms();</span>
+
+        
+
+        //JRadioButton[] algorithmButtons = new JRadioButton[algorithms.length];
+        //algorithmButtons[i] = createRadioButton(algorithms[i]);
+
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        for (int i = 0; i &lt; algorithms.length; i++) {</span>
+<span class="nc" id="L139">            JRadioButton button = createRadioButton(algorithms[i]);</span>
+            
+<span class="nc" id="L141">            algorithmButton.add(button);</span>
+<span class="nc" id="L142">            panel3.add(button);</span>
+
+<span class="nc" id="L144">            button.addActionListener(new AlgorithmListener(button));</span>
+
+            // Select first button;
+<span class="nc bnc" id="L147" title="All 2 branches missed.">            if (i == 0) {</span>
+<span class="nc" id="L148">                button.setSelected(true);</span>
+<span class="nc" id="L149">                this.app.setSolver(algorithms[i]);</span>
+            }
+           
+        }
+
+        //algorithmButton.addActionListener(new algorithmListener(algorithmButton));
+         
+        
+       
+
+        // Actions:
+<span class="nc" id="L160">        JButton solveButton = new JButton(&quot;Solve!&quot;);</span>
+<span class="nc" id="L161">        panel4.add(solveButton);</span>
+<span class="nc" id="L162">        solveButton.addActionListener(new SolveListener());</span>
+
+<span class="nc" id="L164">        JButton loadExampleBUtton = new JButton(&quot;Load example&quot;);</span>
+<span class="nc" id="L165">        panel1.add(loadExampleBUtton);</span>
+<span class="nc" id="L166">        loadExampleBUtton.addActionListener(new ExampleListener());</span>
+
+
+
+<span class="nc" id="L170">        statusSolutionCost = new JLabel();</span>
+<span class="nc" id="L171">        panel4.add(statusSolutionCost);</span>
+
+         
+        // Add the three panels into the frame
+<span class="nc" id="L175">        frame.setLayout(new FlowLayout());</span>
+<span class="nc" id="L176">        frame.add(panel1);</span>
+<span class="nc" id="L177">        frame.add(panel2);</span>
+<span class="nc" id="L178">        frame.add(panel3);</span>
+<span class="nc" id="L179">        frame.add(panel4);</span>
+
+        // set the size of frame 
+<span class="nc" id="L182">        frame.setSize(700, 700); </span>
+         
+        // Set the window to be visible as the default to be false
+        
+<span class="nc" id="L186">        frame.setVisible(true);</span>
+
+<span class="nc" id="L188">        GUI.this.updateStatus();</span>
+        
+<span class="nc" id="L190">    }</span>
+
+    /**
+     * Update input status.
+     */
+    private void updateStatus() {
+<span class="nc" id="L196">        this.statusDemandLocations.setText(&quot;Number of demand locations: &quot; + this.app.getNumberOfDemandLocations());</span>
+<span class="nc" id="L197">        this.statusPossibleLocations.setText(&quot;Number of possible locations: &quot; + this.app.getNumberOfPossibleLocations());</span>
+<span class="nc" id="L198">        this.statusP.setText(&quot;Number of facilities to allocate: &quot; + this.app.getP());</span>
+<span class="nc" id="L199">        this.statusSolutionCost.setText(&quot;Cost: &quot; + this.app.getResultCost());</span>
+        
+
+        // If both locations are updated, calcucate distance matrix
+<span class="nc bnc" id="L203" title="All 6 branches missed.">        if (this.app.getNumberOfDemandLocations() &gt; 0 &amp; this.app.getNumberOfPossibleLocations() &gt; 0) {</span>
+<span class="nc" id="L204">            this.app.calculateCostMatrix();</span>
+            
+        }
+
+<span class="nc" id="L208">        this.statusCostMatrix.setText(&quot;Costmatrix exists: &quot; + this.app.costMatrixExists());</span>
+
+        // Chosen algorithm
+        
+<span class="nc" id="L212">    }</span>
+    /**
+     * Load example problem and set parameters.
+     */
+    private void loadExample() {
+        // Defaults for dev
+<span class="nc" id="L218">        this.app.loadDemandlocations(&quot;src/test/resources/testdata_1_demand_locations.csv&quot;);</span>
+<span class="nc" id="L219">        this.app.loadPossiblelocations(&quot;src/test/resources/testdata_1_facility_locations.csv&quot;);</span>
+<span class="nc" id="L220">        this.app.setP(7);</span>
+<span class="nc" id="L221">        this.app.calculateCostMatrix();</span>
+<span class="nc" id="L222">        this.app.setSolver(this.algorithmButton.getSelection().getActionCommand());</span>
+<span class="nc" id="L223">        this.updateStatus();</span>
+
+<span class="nc" id="L225">    }</span>
+
+    /**
+     * Solve problem.
+     */
+<span class="nc" id="L230">    class SolveListener implements ActionListener {</span>
+        public void actionPerformed(final ActionEvent e) {
+
+            
+<span class="nc" id="L234">            GUI.this.app.solve();</span>
+<span class="nc" id="L235">            GUI.this.updateStatus();</span>
+
+            
+<span class="nc" id="L238">        }</span>
+    }
+    /**
+     * Load example data to app. Dev-purposes in mind.
+     */
+
+<span class="nc" id="L244">    class ExampleListener implements ActionListener {</span>
+        public void actionPerformed(final ActionEvent e) {
+<span class="nc" id="L246">            GUI.this.loadExample();</span>
+<span class="nc" id="L247">        }</span>
+
+    }
+
+    /**
+     * P-chooser listener.
+     */
+    class ChoosePListener implements ActionListener {
+
+        /**
+         * Input field for P.
+         */
+        private JTextField pInputField;
+
+<span class="nc" id="L261">        ChoosePListener(final JTextField pInput) {</span>
+<span class="nc" id="L262">            this.pInputField = pInput;</span>
+<span class="nc" id="L263">        }</span>
+        public void actionPerformed(final ActionEvent e) {
+
+<span class="nc" id="L266">            Integer chosenP = Integer.parseInt(this.pInputField.getText());</span>
+<span class="nc" id="L267">            GUI.this.app.setP(chosenP);</span>
+
+<span class="nc" id="L269">            GUI.this.updateStatus();</span>
+
+<span class="nc" id="L271">        }</span>
+    }
+    /**
+     * Action listener for radio button choosing the algorithm to use.
+     */
+    class AlgorithmListener implements ActionListener {
+        /**
+         * Holds button.
+         */
+        private JRadioButton button;
+
+<span class="nc" id="L282">        AlgorithmListener(final JRadioButton buttonInput) {</span>
+<span class="nc" id="L283">            this.button = buttonInput;</span>
+<span class="nc" id="L284">        }</span>
+
+        public void actionPerformed(final ActionEvent e) {
+<span class="nc" id="L287">            System.out.println();</span>
+
+<span class="nc" id="L289">            String command = button.getActionCommand();</span>
+<span class="nc" id="L290">            System.out.println(&quot;Solver set to &quot; + command);       </span>
+<span class="nc" id="L291">            GUI.this.app.setSolver(command);</span>
+<span class="nc" id="L292">        }</span>
+
+    }
+
+    /**
+     * File chooser.
+     */
+    class InputFileChooserListener implements ActionListener {
+        /**
+         * Is it demand or possible.
+         */
+        private String which;
+
+<span class="nc" id="L305">        InputFileChooserListener(final String whichInput) {</span>
+<span class="nc" id="L306">            this.which = whichInput;</span>
+<span class="nc" id="L307">        }</span>
+
+        public void actionPerformed(final ActionEvent e) {
+            
+<span class="nc" id="L311">            JFileChooser fileChooser = new JFileChooser();</span>
+
+<span class="nc" id="L313">            int result = fileChooser.showOpenDialog(GUI.this);</span>
+<span class="nc bnc" id="L314" title="All 2 branches missed.">            if (result == JFileChooser.APPROVE_OPTION) {</span>
+
+<span class="nc" id="L316">                File selectedFile = fileChooser.getSelectedFile();</span>
+<span class="nc bnc" id="L317" title="All 2 branches missed.">                if (this.which.equals(&quot;demand&quot;)) {</span>
+<span class="nc" id="L318">                    GUI.this.app.loadDemandlocations(selectedFile.getAbsolutePath());</span>
+                }
+<span class="nc bnc" id="L320" title="All 2 branches missed.">                if (this.which.equals(&quot;possible&quot;)) {</span>
+<span class="nc" id="L321">                    GUI.this.app.loadPossiblelocations(selectedFile.getAbsolutePath());</span>
+                }
+
+<span class="nc" id="L324">                GUI.this.updateStatus();</span>
+
+            }
+
+            
+<span class="nc" id="L329">        }</span>
+    }
+    /**
+     * Radio button.
+     * @param text A text to display and set as action command.
+     * @return A radiobutton.
+     */
+    private JRadioButton createRadioButton(final String text) {
+<span class="nc" id="L337">        JRadioButton butt = new JRadioButton(text);</span>
+<span class="nc" id="L338">        butt.setActionCommand(text);</span>
+<span class="nc" id="L339">        return butt;</span>
+    }
+
+    
+  
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Pmedian.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation</a> &gt; <span class="el_source">Pmedian.java</span></div><h1>Pmedian.java</h1><pre class="source lang-java linenums">package locationallocation;
+
+import locationallocation.Utils.LocationLoader;
+import locationallocation.Utils.Location;
+import locationallocation.Utils.CostMatrix;
+
+import locationallocation.Domain.GRIA;
+import locationallocation.Domain.Naive;
+import locationallocation.Domain.Solver;
+import locationallocation.Domain.TeitzBart;
+
+/**
+ * Wraps it all together.
+ */
+
+public class Pmedian {
+
+    /**
+     * Chosen algorithm.
+     */
+    private Solver algorithm;
+    /**
+     * Demand locations.
+     */
+    private Location[] demandLocations;
+    /**
+     * Possible locations.
+     */
+    private Location[] possibleLocations;
+    /**
+     * Cost matrix.
+     */
+    private CostMatrix costs;
+    /**
+     * P (=number of facilities to choose). 
+     */
+    private int p;
+
+    /**
+     * Possible algorithms.
+     */
+    private String[] algorithms;
+
+
+<span class="nc" id="L45">    public Pmedian() {</span>
+<span class="nc" id="L46">        this.demandLocations = new Location[0];</span>
+<span class="nc" id="L47">        this.possibleLocations = new Location[0];</span>
+<span class="nc" id="L48">        this.p = 0;</span>
+
+<span class="nc" id="L50">        this.algorithms = new String[3];</span>
+<span class="nc" id="L51">        this.algorithms[0] =  &quot;Naive&quot;;</span>
+<span class="nc" id="L52">        this.algorithms[1] =  &quot;TeitzBart&quot;;</span>
+<span class="nc" id="L53">        this.algorithms[2] =  &quot;GRIA&quot;;</span>
+<span class="nc" id="L54">    }</span>
+    
+    /** 
+     * Set P (=number of facilities to choose).
+     * @param inputP
+     */
+    public void setP(final int inputP) {
+<span class="nc" id="L61">        this.p = inputP;</span>
+<span class="nc" id="L62">    }</span>
+    /** 
+     * Getter for P (=number of facilities to choose).
+     * @return int p
+     */
+    public int getP() {
+<span class="nc" id="L68">        return this.p;</span>
+    }
+
+    /** 
+     * Load a file as demand locations.
+     * @param path
+     */
+    public void loadDemandlocations(final String path) {
+<span class="nc" id="L76">        this.demandLocations = this.loadLocations(path);</span>
+        
+<span class="nc" id="L78">    }</span>
+    /**
+     * Getter for number of demand locations.
+     * @return int Number of loaded demand locations.
+     */
+    public int getNumberOfDemandLocations() {
+<span class="nc" id="L84">        return this.demandLocations.length;</span>
+    }
+    
+    /** 
+     * Load a file as possible facility locations.
+     * @param path
+     */
+    public void loadPossiblelocations(final String path) {
+<span class="nc" id="L92">        this.possibleLocations = this.loadLocations(path);</span>
+<span class="nc" id="L93">    }</span>
+    /**
+     * Getter for number of possible facility locations.
+     * @return int Number of loaded possible locations.
+     */
+    public int getNumberOfPossibleLocations() {
+<span class="nc" id="L99">        return this.possibleLocations.length;</span>
+    }
+    
+    /** 
+     * Load a file as locations.
+     * @param path
+     * @return Location[]
+     */
+    private Location[] loadLocations(final String path) {
+<span class="nc" id="L108">        LocationLoader data = new LocationLoader(path, true);</span>
+<span class="nc" id="L109">        Location[] locations = data.loadAsLocations();</span>
+<span class="nc" id="L110">        return locations;</span>
+    }
+
+    /**
+     * Calculate cost matrix.
+     */
+    public void calculateCostMatrix() {
+
+<span class="nc" id="L118">        this.costs = new CostMatrix(this.possibleLocations, this.demandLocations);</span>
+        
+<span class="nc" id="L120">    }</span>
+    /**
+     * Use naive solution to solve.
+     */
+    public void setSolverToNaive() {
+<span class="nc" id="L125">        this.algorithm = new Naive(this.costs, this.p);</span>
+<span class="nc" id="L126">    }</span>
+    /**
+     * Use GRIA to solve.
+     */
+    public void setSolverToGRIA() {
+<span class="nc" id="L131">        this.algorithm = new GRIA(this.costs, this.p, this.possibleLocations);</span>
+<span class="nc" id="L132">    }</span>
+    /**
+     * Use TeitzBart to solve.
+     */
+    public void setSolverToTeitzBart() {
+<span class="nc" id="L137">        this.algorithm = new TeitzBart(this.costs, this.p);</span>
+<span class="nc" id="L138">    }</span>
+    /**
+     * Choose solver by name.
+     * @param chosenAlgorithm Algorithm. One of three: Naive, TeitzBart, GRIA.
+     */
+    public void setSolver(final String chosenAlgorithm) {
+<span class="nc bnc" id="L144" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;Naive&quot;) {</span>
+<span class="nc" id="L145">            this.setSolverToNaive();</span>
+        }
+<span class="nc bnc" id="L147" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;GRIA&quot;) {</span>
+<span class="nc" id="L148">            this.setSolverToGRIA();</span>
+        }
+<span class="nc bnc" id="L150" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;TeitzBart&quot;) {</span>
+<span class="nc" id="L151">            this.setSolverToTeitzBart();</span>
+        }
+<span class="nc" id="L153">    }</span>
+
+
+    /**
+     * Solve the problem specified.
+     */
+    public void solve() {
+<span class="nc" id="L160">        System.out.println(&quot;Solving with &quot; + this.algorithm.getName());</span>
+<span class="nc" id="L161">        this.algorithm.solve();</span>
+
+<span class="nc" id="L163">    }</span>
+
+    /**
+     * Get cost of solution.
+     * @return cost of solution.
+     */
+    public double getResultCost() {
+<span class="nc" id="L170">        return this.algorithm.getResultCost();</span>
+    }
+
+    /**
+     * Check existance of cost matrix.
+     * @return True/false if cost matrix is loaded.
+     */
+    public boolean costMatrixExists() {
+<span class="nc bnc" id="L178" title="All 2 branches missed.">        return this.costs != null;</span>
+    }
+
+    /**
+     * Getter for algorithms.
+     * @return Algorithms as strings;
+     */
+    public String[] getAlgorithms() {
+<span class="nc" id="L186">        return this.algorithms;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
