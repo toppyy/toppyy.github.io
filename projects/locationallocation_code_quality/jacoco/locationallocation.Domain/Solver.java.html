@@ -100,39 +100,48 @@ public abstract class Solver {
 <span class="nc" id="L100">    }</span>
     /**
      * Getter for result.
-     * @return Result (a set of integers).
+     * @return Result (a set of integers describing the indexes of chosen locations).
      */
     public int[] getResult() {
 <span class="fc" id="L106">        return this.result;</span>
     }
     /**
+     * Getter for demand facility allocations.
+     * Given a result, to which possible facility each demand facility is allocated to?)
+     * @return  For each demand facility, the index of possible facility location it's allocated to.
+     */
+    public int[] getResultAllocations() {
+<span class="nc" id="L114">        return this.costMatrix.allocateColumnsToRows(this.result);</span>
+    }
+
+    /**
      * Setter for result.
      * @param resultInput A set of integers.
      */
     public void setResult(final int[] resultInput) {
-<span class="fc" id="L113">        this.result = resultInput;</span>
-<span class="fc" id="L114">    }</span>
+<span class="fc" id="L122">        this.result = resultInput;</span>
+<span class="fc" id="L123">    }</span>
     /**
      * Setter for result as a IntegerSet.
      * @param resultInput A set of integers.
      */
     public void setResult(final IntegerSet resultInput) {
-<span class="fc" id="L120">        this.result = resultInput.getIntegers();</span>
-<span class="fc" id="L121">    }</span>
+<span class="fc" id="L129">        this.result = resultInput.getIntegers();</span>
+<span class="fc" id="L130">    }</span>
     /**
      * Getter for result cost.
      * @return Sum of result costs.
      */
     public double getResultCost() {
-<span class="fc" id="L127">        return this.resultCost;</span>
+<span class="fc" id="L136">        return this.resultCost;</span>
     }
     /**
      * Setter for result cost.
      * @param resultCostInput Sum of result costs.
      */
     public void setResultCost(final double resultCostInput) {
-<span class="fc" id="L134">        this.resultCost = resultCostInput;</span>
-<span class="fc" id="L135">    }</span>
+<span class="fc" id="L143">        this.resultCost = resultCostInput;</span>
+<span class="fc" id="L144">    }</span>
     
     
     /**

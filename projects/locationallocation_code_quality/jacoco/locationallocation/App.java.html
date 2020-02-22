@@ -40,65 +40,69 @@ public final class App {
 <span class="nc" id="L40">                app.solve();</span>
 <span class="nc" id="L41">                double costTB = app.getResultCost();</span>
 
-<span class="nc" id="L43">                app.setSolverToGRIA();</span>
-<span class="nc" id="L44">                app.solve();</span>
-<span class="nc" id="L45">                double costGRIA = app.getResultCost();</span>
+<span class="nc" id="L43">                app.writeAllocationsToFile(&quot;/home/tob/Desktop/dump/RES_TB.csv&quot;);</span>
 
-<span class="nc" id="L47">                app.setSolverToNaive();</span>
-<span class="nc" id="L48">                app.solve();</span>
-<span class="nc" id="L49">                double costNaive = app.getResultCost();</span>
+<span class="nc" id="L45">                app.setSolverToGRIA();</span>
+<span class="nc" id="L46">                app.solve();</span>
+<span class="nc" id="L47">                double costGRIA = app.getResultCost();</span>
 
-<span class="nc" id="L51">                System.out.println(&quot;Total cost of solution:&quot;);</span>
-<span class="nc" id="L52">                System.out.println(&quot;TB: &quot; + costTB);</span>
-<span class="nc" id="L53">                System.out.println(&quot;GRIA: &quot; + costGRIA);</span>
-<span class="nc" id="L54">                System.out.println(&quot;Naive: &quot; + costNaive);</span>
+<span class="nc" id="L49">                app.setSolverToNaive();</span>
+<span class="nc" id="L50">                app.solve();</span>
+<span class="nc" id="L51">                double costNaive = app.getResultCost();</span>
+
+<span class="nc" id="L53">                app.writeAllocationsToFile(&quot;/home/tob/Desktop/dump/RES_NAIVE.csv&quot;);</span>
+
+<span class="nc" id="L55">                System.out.println(&quot;Total cost of solution:&quot;);</span>
+<span class="nc" id="L56">                System.out.println(&quot;TB: &quot; + costTB);</span>
+<span class="nc" id="L57">                System.out.println(&quot;GRIA: &quot; + costGRIA);</span>
+<span class="nc" id="L58">                System.out.println(&quot;Naive: &quot; + costNaive);</span>
                 
             }
 
-<span class="nc bnc" id="L58" title="All 2 branches missed.">            if (args[0].equals(&quot;perf&quot;)) {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            if (args[0].equals(&quot;perf&quot;)) {</span>
 
-<span class="nc" id="L60">                String outputfolder = args[1];                </span>
+<span class="nc" id="L64">                String outputfolder = args[1];                </span>
 
                 // Test quality and performance
-<span class="nc" id="L63">                System.out.println(&quot;Running performance tests..&quot;);</span>
+<span class="nc" id="L67">                System.out.println(&quot;Running performance tests..&quot;);</span>
 
-<span class="nc" id="L65">                Reporter report = new Reporter();</span>
+<span class="nc" id="L69">                Reporter report = new Reporter();</span>
 
                 // Large tests
                 
-<span class="nc" id="L69">                String[] algorithms = {&quot;TB&quot;, &quot;GRIA&quot;};</span>
-<span class="nc" id="L70">                int[] limits = {2, 25};</span>
+<span class="nc" id="L73">                String[] algorithms = {&quot;TB&quot;, &quot;GRIA&quot;};</span>
+<span class="nc" id="L74">                int[] limits = {2, 25};</span>
 
-<span class="nc" id="L72">                report.setPlimits(limits);</span>
-<span class="nc" id="L73">                Testresult[] largeTests = report.runTests(algorithms, 50, 300, 10);</span>
+<span class="nc" id="L76">                report.setPlimits(limits);</span>
+<span class="nc" id="L77">                Testresult[] largeTests = report.runTests(algorithms, 50, 300, 10);</span>
 
                 
-<span class="nc" id="L76">                report.writeResults(outputfolder + &quot;/large tests with iterations.txt&quot;);</span>
+<span class="nc" id="L80">                report.writeResults(outputfolder + &quot;/large tests with iterations.txt&quot;);</span>
 
             
                 // Small tests
 
 
-<span class="nc" id="L82">                String[] algorithmsSmall = {&quot;TB&quot;, &quot;GRIA&quot;, &quot;Naive&quot;};</span>
-<span class="nc" id="L83">                int[] limitsSmall = {2, 7};</span>
+<span class="nc" id="L86">                String[] algorithmsSmall = {&quot;TB&quot;, &quot;GRIA&quot;, &quot;Naive&quot;};</span>
+<span class="nc" id="L87">                int[] limitsSmall = {2, 7};</span>
 
-<span class="nc" id="L85">                report.setPlimits(limitsSmall);</span>
+<span class="nc" id="L89">                report.setPlimits(limitsSmall);</span>
 
-<span class="nc" id="L87">                Testresult[] smallTests = report.runTests(algorithmsSmall, 20, 300, 10);</span>
+<span class="nc" id="L91">                Testresult[] smallTests = report.runTests(algorithmsSmall, 20, 300, 10);</span>
                 
-<span class="nc" id="L89">                report.writeResults(outputfolder + &quot;/small tests with iterations.txt&quot;);</span>
+<span class="nc" id="L93">                report.writeResults(outputfolder + &quot;/small tests with iterations.txt&quot;);</span>
 
-<span class="nc" id="L91">                System.out.println(&quot;... tests done.&quot;);</span>
+<span class="nc" id="L95">                System.out.println(&quot;... tests done.&quot;);</span>
             
 
-<span class="nc" id="L94">            }</span>
+<span class="nc" id="L98">            }</span>
     
         } else {
 
-<span class="nc" id="L98">            GUI application = new GUI(app);</span>
+<span class="nc" id="L102">            GUI application = new GUI(app);</span>
 
-<span class="nc" id="L100">            application.start();</span>
+<span class="nc" id="L104">            application.start();</span>
         }
-<span class="nc" id="L102">    }</span>
+<span class="nc" id="L106">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

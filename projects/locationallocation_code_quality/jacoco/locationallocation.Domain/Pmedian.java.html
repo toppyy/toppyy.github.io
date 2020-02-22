@@ -3,6 +3,8 @@
 import locationallocation.Utils.LocationLoader;
 import locationallocation.Utils.Location;
 import locationallocation.Utils.CostMatrix;
+import static locationallocation.Utils.Writer.writeLines;
+import java.io.IOException;
 
 
 /**
@@ -38,30 +40,30 @@ public class Pmedian {
     private String[] algorithms;
 
 
-<span class="nc" id="L41">    public Pmedian() {</span>
-<span class="nc" id="L42">        this.demandLocations = new Location[0];</span>
-<span class="nc" id="L43">        this.possibleLocations = new Location[0];</span>
-<span class="nc" id="L44">        this.p = 0;</span>
+<span class="nc" id="L43">    public Pmedian() {</span>
+<span class="nc" id="L44">        this.demandLocations = new Location[0];</span>
+<span class="nc" id="L45">        this.possibleLocations = new Location[0];</span>
+<span class="nc" id="L46">        this.p = 0;</span>
 
-<span class="nc" id="L46">        this.algorithms = new String[3];</span>
-<span class="nc" id="L47">        this.algorithms[0] =  &quot;Naive&quot;;</span>
-<span class="nc" id="L48">        this.algorithms[1] =  &quot;TeitzBart&quot;;</span>
-<span class="nc" id="L49">        this.algorithms[2] =  &quot;GRIA&quot;;</span>
-<span class="nc" id="L50">    }</span>
+<span class="nc" id="L48">        this.algorithms = new String[3];</span>
+<span class="nc" id="L49">        this.algorithms[0] =  &quot;Naive&quot;;</span>
+<span class="nc" id="L50">        this.algorithms[1] =  &quot;TeitzBart&quot;;</span>
+<span class="nc" id="L51">        this.algorithms[2] =  &quot;GRIA&quot;;</span>
+<span class="nc" id="L52">    }</span>
     
     /** 
      * Set P (=number of facilities to choose).
      * @param inputP
      */
     public void setP(final int inputP) {
-<span class="nc" id="L57">        this.p = inputP;</span>
-<span class="nc" id="L58">    }</span>
+<span class="nc" id="L59">        this.p = inputP;</span>
+<span class="nc" id="L60">    }</span>
     /** 
      * Getter for P (=number of facilities to choose).
      * @return int p
      */
     public int getP() {
-<span class="nc" id="L64">        return this.p;</span>
+<span class="nc" id="L66">        return this.p;</span>
     }
 
     /** 
@@ -69,15 +71,15 @@ public class Pmedian {
      * @param path
      */
     public void loadDemandlocations(final String path) {
-<span class="nc" id="L72">        this.demandLocations = this.loadLocations(path);</span>
+<span class="nc" id="L74">        this.demandLocations = this.loadLocations(path);</span>
         
-<span class="nc" id="L74">    }</span>
+<span class="nc" id="L76">    }</span>
     /**
      * Getter for number of demand locations.
      * @return int Number of loaded demand locations.
      */
     public int getNumberOfDemandLocations() {
-<span class="nc" id="L80">        return this.demandLocations.length;</span>
+<span class="nc" id="L82">        return this.demandLocations.length;</span>
     }
     
     /** 
@@ -85,14 +87,14 @@ public class Pmedian {
      * @param path
      */
     public void loadPossiblelocations(final String path) {
-<span class="nc" id="L88">        this.possibleLocations = this.loadLocations(path);</span>
-<span class="nc" id="L89">    }</span>
+<span class="nc" id="L90">        this.possibleLocations = this.loadLocations(path);</span>
+<span class="nc" id="L91">    }</span>
     /**
      * Getter for number of possible facility locations.
      * @return int Number of loaded possible locations.
      */
     public int getNumberOfPossibleLocations() {
-<span class="nc" id="L95">        return this.possibleLocations.length;</span>
+<span class="nc" id="L97">        return this.possibleLocations.length;</span>
     }
     
     /** 
@@ -101,9 +103,9 @@ public class Pmedian {
      * @return Location[]
      */
     private Location[] loadLocations(final String path) {
-<span class="nc" id="L104">        LocationLoader data = new LocationLoader(path, true);</span>
-<span class="nc" id="L105">        Location[] locations = data.loadAsLocations();</span>
-<span class="nc" id="L106">        return locations;</span>
+<span class="nc" id="L106">        LocationLoader data = new LocationLoader(path, true);</span>
+<span class="nc" id="L107">        Location[] locations = data.loadAsLocations();</span>
+<span class="nc" id="L108">        return locations;</span>
     }
 
     /**
@@ -111,67 +113,105 @@ public class Pmedian {
      */
     public void calculateCostMatrix() {
 
-<span class="nc" id="L114">        this.costs = new CostMatrix(this.possibleLocations, this.demandLocations);</span>
+<span class="nc" id="L116">        this.costs = new CostMatrix(this.possibleLocations, this.demandLocations);</span>
         
-<span class="nc" id="L116">    }</span>
+<span class="nc" id="L118">    }</span>
     /**
      * Use naive solution to solve.
      */
     public void setSolverToNaive() {
-<span class="nc" id="L121">        this.algorithm = new Naive();</span>
-<span class="nc" id="L122">    }</span>
+<span class="nc" id="L123">        this.algorithm = new Naive();</span>
+<span class="nc" id="L124">    }</span>
     /**
      * Use GRIA to solve.
      */
     public void setSolverToGRIA() {
-<span class="nc" id="L127">        this.algorithm = new GRIA();</span>
-<span class="nc" id="L128">        this.algorithm.setPossibleLocations(this.possibleLocations);</span>
-<span class="nc" id="L129">    }</span>
+<span class="nc" id="L129">        this.algorithm = new GRIA();</span>
+<span class="nc" id="L130">        this.algorithm.setPossibleLocations(this.possibleLocations);</span>
+<span class="nc" id="L131">    }</span>
     /**
      * Use TeitzBart to solve.
      */
     public void setSolverToTeitzBart() {
-<span class="nc" id="L134">        this.algorithm = new TeitzBart();</span>
-<span class="nc" id="L135">    }</span>
+<span class="nc" id="L136">        this.algorithm = new TeitzBart();</span>
+<span class="nc" id="L137">    }</span>
     /**
      * Choose solver by name.
      * @param chosenAlgorithm Algorithm. One of three: Naive, TeitzBart, GRIA.
      */
     public void setSolver(final String chosenAlgorithm) {
-<span class="nc bnc" id="L141" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;Naive&quot;) {</span>
-<span class="nc" id="L142">            this.setSolverToNaive();</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;Naive&quot;) {</span>
+<span class="nc" id="L144">            this.setSolverToNaive();</span>
         }
-<span class="nc bnc" id="L144" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;GRIA&quot;) {</span>
-<span class="nc" id="L145">            this.setSolverToGRIA();</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;GRIA&quot;) {</span>
+<span class="nc" id="L147">            this.setSolverToGRIA();</span>
         }
-<span class="nc bnc" id="L147" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;TeitzBart&quot;) {</span>
-<span class="nc" id="L148">            this.setSolverToTeitzBart();</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;TeitzBart&quot;) {</span>
+<span class="nc" id="L150">            this.setSolverToTeitzBart();</span>
         }
-<span class="nc" id="L150">    }</span>
+<span class="nc" id="L152">    }</span>
 
 
     /**
      * Solve the problem specified.
      */
     public void solve() {
-<span class="nc" id="L157">        this.algorithm.solveWithParams(this.costs, this.p);</span>
+<span class="nc" id="L159">        this.algorithm.solveWithParams(this.costs, this.p);</span>
 
-<span class="nc" id="L159">    }</span>
+<span class="nc" id="L161">    }</span>
 
     /**
      * Get cost of solution.
      * @return cost of solution.
      */
     public double getResultCost() {
-<span class="nc" id="L166">        return this.algorithm.getResultCost();</span>
+<span class="nc" id="L168">        return this.algorithm.getResultCost();</span>
     }
+    /**
+     * Get result as demand facility - possible facility pairs.
+     * @return For each demand facility, the index of possible facility location it's allocated to.
+     */
+    public int[] getResultAllocations() {
+<span class="nc" id="L175">        return this.algorithm.getResultAllocations();</span>
+    }
+    /**
+     * Write results (facility allocations) to a file.
+     * @param filePathInput Path to write results to.
+     */
+    public void writeAllocationsToFile(final String filePathInput) {
+
+<span class="nc" id="L183">        int[] allocations = this.getResultAllocations();</span>
+<span class="nc" id="L184">        String[] lines = new String[allocations.length + 1];</span>
+
+        // Header
+<span class="nc" id="L187">        lines[0] = &quot;demandlocation;facility\n&quot;;</span>
+        
+<span class="nc bnc" id="L189" title="All 2 branches missed.">        for (int demandLocationIdx = 1; demandLocationIdx &lt; lines.length; demandLocationIdx++) {</span>
+<span class="nc" id="L190">            String line = demandLocationIdx + &quot;;&quot; + allocations[demandLocationIdx - 1] + &quot;\n&quot;;</span>
+
+<span class="nc" id="L192">            lines[demandLocationIdx] = line;</span>
+        }
+
+    
+        
+        try {
+<span class="nc" id="L198">            writeLines(filePathInput, lines);</span>
+<span class="nc" id="L199">            System.out.println(&quot;Wrote lines to &quot; + filePathInput);</span>
+<span class="nc" id="L200">        } catch (IOException e) { </span>
+      
+<span class="nc" id="L202">            System.out.println(&quot;Problem with writing the results&quot;);</span>
+<span class="nc" id="L203">            e.printStackTrace(); </span>
+<span class="nc" id="L204">          } </span>
+
+        
+<span class="nc" id="L207">    }</span>
 
     /**
      * Check existance of cost matrix.
      * @return True/false if cost matrix is loaded.
      */
     public boolean costMatrixExists() {
-<span class="nc bnc" id="L174" title="All 2 branches missed.">        return this.costs != null;</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">        return this.costs != null;</span>
     }
 
     /**
@@ -179,7 +219,7 @@ public class Pmedian {
      * @return Algorithms as strings;
      */
     public String[] getAlgorithms() {
-<span class="nc" id="L182">        return this.algorithms;</span>
+<span class="nc" id="L222">        return this.algorithms;</span>
     }
 
 }

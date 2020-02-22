@@ -70,47 +70,90 @@ public final class CostMatrix {
      */
     public double costSumForRowset(final int[] rowset) {
         
-<span class="fc" id="L73">        double rtrn = 0, minTmp, tmp;</span>
+<span class="fc" id="L73">        double rtrn = 0, minCost, cost;</span>
 
         
 <span class="fc bfc" id="L76" title="All 2 branches covered.">        for (int col = 0; col &lt; this.costs[0].length; col++) {</span>
         
-<span class="fc" id="L78">            minTmp = Double.MAX_VALUE;</span>
+<span class="fc" id="L78">            minCost = Double.MAX_VALUE;</span>
 
 <span class="fc bfc" id="L80" title="All 2 branches covered.">            for (int row : rowset) {</span>
 
-<span class="fc" id="L82">                tmp = this.costs[row][col];</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">                if (tmp &lt; minTmp) {</span>
-<span class="fc" id="L84">                    minTmp = tmp;</span>
+<span class="fc" id="L82">                cost = this.costs[row][col];</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">                if (cost &lt; minCost) {</span>
+<span class="fc" id="L84">                    minCost = cost;</span>
                 }
             }
-<span class="fc" id="L87">            rtrn += minTmp;</span>
+<span class="fc" id="L87">            rtrn += minCost;</span>
             
         }
 
 <span class="fc" id="L91">        return rtrn;</span>
     }
     /**
+     * Find the minumum cost for each column given a set of rows.
+     * Purpose: Allocate demand locations (=columns in the matrix) to possible facility locations given 
+     * a specific solution (= a set of row indices).
+     * @param rowset Rows to find columns for.
+     * @return For each column, the index of row it's allocated to.
+     */
+    public int[] allocateColumnsToRows(final int[] rowset) {
+
+        double minCost, cost;
+<span class="nc" id="L103">        int minRow = 0;</span>
+<span class="nc" id="L104">        int[] rtrn = new int[this.costs[0].length];</span>
+
+        
+<span class="nc" id="L107">        IntegerSet[] allocatedColumns = new IntegerSet[rowset.length];</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        for (int i = 0; i &lt; rowset.length; i++) {</span>
+<span class="nc" id="L109">            allocatedColumns[i] = new IntegerSet();</span>
+        }
+        
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        for (int col = 0; col &lt; this.costs[0].length; col++) {</span>
+
+<span class="nc" id="L114">            minCost = Double.MAX_VALUE;</span>
+            
+<span class="nc bnc" id="L116" title="All 2 branches missed.">            for (int row : rowset) {</span>
+<span class="nc" id="L117">                cost = this.costs[row][col];</span>
+
+<span class="nc bnc" id="L119" title="All 2 branches missed.">                if (cost &lt; minCost) {</span>
+<span class="nc" id="L120">                    minCost = cost;</span>
+
+<span class="nc" id="L122">                    minRow = row; </span>
+                    
+                }
+            }
+<span class="nc" id="L126">            rtrn[col] = minRow;</span>
+            
+            
+            
+        }
+<span class="nc" id="L131">        return rtrn;</span>
+
+    }
+
+
+    /**
      * Getter for cost matrix.
      * @return cost matrix.
      */
     public double[][] getCosts() {
-<span class="fc" id="L98">        return this.costs;</span>
+<span class="fc" id="L141">        return this.costs;</span>
     }
     /**
      * Setter for cost matrix.
      * @param costsInput cost matrix.
      */
     public void setCosts(final double[][] costsInput) {
-<span class="nc" id="L105">        this.costs = costsInput;</span>
-<span class="nc" id="L106">    }</span>
+<span class="nc" id="L148">        this.costs = costsInput;</span>
+<span class="nc" id="L149">    }</span>
 
     /**
      * Getter for row count.
      * @return Row count of matrix.
      */
     public int getRowCount() {
-<span class="fc" id="L113">        return this.costs.length;</span>
+<span class="fc" id="L156">        return this.costs.length;</span>
     }
 
 }

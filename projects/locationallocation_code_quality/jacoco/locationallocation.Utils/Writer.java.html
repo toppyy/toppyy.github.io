@@ -19,7 +19,7 @@ public final class Writer {
 
 
     /**
-     * Writes an array of strings to given path.
+     * Used to write strings to flatfiles.
      * @param pathInput Path to write to.
      * @throws IOException Output error
      */
@@ -29,23 +29,49 @@ public final class Writer {
 <span class="nc" id="L29">    }</span>
 
     /**
+     * Used to write strings to flatfiles.
+     */
+
+<span class="nc" id="L35">    public Writer() {</span>
+        
+<span class="nc" id="L37">    }</span>
+
+
+    /**
      * Writes an array of strings to given path.
+     * @param pathInput Path to write to.
+     * @param lines Strings to write
+     * @throws IOException Output error
+     */
+
+    public static void writeLines(final String pathInput, final String[] lines) throws IOException  {
+
+<span class="nc" id="L49">        FileWriter fileWriter = new FileWriter(pathInput);</span>
+        
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        for (String st : lines) {</span>
+<span class="nc" id="L52">            fileWriter.write(st);</span>
+        }
+<span class="nc" id="L54">        fileWriter.close();</span>
+<span class="nc" id="L55">    }</span>
+
+    /**
+     * Writes a string.
      * @param st String to write
      * @throws IOException Output error
      */
 
     public void write(final String st) throws IOException  {
         
-<span class="nc" id="L39">        this.fileWriter.write(st);</span>
+<span class="nc" id="L65">        this.fileWriter.write(st);</span>
         
-<span class="nc" id="L41">    }</span>
+<span class="nc" id="L67">    }</span>
     /**
      * Close connection to file.
      * @throws IOException Output error
      */
 
     public void close() throws IOException {
-<span class="nc" id="L48">        this.fileWriter.close();</span>
-<span class="nc" id="L49">    }</span>
+<span class="nc" id="L74">        this.fileWriter.close();</span>
+<span class="nc" id="L75">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
