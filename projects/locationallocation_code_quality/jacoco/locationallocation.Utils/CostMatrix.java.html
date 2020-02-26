@@ -29,7 +29,7 @@ public final class CostMatrix {
 
 <span class="fc bfc" id="L30" title="All 2 branches covered.">            for (int idxB = 0; idxB &lt; setB.length; idxB++) {</span>
             
-<span class="fc" id="L32">                dist[idxA][idxB]  = this.calculateEuclideanDistance(setA[idxA], setB[idxB]);</span>
+<span class="fc" id="L32">                dist[idxA][idxB]  = this.calculateEuclideanDistance(setA[idxA], setB[idxB]) * setA[idxA].getW() * setB[idxB].getW();</span>
 
             }
         }
@@ -104,31 +104,26 @@ public final class CostMatrix {
 <span class="nc" id="L104">        int[] rtrn = new int[this.costs[0].length];</span>
 
         
-<span class="nc" id="L107">        IntegerSet[] allocatedColumns = new IntegerSet[rowset.length];</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">        for (int i = 0; i &lt; rowset.length; i++) {</span>
-<span class="nc" id="L109">            allocatedColumns[i] = new IntegerSet();</span>
-        }
-        
-<span class="nc bnc" id="L112" title="All 2 branches missed.">        for (int col = 0; col &lt; this.costs[0].length; col++) {</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">        for (int col = 0; col &lt; this.costs[0].length; col++) {</span>
 
-<span class="nc" id="L114">            minCost = Double.MAX_VALUE;</span>
+<span class="nc" id="L109">            minCost = Double.MAX_VALUE;</span>
             
-<span class="nc bnc" id="L116" title="All 2 branches missed.">            for (int row : rowset) {</span>
-<span class="nc" id="L117">                cost = this.costs[row][col];</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">            for (int row : rowset) {</span>
+<span class="nc" id="L112">                cost = this.costs[row][col];</span>
 
-<span class="nc bnc" id="L119" title="All 2 branches missed.">                if (cost &lt; minCost) {</span>
-<span class="nc" id="L120">                    minCost = cost;</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">                if (cost &lt; minCost) {</span>
+<span class="nc" id="L115">                    minCost = cost;</span>
 
-<span class="nc" id="L122">                    minRow = row; </span>
+<span class="nc" id="L117">                    minRow = row; </span>
                     
                 }
             }
-<span class="nc" id="L126">            rtrn[col] = minRow;</span>
+<span class="nc" id="L121">            rtrn[col] = minRow;</span>
             
             
             
         }
-<span class="nc" id="L131">        return rtrn;</span>
+<span class="nc" id="L126">        return rtrn;</span>
 
     }
 
@@ -138,22 +133,22 @@ public final class CostMatrix {
      * @return cost matrix.
      */
     public double[][] getCosts() {
-<span class="fc" id="L141">        return this.costs;</span>
+<span class="fc" id="L136">        return this.costs;</span>
     }
     /**
      * Setter for cost matrix.
      * @param costsInput cost matrix.
      */
     public void setCosts(final double[][] costsInput) {
-<span class="nc" id="L148">        this.costs = costsInput;</span>
-<span class="nc" id="L149">    }</span>
+<span class="nc" id="L143">        this.costs = costsInput;</span>
+<span class="nc" id="L144">    }</span>
 
     /**
      * Getter for row count.
      * @return Row count of matrix.
      */
     public int getRowCount() {
-<span class="fc" id="L156">        return this.costs.length;</span>
+<span class="fc" id="L151">        return this.costs.length;</span>
     }
 
 }

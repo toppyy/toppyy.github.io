@@ -18,91 +18,97 @@ public final class App {
 
     public static void main(final String[] args) {
 
-<span class="nc" id="L21">        Pmedian app = new Pmedian();</span>
+        
+
+
+
+<span class="nc" id="L25">        Pmedian app = new Pmedian();</span>
 
         // To run a simple example, try: gradle run --args &quot;example 8&quot;
-<span class="nc bnc" id="L24" title="All 2 branches missed.">        if (args.length &gt; 0) {</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">        if (args.length &gt; 0) {</span>
 
-<span class="nc bnc" id="L26" title="All 2 branches missed.">            if (args[0].equals(&quot;example&quot;)) {</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">            if (args[0].equals(&quot;example&quot;)) {</span>
 
-<span class="nc" id="L28">                Integer p = Integer.parseInt(args[1]);</span>
+<span class="nc" id="L32">                Integer p = Integer.parseInt(args[1]);</span>
 
                 // Set up
-<span class="nc" id="L31">                app.setP(p);</span>
+<span class="nc" id="L35">                app.setP(p);</span>
                 
-<span class="nc" id="L33">                app.loadDemandlocations(&quot;src/test/resources/testdata_1_demand_locations.csv&quot;);</span>
-<span class="nc" id="L34">                app.loadPossiblelocations(&quot;src/test/resources/testdata_1_facility_locations.csv&quot;);</span>
+<span class="nc" id="L37">                app.loadDemandlocations(&quot;src/test/resources/testdata_1_demand_locations.csv&quot;);</span>
+<span class="nc" id="L38">                app.loadPossiblelocations(&quot;src/test/resources/testdata_1_facility_locations.csv&quot;);</span>
 
-<span class="nc" id="L36">                app.calculateCostMatrix();</span>
+<span class="nc" id="L40">                app.calculateCostMatrix();</span>
 
                 // Solve with all algorithms
-<span class="nc" id="L39">                app.setSolverToTeitzBart();</span>
-<span class="nc" id="L40">                app.solve();</span>
-<span class="nc" id="L41">                double costTB = app.getResultCost();</span>
+<span class="nc" id="L43">                app.setSolverToTeitzBart();</span>
+<span class="nc" id="L44">                app.solve();</span>
+<span class="nc" id="L45">                double costTB = app.getResultCost();</span>
 
-<span class="nc" id="L43">                app.writeAllocationsToFile(&quot;/home/tob/Desktop/dump/RES_TB.csv&quot;);</span>
+<span class="nc" id="L47">                app.writeAllocationsToFile(&quot;RES_TB.csv&quot;);</span>
 
-<span class="nc" id="L45">                app.setSolverToGRIA();</span>
-<span class="nc" id="L46">                app.solve();</span>
-<span class="nc" id="L47">                double costGRIA = app.getResultCost();</span>
-
-<span class="nc" id="L49">                app.setSolverToNaive();</span>
+<span class="nc" id="L49">                app.setSolverToGRIA();</span>
 <span class="nc" id="L50">                app.solve();</span>
-<span class="nc" id="L51">                double costNaive = app.getResultCost();</span>
+<span class="nc" id="L51">                double costGRIA = app.getResultCost();</span>
 
-<span class="nc" id="L53">                app.writeAllocationsToFile(&quot;/home/tob/Desktop/dump/RES_NAIVE.csv&quot;);</span>
+<span class="nc" id="L53">                app.writeAllocationsToFile(&quot;RES_GRIA.csv&quot;);</span>
 
-<span class="nc" id="L55">                System.out.println(&quot;Total cost of solution:&quot;);</span>
-<span class="nc" id="L56">                System.out.println(&quot;TB: &quot; + costTB);</span>
-<span class="nc" id="L57">                System.out.println(&quot;GRIA: &quot; + costGRIA);</span>
-<span class="nc" id="L58">                System.out.println(&quot;Naive: &quot; + costNaive);</span>
+<span class="nc" id="L55">                app.setSolverToNaive();</span>
+<span class="nc" id="L56">                app.solve();</span>
+<span class="nc" id="L57">                double costNaive = app.getResultCost();</span>
+
+<span class="nc" id="L59">                app.writeAllocationsToFile(&quot;RES_NAIVE.csv&quot;);</span>
+
+<span class="nc" id="L61">                System.out.println(&quot;Total cost of solution:&quot;);</span>
+<span class="nc" id="L62">                System.out.println(&quot;TB: &quot; + costTB);</span>
+<span class="nc" id="L63">                System.out.println(&quot;GRIA: &quot; + costGRIA);</span>
+<span class="nc" id="L64">                System.out.println(&quot;Naive: &quot; + costNaive);</span>
                 
             }
 
-<span class="nc bnc" id="L62" title="All 2 branches missed.">            if (args[0].equals(&quot;perf&quot;)) {</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">            if (args[0].equals(&quot;perf&quot;)) {</span>
 
-<span class="nc" id="L64">                String outputfolder = args[1];                </span>
+<span class="nc" id="L70">                String outputfolder = args[1];                </span>
 
                 // Test quality and performance
-<span class="nc" id="L67">                System.out.println(&quot;Running performance tests..&quot;);</span>
+<span class="nc" id="L73">                System.out.println(&quot;Running performance tests..&quot;);</span>
 
-<span class="nc" id="L69">                Reporter report = new Reporter();</span>
+<span class="nc" id="L75">                Reporter report = new Reporter();</span>
 
                 // Large tests
                 
-<span class="nc" id="L73">                String[] algorithms = {&quot;TB&quot;, &quot;GRIA&quot;};</span>
-<span class="nc" id="L74">                int[] limits = {2, 25};</span>
+<span class="nc" id="L79">                String[] algorithms = {&quot;TB&quot;, &quot;GRIA&quot;};</span>
+<span class="nc" id="L80">                int[] limits = {2, 25};</span>
 
-<span class="nc" id="L76">                report.setPlimits(limits);</span>
-<span class="nc" id="L77">                Testresult[] largeTests = report.runTests(algorithms, 50, 300, 10);</span>
+<span class="nc" id="L82">                report.setPlimits(limits);</span>
+<span class="nc" id="L83">                Testresult[] largeTests = report.runTests(algorithms, 50, 300, 10);</span>
 
                 
-<span class="nc" id="L80">                report.writeResults(outputfolder + &quot;/large tests with iterations.txt&quot;);</span>
+<span class="nc" id="L86">                report.writeResults(outputfolder + &quot;/large tests with iterations.txt&quot;);</span>
 
             
                 // Small tests
 
 
-<span class="nc" id="L86">                String[] algorithmsSmall = {&quot;TB&quot;, &quot;GRIA&quot;, &quot;Naive&quot;};</span>
-<span class="nc" id="L87">                int[] limitsSmall = {2, 7};</span>
+<span class="nc" id="L92">                String[] algorithmsSmall = {&quot;TB&quot;, &quot;GRIA&quot;, &quot;Naive&quot;};</span>
+<span class="nc" id="L93">                int[] limitsSmall = {2, 7};</span>
 
-<span class="nc" id="L89">                report.setPlimits(limitsSmall);</span>
+<span class="nc" id="L95">                report.setPlimits(limitsSmall);</span>
 
-<span class="nc" id="L91">                Testresult[] smallTests = report.runTests(algorithmsSmall, 20, 300, 10);</span>
+<span class="nc" id="L97">                Testresult[] smallTests = report.runTests(algorithmsSmall, 20, 300, 10);</span>
                 
-<span class="nc" id="L93">                report.writeResults(outputfolder + &quot;/small tests with iterations.txt&quot;);</span>
+<span class="nc" id="L99">                report.writeResults(outputfolder + &quot;/small tests with iterations.txt&quot;);</span>
 
-<span class="nc" id="L95">                System.out.println(&quot;... tests done.&quot;);</span>
+<span class="nc" id="L101">                System.out.println(&quot;... tests done.&quot;);</span>
             
 
-<span class="nc" id="L98">            }</span>
+<span class="nc" id="L104">            }</span>
     
         } else {
 
-<span class="nc" id="L102">            GUI application = new GUI(app);</span>
+<span class="nc" id="L108">            GUI application = new GUI(app);</span>
 
-<span class="nc" id="L104">            application.start();</span>
+<span class="nc" id="L110">            application.start();</span>
         }
-<span class="nc" id="L106">    }</span>
+<span class="nc" id="L112">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

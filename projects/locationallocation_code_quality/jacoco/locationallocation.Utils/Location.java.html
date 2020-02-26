@@ -5,37 +5,63 @@
 */
 
 public class Location {
+    /**
+     * Id.
+     */
+    private final String id;
 
     /**
-     * Coordinates of location.
+     * Coordinates and weight of location.
      */
-    private final double x, y;
+    private final double x, y, w;
 
     /**
      * Creates a Location.
+     * @param idInput Input for location id.
      * @param inputX X-coordinate.
      * @param inputY Y-coordinate.
      */
-<span class="fc" id="L19">    public Location(final double inputX, final double inputY) {</span>
-<span class="fc" id="L20">        this.x = inputX;</span>
-<span class="fc" id="L21">        this.y = inputY;</span>
-<span class="fc" id="L22">    }</span>
+<span class="fc" id="L24">    public Location(final String idInput, final double inputX, final double inputY) {</span>
+<span class="fc" id="L25">        this.id = idInput;</span>
+<span class="fc" id="L26">        this.x = inputX;</span>
+<span class="fc" id="L27">        this.y = inputY;</span>
+<span class="fc" id="L28">        this.w = 1;</span>
+<span class="fc" id="L29">    }</span>
 
+    /**
+     * Creates a Location.
+     * @param idInput Input for location id.
+     * @param inputX X-coordinate.
+     * @param inputY Y-coordinate.
+     * @param inputW Weight. Used in demand locations to weight distances.
+     */
+<span class="fc" id="L38">    public Location(final String idInput, final double inputX, final double inputY, final double inputW) {</span>
+<span class="fc" id="L39">        this.id = idInput;</span>
+<span class="fc" id="L40">        this.x = inputX;</span>
+<span class="fc" id="L41">        this.y = inputY;</span>
+<span class="fc" id="L42">        this.w = inputW;</span>
+<span class="fc" id="L43">    }</span>
+    
+    public final String getId() {
+<span class="nc" id="L46">        return this.id;</span>
+    }
 
-     
+    public final double getW() {
+<span class="fc" id="L50">        return this.w;</span>
+    }
 
     
     public final double[] getCoordinates()  {
 
-<span class="fc" id="L30">        double[] rtrn = {this.x, this.y};</span>
-<span class="fc" id="L31">        return rtrn;</span>
+<span class="fc" id="L56">        double[] rtrn = {this.x, this.y};</span>
+<span class="fc" id="L57">        return rtrn;</span>
     }
 
     public final double getX() {
-<span class="fc" id="L35">        return this.x;</span>
+<span class="fc" id="L61">        return this.x;</span>
     }
     public final double getY() {
-<span class="fc" id="L38">        return this.y;</span>
+<span class="fc" id="L64">        return this.y;</span>
     }
 
 

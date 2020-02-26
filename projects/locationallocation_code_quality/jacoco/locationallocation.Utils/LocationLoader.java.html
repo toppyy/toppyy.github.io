@@ -21,6 +21,7 @@ public class LocationLoader  {
      * Store information of existance of header.
      */
     private boolean header;
+    
 
     /**
      * Reads flat files into sets of locations.
@@ -28,10 +29,11 @@ public class LocationLoader  {
      * @param headerInput true/false. Does the file have a header? If true, first row is not read.
      */
     
-<span class="fc" id="L31">    public LocationLoader(final String pathInput, final boolean headerInput)  {</span>
-<span class="fc" id="L32">        this.file =  new File(pathInput); </span>
-<span class="fc" id="L33">        this.header = headerInput;</span>
-<span class="fc" id="L34">    }</span>
+<span class="fc" id="L32">    public LocationLoader(final String pathInput, final boolean headerInput)  {</span>
+<span class="fc" id="L33">        this.file =  new File(pathInput); </span>
+<span class="fc" id="L34">        this.header = headerInput;</span>
+<span class="fc" id="L35">    }</span>
+    
 
     
     /** 
@@ -41,17 +43,17 @@ public class LocationLoader  {
      */
     public ArrayList readFile() throws FileNotFoundException {
         
-<span class="fc" id="L44">        Scanner sc = new Scanner(file); </span>
+<span class="fc" id="L46">        Scanner sc = new Scanner(file); </span>
 
-<span class="fc" id="L46">        ArrayList rows = new ArrayList();</span>
+<span class="fc" id="L48">        ArrayList rows = new ArrayList();</span>
 
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        while (sc.hasNextLine()) {</span>
-<span class="fc" id="L49">            rows.add(sc.nextLine());</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        while (sc.hasNextLine()) {</span>
+<span class="fc" id="L51">            rows.add(sc.nextLine());</span>
         }
 
-<span class="fc" id="L52">        sc.close();</span>
+<span class="fc" id="L54">        sc.close();</span>
 
-<span class="fc" id="L54">        return rows;</span>
+<span class="fc" id="L56">        return rows;</span>
     }
 
    
@@ -61,40 +63,54 @@ public class LocationLoader  {
     /** 
      * Read a file as locations.
      * Reads a flat file into a list of rows. Converts each row into a Location.
+     * Expected format is:
+     *  id;x;y;w
+     * Content: id for location, x- and y-coordinates and optional weight.
+     * 
      * @return Location[]
      */
     public Location[] loadAsLocations() {
 
         try { 
 
-<span class="fc" id="L70">            ArrayList lines = readFile();</span>
+<span class="fc" id="L76">            ArrayList lines = readFile();</span>
             
             // If header is true, skip first row
-<span class="fc" id="L73">            int startRow = 0;</span>
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">            if (this.header)  {</span>
-<span class="fc" id="L75">                startRow = 1;</span>
+<span class="fc" id="L79">            int startRow = 0;</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">            if (this.header)  {</span>
+<span class="fc" id="L81">                startRow = 1;</span>
             }
 
-<span class="fc" id="L78">            Location[] locations = new Location[lines.size() - startRow];</span>
+<span class="fc" id="L84">            Location[] locations = new Location[lines.size() - startRow];</span>
 
 
-<span class="fc bfc" id="L81" title="All 2 branches covered.">            for (int i = startRow; i &lt; lines.size(); i++) {</span>
-<span class="fc" id="L82">                String[] columns = lines.get(i).split(&quot;;&quot;);</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            for (int i = startRow; i &lt; lines.size(); i++) {</span>
 
-<span class="fc" id="L84">                double x = Double.parseDouble(columns[1]);</span>
-<span class="fc" id="L85">                double y = Double.parseDouble(columns[2]);</span>
+<span class="fc" id="L89">                String[] columns = lines.get(i).split(&quot;;&quot;);</span>
 
-<span class="fc" id="L87">                locations[i - startRow] = new Location(x, y);</span>
+<span class="fc" id="L91">                String id = columns[0];</span>
+
+<span class="fc" id="L93">                double x = Double.parseDouble(columns[1]);</span>
+<span class="fc" id="L94">                double y = Double.parseDouble(columns[2]);</span>
+
+<span class="fc" id="L96">                double w = 1;</span>
+
+                
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">                if (columns.length &gt; 3) {</span>
+<span class="nc" id="L100">                    w = Double.parseDouble(columns[3]);</span>
+                }
+
+<span class="fc" id="L103">                locations[i - startRow] = new Location(id, x, y, w);</span>
             }
 
-<span class="fc" id="L90">            return locations;</span>
+<span class="fc" id="L106">            return locations;</span>
 
-<span class="nc" id="L92">        } catch (IOException e) { </span>
+<span class="nc" id="L108">        } catch (IOException e) { </span>
       
-<span class="nc" id="L94">          System.out.println(&quot;Problem with reading the file&quot;);</span>
-<span class="nc" id="L95">          e.printStackTrace(); </span>
-<span class="nc" id="L96">          Location[] rtrn = new Location[0];</span>
-<span class="nc" id="L97">          return rtrn;</span>
+<span class="nc" id="L110">          System.out.println(&quot;Problem with reading the file&quot;);</span>
+<span class="nc" id="L111">          e.printStackTrace(); </span>
+<span class="nc" id="L112">          Location[] rtrn = new Location[0];</span>
+<span class="nc" id="L113">          return rtrn;</span>
         } 
 
     }

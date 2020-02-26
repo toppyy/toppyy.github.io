@@ -176,42 +176,49 @@ public class Pmedian {
     }
     /**
      * Write results (facility allocations) to a file.
+     * Output is a CSV-file containing two columns: one for demand location and another for the facility it's allocated to.
      * @param filePathInput Path to write results to.
      */
     public void writeAllocationsToFile(final String filePathInput) {
 
-<span class="nc" id="L183">        int[] allocations = this.getResultAllocations();</span>
-<span class="nc" id="L184">        String[] lines = new String[allocations.length + 1];</span>
+<span class="nc" id="L184">        int[] allocations = this.getResultAllocations();</span>
+<span class="nc" id="L185">        String[] lines = new String[allocations.length + 1];</span>
 
         // Header
-<span class="nc" id="L187">        lines[0] = &quot;demandlocation;facility\n&quot;;</span>
+<span class="nc" id="L188">        lines[0] = &quot;demandlocation;facility\n&quot;;</span>
         
-<span class="nc bnc" id="L189" title="All 2 branches missed.">        for (int demandLocationIdx = 1; demandLocationIdx &lt; lines.length; demandLocationIdx++) {</span>
-<span class="nc" id="L190">            String line = demandLocationIdx + &quot;;&quot; + allocations[demandLocationIdx - 1] + &quot;\n&quot;;</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">        for (int demandLocationIdx = 0; demandLocationIdx &lt; this.demandLocations.length; demandLocationIdx++) {</span>
 
-<span class="nc" id="L192">            lines[demandLocationIdx] = line;</span>
+<span class="nc" id="L192">            int idx = allocations[demandLocationIdx];</span>
+
+<span class="nc" id="L194">            String demandLocationId     = this.demandLocations[demandLocationIdx].getId();</span>
+<span class="nc" id="L195">            String facilityLocationId   = this.possibleLocations[idx].getId();</span>
+
+<span class="nc" id="L197">            String line = demandLocationId + &quot;;&quot; + facilityLocationId + &quot;\n&quot;;</span>
+
+<span class="nc" id="L199">            lines[demandLocationIdx + 1] = line;</span>
         }
 
     
         
         try {
-<span class="nc" id="L198">            writeLines(filePathInput, lines);</span>
-<span class="nc" id="L199">            System.out.println(&quot;Wrote lines to &quot; + filePathInput);</span>
-<span class="nc" id="L200">        } catch (IOException e) { </span>
+<span class="nc" id="L205">            writeLines(filePathInput, lines);</span>
+<span class="nc" id="L206">            System.out.println(&quot;Wrote lines to &quot; + filePathInput);</span>
+<span class="nc" id="L207">        } catch (IOException e) { </span>
       
-<span class="nc" id="L202">            System.out.println(&quot;Problem with writing the results&quot;);</span>
-<span class="nc" id="L203">            e.printStackTrace(); </span>
-<span class="nc" id="L204">          } </span>
+<span class="nc" id="L209">            System.out.println(&quot;Problem with writing the results&quot;);</span>
+<span class="nc" id="L210">            e.printStackTrace(); </span>
+<span class="nc" id="L211">          } </span>
 
         
-<span class="nc" id="L207">    }</span>
+<span class="nc" id="L214">    }</span>
 
     /**
      * Check existance of cost matrix.
      * @return True/false if cost matrix is loaded.
      */
     public boolean costMatrixExists() {
-<span class="nc bnc" id="L214" title="All 2 branches missed.">        return this.costs != null;</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">        return this.costs != null;</span>
     }
 
     /**
@@ -219,7 +226,7 @@ public class Pmedian {
      * @return Algorithms as strings;
      */
     public String[] getAlgorithms() {
-<span class="nc" id="L222">        return this.algorithms;</span>
+<span class="nc" id="L229">        return this.algorithms;</span>
     }
 
 }

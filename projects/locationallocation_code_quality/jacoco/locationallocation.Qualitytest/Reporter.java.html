@@ -86,11 +86,11 @@ public class Reporter {
 
 
 <span class="fc bfc" id="L88" title="All 2 branches covered.">        for (int i = 0; i &lt; candidates; i++) {</span>
-<span class="fc" id="L89">            testLocations1[i] = new Location(this.randomNumber(), this.randomNumber());</span>
+<span class="fc" id="L89">            testLocations1[i] = new Location(&quot;IDC&quot; + i, this.randomNumber(), this.randomNumber());</span>
         }
 
 <span class="fc bfc" id="L92" title="All 2 branches covered.">        for (int i = 0; i &lt; demandlocations; i++) {</span>
-<span class="fc" id="L93">            testLocations2[i] = new Location(this.randomNumber(), this.randomNumber());</span>
+<span class="fc" id="L93">            testLocations2[i] = new Location(&quot;IDD&quot; + i, this.randomNumber(), this.randomNumber());</span>
         }
       
         // Calculate distance matrix

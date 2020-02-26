@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InputFileChooserListener.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation.UI.ActionListeners</a> &gt; <span class="el_source">InputFileChooserListener.java</span></div><h1>InputFileChooserListener.java</h1><pre class="source lang-java linenums">package locationallocation.UI.ActionListeners;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JFileChooser;
+
+import java.io.File;
+
+import locationallocation.Domain.Pmedian;
+import locationallocation.UI.GUI;
+
+/**
+ * File chooser.
+ */
+public class InputFileChooserListener implements ActionListener {
+    /**
+     * Is it demand or possible.
+     */
+    private String which;
+    private Pmedian app;
+    private GUI ui;
+
+<span class="nc" id="L23">    public InputFileChooserListener(final GUI uiInput, final Pmedian appInput, final String whichInput) {</span>
+     
+<span class="nc" id="L25">        this.app = appInput;</span>
+<span class="nc" id="L26">        this.ui = uiInput;</span>
+<span class="nc" id="L27">        this.which = whichInput;</span>
+    
+<span class="nc" id="L29">    }</span>
+    /**
+     * On file choose, load file content as demand/possible locations.
+     * @param e Event.
+     */
+    public void actionPerformed(final ActionEvent e) {
+        
+<span class="nc" id="L36">        JFileChooser fileChooser = new JFileChooser();</span>
+
+<span class="nc" id="L38">        int result = fileChooser.showOpenDialog(this.ui);</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        if (result == JFileChooser.APPROVE_OPTION) {</span>
+
+<span class="nc" id="L41">            File selectedFile = fileChooser.getSelectedFile();</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">            if (this.which.equals(&quot;demand&quot;)) {</span>
+<span class="nc" id="L43">                this.app.loadDemandlocations(selectedFile.getAbsolutePath());</span>
+            }
+<span class="nc bnc" id="L45" title="All 2 branches missed.">            if (this.which.equals(&quot;possible&quot;)) {</span>
+<span class="nc" id="L46">                this.app.loadPossiblelocations(selectedFile.getAbsolutePath());</span>
+            }
+
+<span class="nc" id="L49">            this.ui.updateStatus(&quot;locations&quot;);</span>
+
+        }
+
+        
+<span class="nc" id="L54">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
