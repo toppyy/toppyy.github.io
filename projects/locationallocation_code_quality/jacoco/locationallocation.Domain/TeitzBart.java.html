@@ -14,13 +14,11 @@ import locationallocation.Utils.Location;
 
 public class TeitzBart extends Solver {
 
-    /**
-     * Solves the P-median problem with TeitzBart algorithm.
-     */
-    public TeitzBart() {
-<span class="fc" id="L21">        super(&quot;TeitzBart&quot;);</span>
 
-<span class="fc" id="L23">    }</span>
+    public TeitzBart() {
+<span class="fc" id="L19">        super(&quot;TeitzBart&quot;); // Name of algorithm.</span>
+
+<span class="fc" id="L21">    }</span>
     /**
      * Solve with params.
      * @param pnInput Number of facilities to allocate
@@ -30,10 +28,10 @@ public class TeitzBart extends Solver {
     public int[] solveWithParams(final CostMatrix costMatrixInput, final int pnInput) {
         
 
-<span class="fc" id="L33">        this.setCosts(costMatrixInput);</span>
-<span class="fc" id="L34">        this.setP(pnInput);</span>
+<span class="fc" id="L31">        this.setCosts(costMatrixInput);</span>
+<span class="fc" id="L32">        this.setP(pnInput);</span>
 
-<span class="fc" id="L36">        return this.solve();</span>
+<span class="fc" id="L34">        return this.solve();</span>
 
     }
     /**
@@ -42,7 +40,7 @@ public class TeitzBart extends Solver {
      */
     public void setPossibleLocations(final Location[] facilitiesInput) {
         
-<span class="nc" id="L45">    }</span>
+<span class="nc" id="L43">    }</span>
 
     /** 
      * Returns a set of facilities consired as the &quot;optimal&quot; locations based on demand.
@@ -51,33 +49,33 @@ public class TeitzBart extends Solver {
      */
     public int[] solve() {
 
-<span class="fc" id="L54">        int newcandidate = -1;</span>
+<span class="fc" id="L52">        int newcandidate = -1;</span>
         double toTestAgainst;
 
-<span class="fc" id="L57">        CostMatrix costs = this.getCosts();</span>
-<span class="fc" id="L58">        int pn = this.getP();</span>
+<span class="fc" id="L55">        CostMatrix costs = this.getCosts();</span>
+<span class="fc" id="L56">        int pn = this.getP();</span>
 
 
         // Init with first pn locations
-<span class="fc" id="L62">        int[] initialSet = new int[pn];</span>
-<span class="fc" id="L63">        int[] initialCandidates = new int[costs.getRowCount() - pn];</span>
+<span class="fc" id="L60">        int[] initialSet = new int[pn];</span>
+<span class="fc" id="L61">        int[] initialCandidates = new int[costs.getRowCount() - pn];</span>
 
-<span class="fc" id="L65">        int ci = 0;</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">        for (int i = 0; i &lt; costs.getRowCount(); i++) {</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">            if (i &lt; pn) {</span>
-<span class="fc" id="L68">                initialSet[i] = i;</span>
+<span class="fc" id="L63">        int ci = 0;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        for (int i = 0; i &lt; costs.getRowCount(); i++) {</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">            if (i &lt; pn) {</span>
+<span class="fc" id="L66">                initialSet[i] = i;</span>
             } else {
-<span class="fc" id="L70">                initialCandidates[ci] = i;</span>
-<span class="fc" id="L71">                ci++;</span>
+<span class="fc" id="L68">                initialCandidates[ci] = i;</span>
+<span class="fc" id="L69">                ci++;</span>
             }
         }
 
 
-<span class="fc" id="L76">        IntegerSet solutions  = new IntegerSet(initialSet);</span>
-<span class="fc" id="L77">        IntegerSet candidates = new IntegerSet(initialCandidates);</span>
+<span class="fc" id="L74">        IntegerSet solutions  = new IntegerSet(initialSet);</span>
+<span class="fc" id="L75">        IntegerSet candidates = new IntegerSet(initialCandidates);</span>
         
-<span class="fc" id="L79">        double minOfTests = Double.MAX_VALUE, testsum;</span>
-<span class="fc" id="L80">        int toBeReplaced = -1;</span>
+<span class="fc" id="L77">        double minOfTests = Double.MAX_VALUE, testsum;</span>
+<span class="fc" id="L78">        int toBeReplaced = -1;</span>
 
 
         // For each candidate
@@ -85,41 +83,41 @@ public class TeitzBart extends Solver {
         //  - Find minimum cost
         //  - If lower than before any replacement, persist change
 
-<span class="fc bfc" id="L88" title="All 2 branches covered.">        while (!candidates.isEmpty()) {</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        while (!candidates.isEmpty()) {</span>
             
         
-<span class="fc" id="L91">            toTestAgainst = costs.costSumForRowset(solutions);</span>
+<span class="fc" id="L89">            toTestAgainst = costs.costSumForRowset(solutions);</span>
 
-<span class="fc" id="L93">            newcandidate = candidates.pop();</span>
+<span class="fc" id="L91">            newcandidate = candidates.pop();</span>
 
-<span class="fc" id="L95">            int[] testSet = solutions.getIntegers();</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">            for (int i = 0; i &lt; testSet.length; i++) {</span>
+<span class="fc" id="L93">            int[] testSet = solutions.getIntegers();</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">            for (int i = 0; i &lt; testSet.length; i++) {</span>
 
 
-<span class="fc" id="L99">                int[] tmp = testSet.clone();</span>
-<span class="fc" id="L100">                tmp[i] = newcandidate;</span>
+<span class="fc" id="L97">                int[] tmp = testSet.clone();</span>
+<span class="fc" id="L98">                tmp[i] = newcandidate;</span>
 
-<span class="fc" id="L102">                testsum = costs.costSumForRowset(tmp);</span>
+<span class="fc" id="L100">                testsum = costs.costSumForRowset(tmp);</span>
                 
-<span class="fc bfc" id="L104" title="All 2 branches covered.">                if (testsum &lt; minOfTests) {</span>
-<span class="fc" id="L105">                    minOfTests      = testsum;</span>
-<span class="fc" id="L106">                    toBeReplaced = testSet[i];</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">                if (testsum &lt; minOfTests) {</span>
+<span class="fc" id="L103">                    minOfTests      = testsum;</span>
+<span class="fc" id="L104">                    toBeReplaced = testSet[i];</span>
                 }
                 
             }
             // If better solution is found, change set 
-<span class="fc bfc" id="L111" title="All 2 branches covered.">            if (minOfTests &lt; toTestAgainst) {</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">            if (minOfTests &lt; toTestAgainst) {</span>
                 
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">                if (solutions.setChange(toBeReplaced, newcandidate)) {</span>
-<span class="fc" id="L114">                    candidates.add(toBeReplaced);</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">                if (solutions.setChange(toBeReplaced, newcandidate)) {</span>
+<span class="fc" id="L112">                    candidates.add(toBeReplaced);</span>
                 }
             }
-<span class="fc" id="L117">        }</span>
+<span class="fc" id="L115">        }</span>
         
-<span class="fc" id="L119">        this.setResultCost(costs.costSumForRowset(solutions));</span>
-<span class="fc" id="L120">        this.setResult(solutions);</span>
+<span class="fc" id="L117">        this.setResultCost(costs.costSumForRowset(solutions));</span>
+<span class="fc" id="L118">        this.setResult(solutions);</span>
 
-<span class="fc" id="L122">       return this.getResult();</span>
+<span class="fc" id="L120">       return this.getResult();</span>
     }
 
 }

@@ -14,24 +14,18 @@ import locationallocation.Utils.CostMatrix;
 public class GRIA extends Solver {
 
    
-    /**
-     * Holds facilities.
-     */
     private Location[] facilities;
 
-    /**
-     * Solves the P-median problem with GRIA algorithm.
-     */
     public GRIA() {
-<span class="fc" id="L26">        super(&quot;GRIA&quot;);</span>
-<span class="fc" id="L27">    }</span>
+<span class="fc" id="L20">        super(&quot;GRIA&quot;); // Name of algorithm.</span>
+<span class="fc" id="L21">    }</span>
     /**
      * Setter for possible facilities.
      * @param facilitiesInput Possible facilities to allocate.
      */
     public void setPossibleLocations(final Location[] facilitiesInput) {
-<span class="fc" id="L33">        this.facilities = facilitiesInput;</span>
-<span class="fc" id="L34">    }</span>
+<span class="fc" id="L27">        this.facilities = facilitiesInput;</span>
+<span class="fc" id="L28">    }</span>
     /**
      * Solve with params.
      * @param pnInput Number of facilities to allocate
@@ -41,10 +35,10 @@ public class GRIA extends Solver {
     public int[] solveWithParams(final CostMatrix costMatrixInput, final int pnInput) {
         
 
-<span class="fc" id="L44">        this.setCosts(costMatrixInput);</span>
-<span class="fc" id="L45">        this.setP(pnInput);</span>
+<span class="fc" id="L38">        this.setCosts(costMatrixInput);</span>
+<span class="fc" id="L39">        this.setP(pnInput);</span>
 
-<span class="fc" id="L47">        return this.solve();</span>
+<span class="fc" id="L41">        return this.solve();</span>
 
     }
 
@@ -55,32 +49,32 @@ public class GRIA extends Solver {
      */
     public int[] solve() {
         
-<span class="fc" id="L58">        int[] emptyArray = {};</span>
+<span class="fc" id="L52">        int[] emptyArray = {};</span>
 
-<span class="fc" id="L60">        IntegerSet solution  = new IntegerSet(emptyArray), candidates = new IntegerSet(emptyArray);</span>
+<span class="fc" id="L54">        IntegerSet solution  = new IntegerSet(emptyArray), candidates = new IntegerSet(emptyArray);</span>
 
         // Create initial solution and candidates
         // Initial solution is the first P facilities, candidates are facilities not in the initial solution
 
-<span class="fc bfc" id="L65" title="All 2 branches covered.">        for (int i = 0; i &lt; this.getCosts().getRowCount(); i++) {</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">            if (i &lt; this.getP()) {</span>
-<span class="fc" id="L67">                solution.add(i);</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        for (int i = 0; i &lt; this.getCosts().getRowCount(); i++) {</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            if (i &lt; this.getP()) {</span>
+<span class="fc" id="L61">                solution.add(i);</span>
             } else {
-<span class="fc" id="L69">                candidates.add(i);</span>
+<span class="fc" id="L63">                candidates.add(i);</span>
             }
         }
         
         // Global interchange
-<span class="fc" id="L74">        IntegerSet[] returnFromGlobalInterchange = globalExhance(solution, candidates);</span>
+<span class="fc" id="L68">        IntegerSet[] returnFromGlobalInterchange = globalExhance(solution, candidates);</span>
 
 
         // Regional interchange
-<span class="fc" id="L78">        IntegerSet returnFromRegionalInterChange = regionalExchange(returnFromGlobalInterchange[0], returnFromGlobalInterchange[1]);</span>
+<span class="fc" id="L72">        IntegerSet returnFromRegionalInterChange = regionalExchange(returnFromGlobalInterchange[0], returnFromGlobalInterchange[1]);</span>
       
-<span class="fc" id="L80">        this.setResultCost(this.getCosts().costSumForRowset(returnFromRegionalInterChange));</span>
-<span class="fc" id="L81">        this.setResult(returnFromRegionalInterChange);</span>
+<span class="fc" id="L74">        this.setResultCost(this.getCosts().costSumForRowset(returnFromRegionalInterChange));</span>
+<span class="fc" id="L75">        this.setResult(returnFromRegionalInterChange);</span>
 
-<span class="fc" id="L83">        return this.getResult();</span>
+<span class="fc" id="L77">        return this.getResult();</span>
     }   
 
 
@@ -99,71 +93,71 @@ public class GRIA extends Solver {
 
         
 
-<span class="fc" id="L102">        IntegerSet solution = initialSolution, candidates = initialCandidates;</span>
+<span class="fc" id="L96">        IntegerSet solution = initialSolution, candidates = initialCandidates;</span>
 
-<span class="fc" id="L104">        boolean bestObjectiveFunctionLessThanPreviousBest = true;</span>
-<span class="fc" id="L105">        double beforeDrop, toDropMin = Double.MAX_VALUE, toAddMin = Double.MAX_VALUE, tmp, afterDropAdd;</span>
-<span class="fc" id="L106">        int  toDrop = 0, toAdd = 0;</span>
+<span class="fc" id="L98">        boolean bestObjectiveFunctionLessThanPreviousBest = true;</span>
+<span class="fc" id="L99">        double beforeDrop, toDropMin = Double.MAX_VALUE, toAddMin = Double.MAX_VALUE, tmp, afterDropAdd;</span>
+<span class="fc" id="L100">        int  toDrop = 0, toAdd = 0;</span>
 
-<span class="fc bfc" id="L108" title="All 2 branches covered.">        while (bestObjectiveFunctionLessThanPreviousBest) {</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        while (bestObjectiveFunctionLessThanPreviousBest) {</span>
 
-<span class="fc" id="L110">            beforeDrop = this.getCosts().costSumForRowset(solution);</span>
+<span class="fc" id="L104">            beforeDrop = this.getCosts().costSumForRowset(solution);</span>
    
             // Find best facility to drop
-<span class="fc" id="L113">            toDropMin = Double.MAX_VALUE;</span>
-<span class="fc bfc" id="L114" title="All 2 branches covered.">            for (int i = 0; i &lt; solution.getSetSize(); i++) {</span>
-<span class="fc" id="L115">                IntegerSet withoutISolution = new IntegerSet(solution);</span>
+<span class="fc" id="L107">            toDropMin = Double.MAX_VALUE;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">            for (int i = 0; i &lt; solution.getSetSize(); i++) {</span>
+<span class="fc" id="L109">                IntegerSet withoutISolution = new IntegerSet(solution);</span>
                 
-<span class="fc" id="L117">                withoutISolution.removeByIndex(i);</span>
-<span class="fc" id="L118">                tmp =  this.getCosts().costSumForRowset(withoutISolution);</span>
+<span class="fc" id="L111">                withoutISolution.removeByIndex(i);</span>
+<span class="fc" id="L112">                tmp =  this.getCosts().costSumForRowset(withoutISolution);</span>
                 
-<span class="fc bfc" id="L120" title="All 2 branches covered.">                if (tmp &lt; toDropMin) {</span>
-<span class="fc" id="L121">                    toDropMin = tmp;</span>
-<span class="fc" id="L122">                    toDrop    = solution.getIntegerByIndex(i);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">                if (tmp &lt; toDropMin) {</span>
+<span class="fc" id="L115">                    toDropMin = tmp;</span>
+<span class="fc" id="L116">                    toDrop    = solution.getIntegerByIndex(i);</span>
                 }
             }
         
-<span class="fc" id="L126">            IntegerSet solutionAfterDrop = new IntegerSet(solution);</span>
-<span class="fc" id="L127">            solutionAfterDrop.remove(toDrop);</span>
+<span class="fc" id="L120">            IntegerSet solutionAfterDrop = new IntegerSet(solution);</span>
+<span class="fc" id="L121">            solutionAfterDrop.remove(toDrop);</span>
 
             // Find the best facility to add
-<span class="fc" id="L130">            toAddMin = Double.MAX_VALUE;</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">            for (int i = 0; i &lt; candidates.getSetSize(); i++) {</span>
+<span class="fc" id="L124">            toAddMin = Double.MAX_VALUE;</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">            for (int i = 0; i &lt; candidates.getSetSize(); i++) {</span>
 
-<span class="fc" id="L133">                IntegerSet withISolution = new IntegerSet(solutionAfterDrop);</span>
+<span class="fc" id="L127">                IntegerSet withISolution = new IntegerSet(solutionAfterDrop);</span>
 
-<span class="fc" id="L135">                int candidate = candidates.getIntegerByIndex(i);</span>
-<span class="fc" id="L136">                withISolution.add(candidate);</span>
+<span class="fc" id="L129">                int candidate = candidates.getIntegerByIndex(i);</span>
+<span class="fc" id="L130">                withISolution.add(candidate);</span>
             
-<span class="fc" id="L138">                tmp =  this.getCosts().costSumForRowset(withISolution);</span>
+<span class="fc" id="L132">                tmp =  this.getCosts().costSumForRowset(withISolution);</span>
  
-<span class="fc bfc" id="L140" title="All 2 branches covered.">                if (tmp &lt; toAddMin) {</span>
-<span class="fc" id="L141">                    toAddMin = tmp;</span>
-<span class="fc" id="L142">                    toAdd    = candidate;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">                if (tmp &lt; toAddMin) {</span>
+<span class="fc" id="L135">                    toAddMin = tmp;</span>
+<span class="fc" id="L136">                    toAdd    = candidate;</span>
                 }
             }
 
-<span class="fc" id="L146">            solutionAfterDrop.add(toAdd);</span>
-<span class="fc" id="L147">            afterDropAdd = this.getCosts().costSumForRowset(solutionAfterDrop);</span>
+<span class="fc" id="L140">            solutionAfterDrop.add(toAdd);</span>
+<span class="fc" id="L141">            afterDropAdd = this.getCosts().costSumForRowset(solutionAfterDrop);</span>
             
             // Cost before vs. after drop &amp; add
-<span class="fc bfc" id="L150" title="All 2 branches covered.">            if (afterDropAdd &lt;  beforeDrop) {</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">            if (afterDropAdd &lt;  beforeDrop) {</span>
  
-<span class="fc" id="L152">                solution    = new IntegerSet(solutionAfterDrop);</span>
+<span class="fc" id="L146">                solution    = new IntegerSet(solutionAfterDrop);</span>
 
                 // Update candidates
-<span class="fc" id="L155">                candidates.remove(toAdd);</span>
-<span class="fc" id="L156">                candidates.add(toDrop);</span>
+<span class="fc" id="L149">                candidates.remove(toAdd);</span>
+<span class="fc" id="L150">                candidates.add(toDrop);</span>
 
             } else {
-<span class="fc" id="L159">                bestObjectiveFunctionLessThanPreviousBest = false;</span>
+<span class="fc" id="L153">                bestObjectiveFunctionLessThanPreviousBest = false;</span>
             }
             
-<span class="fc" id="L162">        }</span>
+<span class="fc" id="L156">        }</span>
 
         // Return solution and candidates
-<span class="fc" id="L165">        IntegerSet[] rtrn = {solution, candidates};</span>
-<span class="fc" id="L166">        return rtrn;</span>
+<span class="fc" id="L159">        IntegerSet[] rtrn = {solution, candidates};</span>
+<span class="fc" id="L160">        return rtrn;</span>
     }
 
     
@@ -180,51 +174,51 @@ public class GRIA extends Solver {
      */
     private IntegerSet regionalExchange(final IntegerSet initialSolution, final IntegerSet initialCandidates) {
 
-<span class="fc" id="L183">        IntegerSet solution = new IntegerSet(initialSolution), candidates = initialCandidates;</span>
+<span class="fc" id="L177">        IntegerSet solution = new IntegerSet(initialSolution), candidates = initialCandidates;</span>
 
         // Distancematrix between locations and locations
-<span class="fc" id="L186">        CostMatrix facilityCosts = new CostMatrix(this.facilities, this.facilities);</span>
-<span class="fc" id="L187">        double[][] distanceMatrixFacilities = facilityCosts.getCosts();</span>
+<span class="fc" id="L180">        CostMatrix facilityCosts = new CostMatrix(this.facilities, this.facilities);</span>
+<span class="fc" id="L181">        double[][] distanceMatrixFacilities = facilityCosts.getCosts();</span>
         
         // Allocate all candidates to solution facilities based on proximity
         //  For each candidate facility, find closest facility in solution
-<span class="fc" id="L191">        double minSwapCost = Double.MAX_VALUE, tmpCost = 0.0;</span>
-<span class="fc" id="L192">        int minSwapCostReplaceBy = 0, minSwapCostToReplace = 0;</span>
+<span class="fc" id="L185">        double minSwapCost = Double.MAX_VALUE, tmpCost = 0.0;</span>
+<span class="fc" id="L186">        int minSwapCostReplaceBy = 0, minSwapCostToReplace = 0;</span>
         
-<span class="fc bfc" id="L194" title="All 2 branches covered.">        for (int candidate : candidates.getIntegers()) {</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">        for (int candidate : candidates.getIntegers()) {</span>
             
-<span class="fc" id="L196">            double min = Double.MAX_VALUE, distance = 0.0;</span>
-<span class="fc" id="L197">            int minFacility = 0;</span>
+<span class="fc" id="L190">            double min = Double.MAX_VALUE, distance = 0.0;</span>
+<span class="fc" id="L191">            int minFacility = 0;</span>
 
-<span class="fc bfc" id="L199" title="All 2 branches covered.">            for (int solutionInt : solution.getIntegers()) {</span>
-<span class="fc" id="L200">                distance =  distanceMatrixFacilities[candidate][solutionInt];</span>
-<span class="fc bfc" id="L201" title="All 2 branches covered.">                if (distance &lt; min) {</span>
-<span class="fc" id="L202">                    min = distance;</span>
-<span class="fc" id="L203">                    minFacility = solutionInt;</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">            for (int solutionInt : solution.getIntegers()) {</span>
+<span class="fc" id="L194">                distance =  distanceMatrixFacilities[candidate][solutionInt];</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">                if (distance &lt; min) {</span>
+<span class="fc" id="L196">                    min = distance;</span>
+<span class="fc" id="L197">                    minFacility = solutionInt;</span>
                 }
             }
 
             // Swap each candidate with the facility it's allocated to
             // And store which swap provides the lowest overall cost      
-<span class="fc" id="L209">            IntegerSet tmpSolution = new IntegerSet(solution);</span>
-<span class="fc" id="L210">            tmpSolution.setChange(minFacility, candidate);</span>
-<span class="fc" id="L211">            tmpCost = this.getCosts().costSumForRowset(tmpSolution);</span>
-<span class="fc bfc" id="L212" title="All 2 branches covered.">            if (tmpCost &lt; minSwapCost) {</span>
-<span class="fc" id="L213">                minSwapCost = tmpCost;</span>
-<span class="fc" id="L214">                minSwapCostReplaceBy = candidate;</span>
-<span class="fc" id="L215">                minSwapCostToReplace = minFacility;</span>
+<span class="fc" id="L203">            IntegerSet tmpSolution = new IntegerSet(solution);</span>
+<span class="fc" id="L204">            tmpSolution.setChange(minFacility, candidate);</span>
+<span class="fc" id="L205">            tmpCost = this.getCosts().costSumForRowset(tmpSolution);</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">            if (tmpCost &lt; minSwapCost) {</span>
+<span class="fc" id="L207">                minSwapCost = tmpCost;</span>
+<span class="fc" id="L208">                minSwapCostReplaceBy = candidate;</span>
+<span class="fc" id="L209">                minSwapCostToReplace = minFacility;</span>
             }
 
         }
       
         
         // If found best swap is lower than total cost before regional interchange, persist it
-<span class="fc bfc" id="L222" title="All 2 branches covered.">        if (minSwapCost &lt; this.getCosts().costSumForRowset(solution)) {</span>
-<span class="fc" id="L223">            solution.setChange(minSwapCostToReplace, minSwapCostReplaceBy);</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">        if (minSwapCost &lt; this.getCosts().costSumForRowset(solution)) {</span>
+<span class="fc" id="L217">            solution.setChange(minSwapCostToReplace, minSwapCostReplaceBy);</span>
         }
         
         // Return solution
-<span class="fc" id="L227">        return solution;</span>
+<span class="fc" id="L221">        return solution;</span>
 
     }
 }

@@ -9,69 +9,29 @@ import java.io.IOException;
  */
 
 public final class Writer {
+    
+    private Writer() {
 
+    }
 
-    /**
-     * Hold path to file.
-     */
-
-    private FileWriter fileWriter;
-
-
-    /**
-     * Used to write strings to flatfiles.
-     * @param pathInput Path to write to.
-     * @throws IOException Output error
-     */
-
-<span class="nc" id="L27">    public Writer(final String pathInput) throws IOException {</span>
-<span class="nc" id="L28">        this.fileWriter = new FileWriter(pathInput);</span>
-<span class="nc" id="L29">    }</span>
-
-    /**
-     * Used to write strings to flatfiles.
-     */
-
-<span class="nc" id="L35">    public Writer() {</span>
-        
-<span class="nc" id="L37">    }</span>
-
-
+  
     /**
      * Writes an array of strings to given path.
-     * @param pathInput Path to write to.
+     * @param pathOutput Path to write to.
      * @param lines Strings to write
      * @throws IOException Output error
      */
 
-    public static void writeLines(final String pathInput, final String[] lines) throws IOException  {
+    public static void writeLines(final String pathOutput, final String[] lines) throws IOException  {
 
-<span class="nc" id="L49">        FileWriter fileWriter = new FileWriter(pathInput);</span>
+<span class="nc" id="L27">        FileWriter fileWriter = new FileWriter(pathOutput);</span>
         
-<span class="nc bnc" id="L51" title="All 2 branches missed.">        for (String st : lines) {</span>
-<span class="nc" id="L52">            fileWriter.write(st);</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        for (String st : lines) {</span>
+<span class="nc" id="L30">            fileWriter.write(st);</span>
         }
-<span class="nc" id="L54">        fileWriter.close();</span>
-<span class="nc" id="L55">    }</span>
+<span class="nc" id="L32">        fileWriter.close();</span>
+<span class="nc" id="L33">        System.out.println(&quot;Wrote results to: &quot; + pathOutput);</span>
+<span class="nc" id="L34">    }</span>
 
-    /**
-     * Writes a string.
-     * @param st String to write
-     * @throws IOException Output error
-     */
-
-    public void write(final String st) throws IOException  {
-        
-<span class="nc" id="L65">        this.fileWriter.write(st);</span>
-        
-<span class="nc" id="L67">    }</span>
-    /**
-     * Close connection to file.
-     * @throws IOException Output error
-     */
-
-    public void close() throws IOException {
-<span class="nc" id="L74">        this.fileWriter.close();</span>
-<span class="nc" id="L75">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

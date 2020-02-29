@@ -8,18 +8,11 @@ package locationallocation.Utils;
 
 public class ArrayList {
     
-    /**
-     * Array to grow.
-     */
+
     private String[] array;
-    /**
-     * Size of array.
-     */
     private int size;
-    /**
-     * Elements in array currently.
-     */
     private int elementsInArray;
+
     /**
      * The number of elements to increment array when full/empty.
      */
@@ -29,60 +22,60 @@ public class ArrayList {
      * Creates an object imitating the behavior of Java's ArrayList.
      */
 
-<span class="fc" id="L32">    public ArrayList() {</span>
+<span class="fc" id="L25">    public ArrayList() {</span>
         
-<span class="fc" id="L34">        this.increment = 10;</span>
-<span class="fc" id="L35">        this.array = new String[this.increment];</span>
-<span class="fc" id="L36">        this.size = this.array.length;</span>
-<span class="fc" id="L37">        this.elementsInArray = 0;</span>
+<span class="fc" id="L27">        this.increment = 10;</span>
+<span class="fc" id="L28">        this.array = new String[this.increment];</span>
+<span class="fc" id="L29">        this.size = this.array.length;</span>
+<span class="fc" id="L30">        this.elementsInArray = 0;</span>
 
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L32">    }</span>
     /**
      * Add to array.
      * @param toAdd Element to add 
      */
     public void add(final String toAdd) {
 
-<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (elementsInArray &lt; (this.size - 1)) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (elementsInArray &lt; (this.size - 1)) {</span>
 
-<span class="fc" id="L48">            this.array[elementsInArray] = toAdd;</span>
-<span class="fc" id="L49">            elementsInArray++;</span>
+<span class="fc" id="L41">            this.array[elementsInArray] = toAdd;</span>
+<span class="fc" id="L42">            elementsInArray++;</span>
         } else {
 
-<span class="fc" id="L52">            this.extendArray();</span>
+<span class="fc" id="L45">            this.extendArray();</span>
 
-<span class="fc" id="L54">            this.array[elementsInArray] = toAdd;</span>
-<span class="fc" id="L55">            elementsInArray++;</span>
+<span class="fc" id="L47">            this.array[elementsInArray] = toAdd;</span>
+<span class="fc" id="L48">            elementsInArray++;</span>
         }
 
-<span class="fc" id="L58">    }</span>
+<span class="fc" id="L51">    }</span>
 
     /**
      * Extends array size. Use when elementsInArray reaches size.
      */
     private void extendArray() {
 
-<span class="fc" id="L65">        String[] largerArray = new String[this.size + this.increment];</span>
+<span class="fc" id="L58">        String[] largerArray = new String[this.size + this.increment];</span>
 
-<span class="fc bfc" id="L67" title="All 2 branches covered.">        for (int i = 0; i &lt; this.size; i++) {</span>
-<span class="fc" id="L68">            largerArray[i] = this.array[i];</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        for (int i = 0; i &lt; this.size; i++) {</span>
+<span class="fc" id="L61">            largerArray[i] = this.array[i];</span>
         }
 
-<span class="fc" id="L71">        this.size = largerArray.length;</span>
-<span class="fc" id="L72">        this.array = largerArray;</span>
-<span class="fc" id="L73">    }</span>
+<span class="fc" id="L64">        this.size = largerArray.length;</span>
+<span class="fc" id="L65">        this.array = largerArray;</span>
+<span class="fc" id="L66">    }</span>
 
     /**
      * Getter for array. Note that it returns only the portion of array that has elements.
      * @return Array.
      */
     public String[] getArray() {
-<span class="nc" id="L80">        String[] rtrn = new String[this.elementsInArray];</span>
+<span class="nc" id="L73">        String[] rtrn = new String[this.elementsInArray];</span>
 
-<span class="nc bnc" id="L82" title="All 2 branches missed.">        for (int i = 0; i &lt; this.elementsInArray; i++) {</span>
-<span class="nc" id="L83">            rtrn[i] = this.array[i];</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        for (int i = 0; i &lt; this.elementsInArray; i++) {</span>
+<span class="nc" id="L76">            rtrn[i] = this.array[i];</span>
         }
-<span class="nc" id="L85">        return rtrn;</span>
+<span class="nc" id="L78">        return rtrn;</span>
     }
     /**
      * Getter for a single value.
@@ -90,22 +83,15 @@ public class ArrayList {
      * @return Array of strings.
      */
     public String get(final int idx) {
-<span class="fc" id="L93">        return this.array[idx];</span>
+<span class="fc" id="L86">        return this.array[idx];</span>
     }
     /**
      * Getter for size. 
      * @return Returns the number of elements stored in array (not array.length).
      */
     public int size() {
-<span class="fc" id="L100">        return this.elementsInArray;</span>
+<span class="fc" id="L93">        return this.elementsInArray;</span>
     }
 
-    /**
-     * Prints info.
-     */
-    public void printMe() {
-<span class="nc" id="L107">        System.out.println(&quot;Size: &quot; + this.size);</span>
-<span class="nc" id="L108">        System.out.println(&quot;Elements: &quot; + this.elementsInArray);</span>
-<span class="nc" id="L109">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

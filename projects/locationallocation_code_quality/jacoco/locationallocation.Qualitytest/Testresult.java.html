@@ -8,24 +8,9 @@ package locationallocation.Qualitytest;
 public class Testresult {
 
 
-    /**
-     * Inputs.
-     */
     private int p, candidates, demandlocations;
-
-    /**
-     * Cost.
-     */
     private double cost;
-
-    /**
-     * Runtime.
-     */
     private long timeElapsed;
-
-    /**
-     * Input strings.
-     */
     private String algorithmName;
 
     /**
@@ -38,16 +23,16 @@ public class Testresult {
      * @param algorithmNameInput Name/abbrevation of tested algorithm.
      */
 
-<span class="fc" id="L41">    public Testresult(final int pInput, final int candidatesInput, final int demandlocationsInput, final double costInput, final long timeElapsedInput, final String algorithmNameInput) {</span>
+<span class="fc" id="L26">    public Testresult(final int pInput, final int candidatesInput, final int demandlocationsInput, final double costInput, final long timeElapsedInput, final String algorithmNameInput) {</span>
 
-<span class="fc" id="L43">        this.p = pInput;</span>
-<span class="fc" id="L44">        this.candidates = candidatesInput;</span>
-<span class="fc" id="L45">        this.demandlocations = demandlocationsInput;</span>
-<span class="fc" id="L46">        this.cost = costInput;</span>
-<span class="fc" id="L47">        this.timeElapsed = timeElapsedInput;</span>
-<span class="fc" id="L48">        this.algorithmName = algorithmNameInput;</span>
+<span class="fc" id="L28">        this.p = pInput;</span>
+<span class="fc" id="L29">        this.candidates = candidatesInput;</span>
+<span class="fc" id="L30">        this.demandlocations = demandlocationsInput;</span>
+<span class="fc" id="L31">        this.cost = costInput;</span>
+<span class="fc" id="L32">        this.timeElapsed = timeElapsedInput;</span>
+<span class="fc" id="L33">        this.algorithmName = algorithmNameInput;</span>
 
-<span class="fc" id="L50">    }</span>
+<span class="fc" id="L35">    }</span>
 
 
 
@@ -57,58 +42,35 @@ public class Testresult {
      */
     @Override
     public String toString() {
-<span class="nc" id="L60">        return this.p + &quot;;&quot; + this.candidates + &quot;;&quot; + this.demandlocations + &quot;;&quot; + this.cost + &quot;;&quot; + this.timeElapsed + &quot;;&quot; + this.algorithmName;</span>
+<span class="nc" id="L45">        return this.p + &quot;;&quot; + this.candidates + &quot;;&quot; + this.demandlocations + &quot;;&quot; + this.cost + &quot;;&quot; + this.timeElapsed + &quot;;&quot; + this.algorithmName;</span>
 
     }
 
 
-    /**
-     * Getter for P.
-     * @return P.
-     */
-    public int getP() {
-<span class="fc" id="L70">        return this.p;</span>
+    public final int getP() {
+<span class="fc" id="L51">        return this.p;</span>
     }
 
-    /**
-     * Getter for candidates.
-     * @return candidates.
-     */
-    public int getCandidates() {
-<span class="fc" id="L78">        return this.candidates;</span>
+    public final int getCandidates() {
+<span class="fc" id="L55">        return this.candidates;</span>
     }
 
-    /**
-     * Getter for demandlocations.
-     * @return demandlocations.
-     */
-    public int getDemandlocations() {
-<span class="fc" id="L86">        return this.demandlocations;</span>
+    public final int getDemandlocations() {
+<span class="fc" id="L59">        return this.demandlocations;</span>
     }
 
 
-    /**
-     * Getter for cost.
-     * @return cost.
-     */
-    public double getCost() {
-<span class="fc" id="L95">        return this.cost;</span>
+    public final double getCost() {
+<span class="fc" id="L64">        return this.cost;</span>
     }
 
-    /**
-     * Getter for time elapsed.
-     * @return Time elapsed.
-     */
-    public long getTimeElapsed() {
-<span class="fc" id="L103">        return this.timeElapsed;</span>
+
+    public final long getTimeElapsed() {
+<span class="fc" id="L69">        return this.timeElapsed;</span>
     }
 
-     /**
-     * Getter for algorithm.
-     * @return Algorithm.
-     */
-    public String getAlgorithmName() {
-<span class="fc" id="L111">        return this.algorithmName;</span>
+    public final String getAlgorithmName() {
+<span class="fc" id="L73">        return this.algorithmName;</span>
     }
 
 

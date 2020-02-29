@@ -35,203 +35,198 @@ import locationallocation.UI.ActionListeners.AlgorithmListener;
 
 public class GUI extends JFrame  {
 
-    /**
-     * Class containing application logic.
-     */
-    private Pmedian app;
 
+    private Pmedian app;
+    private ButtonGroup algorithmButton;
+    
     /**
      * Holds status of GUI.
      */
     private JLabel statusDemandLocations, statusPossibleLocations, statusP, statusSolutionCost, statusCostMatrix;
 
-    /**
-     * Button group specifying algorithm.
-     */
-    private ButtonGroup algorithmButton;
 
     /**
      * Graphical interface for application.
      * @param inputApp Application logic.
      */
-<span class="nc" id="L57">    public GUI(final Pmedian inputApp) {</span>
-<span class="nc" id="L58">        this.app = inputApp;</span>
+<span class="nc" id="L52">    public GUI(final Pmedian inputApp) {</span>
+<span class="nc" id="L53">        this.app = inputApp;</span>
 
-<span class="nc" id="L60">    }</span>
+<span class="nc" id="L55">    }</span>
   
     /**
      * Run application.
      */
     public void start() {
         // Create and set up a frame window
-<span class="nc" id="L67">        JFrame.setDefaultLookAndFeelDecorated(true);</span>
-<span class="nc" id="L68">        JFrame frame = new JFrame(&quot;P-median solver&quot;);</span>
-<span class="nc" id="L69">        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L62">        JFrame.setDefaultLookAndFeelDecorated(true);</span>
+<span class="nc" id="L63">        JFrame frame = new JFrame(&quot;P-median solver&quot;);</span>
+<span class="nc" id="L64">        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
                  
        
         // Panels
-<span class="nc" id="L73">        JPanel panel1 = new JPanel();</span>
-<span class="nc" id="L74">        JPanel panel2 = new JPanel();</span>
-<span class="nc" id="L75">        JPanel panel3 = new JPanel();</span>
-<span class="nc" id="L76">        JPanel panel4 = new JPanel();</span>
+<span class="nc" id="L68">        JPanel panel1 = new JPanel();</span>
+<span class="nc" id="L69">        JPanel panel2 = new JPanel();</span>
+<span class="nc" id="L70">        JPanel panel3 = new JPanel();</span>
+<span class="nc" id="L71">        JPanel panel4 = new JPanel();</span>
        
          
         // Set up the title for different panels
-<span class="nc" id="L80">        panel1.setBorder(BorderFactory.createTitledBorder(&quot;Input:&quot;));</span>
-<span class="nc" id="L81">        panel2.setBorder(BorderFactory.createTitledBorder(&quot;Parameters:&quot;));</span>
-<span class="nc" id="L82">        panel3.setBorder(BorderFactory.createTitledBorder(&quot;Choose algorithm:&quot;));</span>
-<span class="nc" id="L83">        panel4.setBorder(BorderFactory.createTitledBorder(&quot;Actions:&quot;));</span>
+<span class="nc" id="L75">        panel1.setBorder(BorderFactory.createTitledBorder(&quot;Input:&quot;));</span>
+<span class="nc" id="L76">        panel2.setBorder(BorderFactory.createTitledBorder(&quot;Parameters:&quot;));</span>
+<span class="nc" id="L77">        panel3.setBorder(BorderFactory.createTitledBorder(&quot;Choose algorithm:&quot;));</span>
+<span class="nc" id="L78">        panel4.setBorder(BorderFactory.createTitledBorder(&quot;Actions:&quot;));</span>
 
 
          
         // Set up the BoxLayout
-<span class="nc" id="L88">        BoxLayout layout1 = new BoxLayout(panel1, BoxLayout.Y_AXIS);</span>
-<span class="nc" id="L89">        BoxLayout layout2 = new BoxLayout(panel2, BoxLayout.Y_AXIS);</span>
-<span class="nc" id="L90">        BoxLayout layout3 = new BoxLayout(panel3, BoxLayout.Y_AXIS);</span>
-<span class="nc" id="L91">        BoxLayout layout4 = new BoxLayout(panel4, BoxLayout.Y_AXIS);</span>
-<span class="nc" id="L92">        panel1.setLayout(layout1);</span>
-<span class="nc" id="L93">        panel2.setLayout(layout2);</span>
-<span class="nc" id="L94">        panel3.setLayout(layout3);</span>
-<span class="nc" id="L95">        panel4.setLayout(layout4);</span>
+<span class="nc" id="L83">        BoxLayout layout1 = new BoxLayout(panel1, BoxLayout.Y_AXIS);</span>
+<span class="nc" id="L84">        BoxLayout layout2 = new BoxLayout(panel2, BoxLayout.Y_AXIS);</span>
+<span class="nc" id="L85">        BoxLayout layout3 = new BoxLayout(panel3, BoxLayout.Y_AXIS);</span>
+<span class="nc" id="L86">        BoxLayout layout4 = new BoxLayout(panel4, BoxLayout.Y_AXIS);</span>
+<span class="nc" id="L87">        panel1.setLayout(layout1);</span>
+<span class="nc" id="L88">        panel2.setLayout(layout2);</span>
+<span class="nc" id="L89">        panel3.setLayout(layout3);</span>
+<span class="nc" id="L90">        panel4.setLayout(layout4);</span>
 
          
         // Input
 
-<span class="nc" id="L100">        JButton inputDemandLocations = new JButton(&quot;Load demand locations&quot;);        </span>
-<span class="nc" id="L101">        JButton inputPossibleFacilities = new JButton(&quot;Load possible facility locations&quot;);</span>
+<span class="nc" id="L95">        JButton inputDemandLocations = new JButton(&quot;Load demand locations&quot;);        </span>
+<span class="nc" id="L96">        JButton inputPossibleFacilities = new JButton(&quot;Load possible facility locations&quot;);</span>
 
-<span class="nc" id="L103">        inputDemandLocations.addActionListener(new InputFileChooserListener(this, this.app, &quot;demand&quot;));</span>
-<span class="nc" id="L104">        inputPossibleFacilities.addActionListener(new InputFileChooserListener(this, this.app, &quot;possible&quot;));</span>
+<span class="nc" id="L98">        inputDemandLocations.addActionListener(new InputFileChooserListener(this, this.app, &quot;demand&quot;));</span>
+<span class="nc" id="L99">        inputPossibleFacilities.addActionListener(new InputFileChooserListener(this, this.app, &quot;possible&quot;));</span>
 
         // Texts for inputs
-<span class="nc" id="L107">        this.statusDemandLocations = new JLabel();</span>
-<span class="nc" id="L108">        this.statusPossibleLocations = new JLabel();</span>
-<span class="nc" id="L109">        this.statusCostMatrix = new JLabel();</span>
+<span class="nc" id="L102">        this.statusDemandLocations = new JLabel();</span>
+<span class="nc" id="L103">        this.statusPossibleLocations = new JLabel();</span>
+<span class="nc" id="L104">        this.statusCostMatrix = new JLabel();</span>
 
-<span class="nc" id="L111">        inputPossibleFacilities.setAlignmentX(Component.LEFT_ALIGNMENT);</span>
-<span class="nc" id="L112">        inputDemandLocations.setAlignmentX(Component.LEFT_ALIGNMENT);</span>
-<span class="nc" id="L113">        panel1.add(inputDemandLocations);</span>
-<span class="nc" id="L114">        panel1.add(statusDemandLocations);</span>
-<span class="nc" id="L115">        panel1.add(inputPossibleFacilities);</span>
-<span class="nc" id="L116">        panel1.add(statusPossibleLocations);</span>
-<span class="nc" id="L117">        panel1.add(statusCostMatrix);</span>
+<span class="nc" id="L106">        inputPossibleFacilities.setAlignmentX(Component.LEFT_ALIGNMENT);</span>
+<span class="nc" id="L107">        inputDemandLocations.setAlignmentX(Component.LEFT_ALIGNMENT);</span>
+<span class="nc" id="L108">        panel1.add(inputDemandLocations);</span>
+<span class="nc" id="L109">        panel1.add(statusDemandLocations);</span>
+<span class="nc" id="L110">        panel1.add(inputPossibleFacilities);</span>
+<span class="nc" id="L111">        panel1.add(statusPossibleLocations);</span>
+<span class="nc" id="L112">        panel1.add(statusCostMatrix);</span>
 
         // Parameters
          
             
-<span class="nc" id="L122">        JTextField pChooser = new JTextField(3);</span>
-<span class="nc" id="L123">        pChooser.setToolTipText(&quot;Choose the number of facilities to allocate.&quot;);</span>
+<span class="nc" id="L117">        JTextField pChooser = new JTextField(3);</span>
+<span class="nc" id="L118">        pChooser.setToolTipText(&quot;Choose the number of facilities to allocate.&quot;);</span>
         
         
-<span class="nc" id="L126">        pChooser.addActionListener(new ChoosePListener(this, this.app, pChooser));</span>
+<span class="nc" id="L121">        pChooser.addActionListener(new ChoosePListener(this, this.app, pChooser));</span>
 
 
-<span class="nc" id="L129">        this.statusP = new JLabel();</span>
+<span class="nc" id="L124">        this.statusP = new JLabel();</span>
         
-<span class="nc" id="L131">        panel2.add(pChooser);</span>
-<span class="nc" id="L132">        panel2.add(statusP);</span>
+<span class="nc" id="L126">        panel2.add(pChooser);</span>
+<span class="nc" id="L127">        panel2.add(statusP);</span>
         
         // Radio buttons for algorithm choice
         // Group for the radio buttons.
-<span class="nc" id="L136">        this.algorithmButton = new ButtonGroup();</span>
+<span class="nc" id="L131">        this.algorithmButton = new ButtonGroup();</span>
 
-<span class="nc" id="L138">        String[] algorithms = this.app.getAlgorithms();</span>
+<span class="nc" id="L133">        String[] algorithms = this.app.getAlgorithms();</span>
 
 
 
-<span class="nc bnc" id="L142" title="All 2 branches missed.">        for (int i = 0; i &lt; algorithms.length; i++) {</span>
-<span class="nc" id="L143">            JRadioButton button = createRadioButton(algorithms[i]);</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">        for (int i = 0; i &lt; algorithms.length; i++) {</span>
+<span class="nc" id="L138">            JRadioButton button = createRadioButton(algorithms[i]);</span>
             
-<span class="nc" id="L145">            algorithmButton.add(button);</span>
-<span class="nc" id="L146">            panel3.add(button);</span>
+<span class="nc" id="L140">            algorithmButton.add(button);</span>
+<span class="nc" id="L141">            panel3.add(button);</span>
 
-<span class="nc" id="L148">            button.addActionListener(new AlgorithmListener(this.app, button));</span>
+<span class="nc" id="L143">            button.addActionListener(new AlgorithmListener(this.app, button));</span>
 
             // Select first button;
-<span class="nc bnc" id="L151" title="All 2 branches missed.">            if (i == 0) {</span>
-<span class="nc" id="L152">                button.setSelected(true);</span>
-<span class="nc" id="L153">                this.app.setSolver(algorithms[i]);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">            if (i == 0) {</span>
+<span class="nc" id="L147">                button.setSelected(true);</span>
+<span class="nc" id="L148">                this.app.setSolver(algorithms[i]);</span>
             }
            
         }
        
 
         // Actions:
-<span class="nc" id="L160">        JButton solveButton = new JButton(&quot;Solve!&quot;);</span>
-<span class="nc" id="L161">        panel4.add(solveButton);</span>
-<span class="nc" id="L162">        solveButton.addActionListener(new SolveListener(this, this.app));</span>
+<span class="nc" id="L155">        JButton solveButton = new JButton(&quot;Solve!&quot;);</span>
+<span class="nc" id="L156">        panel4.add(solveButton);</span>
+<span class="nc" id="L157">        solveButton.addActionListener(new SolveListener(this, this.app));</span>
 
-<span class="nc" id="L164">        JButton loadExampleBUtton = new JButton(&quot;Load example&quot;);</span>
-<span class="nc" id="L165">        panel1.add(loadExampleBUtton);</span>
-<span class="nc" id="L166">        loadExampleBUtton.addActionListener(new ExampleListener());</span>
+<span class="nc" id="L159">        JButton loadExampleBUtton = new JButton(&quot;Load example&quot;);</span>
+<span class="nc" id="L160">        panel1.add(loadExampleBUtton);</span>
+<span class="nc" id="L161">        loadExampleBUtton.addActionListener(new ExampleListener());</span>
 
-<span class="nc" id="L168">        statusSolutionCost = new JLabel();</span>
-<span class="nc" id="L169">        panel4.add(statusSolutionCost);</span>
+<span class="nc" id="L163">        statusSolutionCost = new JLabel();</span>
+<span class="nc" id="L164">        panel4.add(statusSolutionCost);</span>
 
         // Write to file
 
-<span class="nc" id="L173">        JTextField outputPathInput = new JTextField(3);</span>
-<span class="nc" id="L174">        outputPathInput.setToolTipText(&quot;Path and filename to write output to.&quot;);</span>
-<span class="nc" id="L175">        outputPathInput.setText(&quot;/home/Documents/user/allocationresults.csv&quot;);</span>
+<span class="nc" id="L168">        JTextField outputPathInput = new JTextField(3);</span>
+<span class="nc" id="L169">        outputPathInput.setToolTipText(&quot;Path and filename to write output to.&quot;);</span>
+<span class="nc" id="L170">        outputPathInput.setText(&quot;/home/Documents/user/allocationresults.csv&quot;);</span>
 
-<span class="nc" id="L177">        JButton writeResultsButton = new JButton(&quot;Write results to file.&quot;);</span>
-<span class="nc" id="L178">        panel4.add(outputPathInput);</span>
-<span class="nc" id="L179">        panel4.add(writeResultsButton);</span>
+<span class="nc" id="L172">        JButton writeResultsButton = new JButton(&quot;Write results to file.&quot;);</span>
+<span class="nc" id="L173">        panel4.add(outputPathInput);</span>
+<span class="nc" id="L174">        panel4.add(writeResultsButton);</span>
         
-<span class="nc" id="L181">        writeResultsButton.addActionListener(new WriteResultsListener(this.app, outputPathInput));</span>
+<span class="nc" id="L176">        writeResultsButton.addActionListener(new WriteResultsListener(this.app, outputPathInput));</span>
 
          
         // Add the three panels into the frame
-<span class="nc" id="L185">        frame.setLayout(new FlowLayout());</span>
-<span class="nc" id="L186">        frame.add(panel1);</span>
-<span class="nc" id="L187">        frame.add(panel2);</span>
-<span class="nc" id="L188">        frame.add(panel3);</span>
-<span class="nc" id="L189">        frame.add(panel4);</span>
+<span class="nc" id="L180">        frame.setLayout(new FlowLayout());</span>
+<span class="nc" id="L181">        frame.add(panel1);</span>
+<span class="nc" id="L182">        frame.add(panel2);</span>
+<span class="nc" id="L183">        frame.add(panel3);</span>
+<span class="nc" id="L184">        frame.add(panel4);</span>
 
         // set the size of frame 
-<span class="nc" id="L192">        frame.setSize(700, 700); </span>
+<span class="nc" id="L187">        frame.setSize(700, 700); </span>
          
         // Set the window to be visible as the default to be false
         
-<span class="nc" id="L196">        frame.setVisible(true);</span>
+<span class="nc" id="L191">        frame.setVisible(true);</span>
         
-<span class="nc" id="L198">    }</span>
+<span class="nc" id="L193">    }</span>
 
 
     /**
      * Calculate cost matrix.
      */
     public void calculateCostMatrix() {
-<span class="nc bnc" id="L205" title="All 6 branches missed.">        if (this.app.getNumberOfDemandLocations() &gt; 0 &amp; this.app.getNumberOfPossibleLocations() &gt; 0) {</span>
-<span class="nc" id="L206">            this.app.calculateCostMatrix();</span>
+<span class="nc bnc" id="L200" title="All 6 branches missed.">        if (this.app.getNumberOfDemandLocations() &gt; 0 &amp; this.app.getNumberOfPossibleLocations() &gt; 0) {</span>
+<span class="nc" id="L201">            this.app.calculateCostMatrix();</span>
             
         }
-<span class="nc" id="L209">        this.statusCostMatrix.setText(&quot;Costmatrix exists: &quot; + this.app.costMatrixExists());</span>
-<span class="nc" id="L210">    }</span>
+<span class="nc" id="L204">        this.statusCostMatrix.setText(&quot;Costmatrix exists: &quot; + this.app.costMatrixExists());</span>
+<span class="nc" id="L205">    }</span>
 
     /**
      * Load example problem and set parameters.
      */
     private void loadExample() {
         // Defaults for dev
-<span class="nc" id="L217">        this.app.loadDemandlocations(&quot;src/test/resources/testdata_1_demand_locations.csv&quot;);</span>
-<span class="nc" id="L218">        this.app.loadPossiblelocations(&quot;src/test/resources/testdata_1_facility_locations.csv&quot;);</span>
-<span class="nc" id="L219">        this.app.setP(7);</span>
-<span class="nc" id="L220">        this.calculateCostMatrix();</span>
-<span class="nc" id="L221">        this.updateStatus(&quot;locations&quot;);</span>
-<span class="nc" id="L222">        this.updateStatus(&quot;P&quot;);</span>
+<span class="nc" id="L212">        this.app.loadDemandlocations(&quot;src/test/resources/testdata_1_demand_locations.csv&quot;);</span>
+<span class="nc" id="L213">        this.app.loadPossiblelocations(&quot;src/test/resources/testdata_1_facility_locations.csv&quot;);</span>
+<span class="nc" id="L214">        this.app.setP(7);</span>
+<span class="nc" id="L215">        this.calculateCostMatrix();</span>
+<span class="nc" id="L216">        this.updateStatus(&quot;locations&quot;);</span>
+<span class="nc" id="L217">        this.updateStatus(&quot;P&quot;);</span>
 
-<span class="nc" id="L224">    }</span>
+<span class="nc" id="L219">    }</span>
 
     
     /**
      * Load example data to app. Dev-purposes in mind.
      */
 
-<span class="nc" id="L231">    class ExampleListener implements ActionListener {</span>
+<span class="nc" id="L226">    class ExampleListener implements ActionListener {</span>
         public void actionPerformed(final ActionEvent e) {
-<span class="nc" id="L233">            GUI.this.loadExample();</span>
-<span class="nc" id="L234">        }</span>
+<span class="nc" id="L228">            GUI.this.loadExample();</span>
+<span class="nc" id="L229">        }</span>
 
     }
 
@@ -241,9 +236,9 @@ public class GUI extends JFrame  {
      * @return A radiobutton.
      */
     private JRadioButton createRadioButton(final String text) {
-<span class="nc" id="L244">        JRadioButton butt = new JRadioButton(text);</span>
-<span class="nc" id="L245">        butt.setActionCommand(text);</span>
-<span class="nc" id="L246">        return butt;</span>
+<span class="nc" id="L239">        JRadioButton butt = new JRadioButton(text);</span>
+<span class="nc" id="L240">        butt.setActionCommand(text);</span>
+<span class="nc" id="L241">        return butt;</span>
     }
 
 
@@ -252,17 +247,17 @@ public class GUI extends JFrame  {
      * @param which
      */
     public void updateStatus(final String which) {
-<span class="nc bnc" id="L255" title="All 2 branches missed.">        if (which == &quot;P&quot;) {</span>
-<span class="nc" id="L256">            this.statusP.setText(&quot;Number of facilities to allocate: &quot; + this.app.getP());</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">        if (which == &quot;P&quot;) {</span>
+<span class="nc" id="L251">            this.statusP.setText(&quot;Number of facilities to allocate: &quot; + this.app.getP());</span>
         }
-<span class="nc bnc" id="L258" title="All 2 branches missed.">        if (which == &quot;cost&quot;) {</span>
-<span class="nc" id="L259">            this.statusSolutionCost.setText(&quot;Cost: &quot; + this.app.getResultCost());</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">        if (which == &quot;cost&quot;) {</span>
+<span class="nc" id="L254">            this.statusSolutionCost.setText(&quot;Cost: &quot; + this.app.getResultCost());</span>
         }
-<span class="nc bnc" id="L261" title="All 2 branches missed.">        if (which == &quot;locations&quot;) {</span>
-<span class="nc" id="L262">            this.statusDemandLocations.setText(&quot;Number of demand locations: &quot; + this.app.getNumberOfDemandLocations());</span>
-<span class="nc" id="L263">            this.statusPossibleLocations.setText(&quot;Number of possible locations: &quot; + this.app.getNumberOfPossibleLocations());</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">        if (which == &quot;locations&quot;) {</span>
+<span class="nc" id="L257">            this.statusDemandLocations.setText(&quot;Number of demand locations: &quot; + this.app.getNumberOfDemandLocations());</span>
+<span class="nc" id="L258">            this.statusPossibleLocations.setText(&quot;Number of possible locations: &quot; + this.app.getNumberOfPossibleLocations());</span>
         }
-<span class="nc" id="L265">    }</span>
+<span class="nc" id="L260">    }</span>
   
     
 }
