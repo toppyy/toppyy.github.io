@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Arguments.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">locationallocation</a> &gt; <a href="index.source.html" class="el_package">locationallocation.Utils</a> &gt; <span class="el_source">Arguments.java</span></div><h1>Arguments.java</h1><pre class="source lang-java linenums">
+package locationallocation.Utils;
+
+/**
+ *  A parser for arguments given trough cmd.
+ */
+
+
+public class Arguments {
+
+    private String locDemand, locPossible, p, a, out;
+
+
+
+    /**
+     * Parses arguments given through cmd.
+     * @param args
+     */
+<span class="nc" id="L19">    public Arguments(final String[] args) {</span>
+
+<span class="nc" id="L21">        this.parseArguments(args);</span>
+
+<span class="nc" id="L23">    }</span>
+
+    private void setArgument(final String which, final String value) {
+
+<span class="nc" id="L27">        System.out.println(&quot;Setting &quot; + which + &quot; to &quot; + value);</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">        if (which.equals(&quot;dl&quot;)) {</span>
+<span class="nc" id="L29">            this.locDemand = value;</span>
+        }
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        if (which.equals(&quot;pl&quot;)) {</span>
+<span class="nc" id="L32">            this.locPossible = value;</span>
+        }
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        if (which.equals(&quot;p&quot;)) {</span>
+<span class="nc" id="L35">            this.p = value;</span>
+        }
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        if (which.equals(&quot;a&quot;)) {</span>
+<span class="nc" id="L38">            this.a = value;</span>
+        }
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        if (which.equals(&quot;out&quot;)) {</span>
+<span class="nc" id="L41">            this.out = value;</span>
+        }
+<span class="nc" id="L43">    }</span>
+
+
+    
+    private void parseArguments(final String[] args) {
+
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (args.length % 2 != 0) {</span>
+<span class="nc" id="L50">            System.out.println(&quot;Number of arguments is not even.&quot;);</span>
+<span class="nc" id="L51">            return;</span>
+        }
+
+
+      
+
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        for (int i = 0; i &lt; args.length; i += 2) {</span>
+            
+<span class="nc" id="L59">            this.setArgument(args[i], args[i + 1]);</span>
+
+        }
+
+<span class="nc" id="L63">        this.print();</span>
+
+
+
+
+<span class="nc" id="L68">    }</span>
+
+    public final void print() {
+<span class="nc" id="L71">        System.out.println(this.locDemand + &quot;, &quot; + locPossible + &quot;, &quot; + p + &quot;, &quot; + a + &quot;, &quot; + out);</span>
+<span class="nc" id="L72">    }</span>
+
+    public final boolean allRequiredArgumentsGiven() {
+
+
+<span class="nc bnc" id="L77" title="All 12 branches missed.">        if (</span>
+            this.locDemand == null
+            |
+            this.locPossible == null
+            |
+            this.p == null
+            |
+            this.a == null
+            |
+            this.out == null
+            ) {
+<span class="nc" id="L88">            return false;</span>
+        }
+
+<span class="nc" id="L91">        return true;</span>
+       
+    }
+
+    public final String getAlgorithm() {
+<span class="nc" id="L96">        return this.a;</span>
+    }
+    public final String getOutputPath() {
+<span class="nc" id="L99">        return this.out;</span>
+    }
+    public final String getP() {
+<span class="nc" id="L102">        return this.p;</span>
+    }
+    public final String getDemandLocationPath() {
+<span class="nc" id="L105">        return this.locDemand;</span>
+    }
+    public final String getPossibleLocationPath() {
+<span class="nc" id="L108">        return this.locPossible;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
