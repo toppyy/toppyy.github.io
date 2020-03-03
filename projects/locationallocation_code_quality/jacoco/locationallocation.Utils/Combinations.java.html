@@ -17,7 +17,7 @@ public final class Combinations {
      * Counting the number of combinations given n and k would require implementation of BigInteger (if k  &gt; 20).
      * A simpler solution was chosen: an initial array if created and in expanded if needed.
      */
-    private static final int INITIAL_SIZE = 10000000;
+    private static final int INITIAL_SIZE = 1000000;
      
     /** 
      * Creates an array of arrays holding all k combinations of &quot;arr&quot;.
@@ -30,11 +30,11 @@ public final class Combinations {
 <span class="fc" id="L30">        int pit = arr.length;</span>
 
         // Sanity check
-<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if (k &gt; pit) {</span>
-<span class="nc" id="L34">            System.out.println(&quot;K greater than array size. Returning array.&quot;);</span>
-<span class="nc" id="L35">            int[][] tmp = new int[1][];</span>
-<span class="nc" id="L36">            tmp[0] = arr;</span>
-<span class="nc" id="L37">            return tmp;</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if (k &gt; pit) {</span>
+<span class="fc" id="L34">            System.out.println(&quot;K greater than array size. Returning array.&quot;);</span>
+<span class="fc" id="L35">            int[][] tmp = new int[1][];</span>
+<span class="fc" id="L36">            tmp[0] = arr;</span>
+<span class="fc" id="L37">            return tmp;</span>
         }
 
        
@@ -52,14 +52,14 @@ public final class Combinations {
 <span class="pc bpc" id="L52" title="1 of 2 branches missed.">        while (notFinished) {</span>
 
             // Double array size if needed.
-<span class="pc bpc" id="L55" title="1 of 2 branches missed.">            if (komboCounter &gt;= combinationsSize) {</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">            if (komboCounter &gt;= combinationsSize) {</span>
                 
-<span class="nc" id="L57">                int[][] newCombinations = new int[combinations.length * 2][];</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">                for (int z = 0; z &lt; combinations.length; z++) {</span>
-<span class="nc" id="L59">                    newCombinations[z] = combinations[z].clone();</span>
+<span class="fc" id="L57">                int[][] newCombinations = new int[combinations.length * 2][];</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">                for (int z = 0; z &lt; combinations.length; z++) {</span>
+<span class="fc" id="L59">                    newCombinations[z] = combinations[z].clone();</span>
                 }
-<span class="nc" id="L61">                combinations = newCombinations.clone();</span>
-<span class="nc" id="L62">                combinationsSize = combinations.length;</span>
+<span class="fc" id="L61">                combinations = newCombinations.clone();</span>
+<span class="fc" id="L62">                combinationsSize = combinations.length;</span>
             }
             
 <span class="fc" id="L65">            combinations[komboCounter] = kt.clone();</span>

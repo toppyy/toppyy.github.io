@@ -2,6 +2,8 @@
 
 import locationallocation.Utils.LocationLoader;
 import locationallocation.Utils.Location;
+import locationallocation.Utils.Arguments;
+
 import locationallocation.Utils.CostMatrix;
 import static locationallocation.Utils.Writer.writeLines;
 import java.io.IOException;
@@ -26,46 +28,72 @@ public class Pmedian {
     private String[] algorithms;
 
 
-<span class="nc" id="L29">    public Pmedian() {</span>
-<span class="nc" id="L30">        this.demandLocations = new Location[0];</span>
-<span class="nc" id="L31">        this.possibleLocations = new Location[0];</span>
-<span class="nc" id="L32">        this.p = 0;</span>
+<span class="nc" id="L31">    public Pmedian() {</span>
+<span class="nc" id="L32">        this.demandLocations = new Location[0];</span>
+<span class="nc" id="L33">        this.possibleLocations = new Location[0];</span>
+<span class="nc" id="L34">        this.p = 0;</span>
 
-<span class="nc" id="L34">        this.algorithms = new String[3];</span>
-<span class="nc" id="L35">        this.algorithms[0] =  &quot;Naive&quot;;</span>
-<span class="nc" id="L36">        this.algorithms[1] =  &quot;TeitzBart&quot;;</span>
-<span class="nc" id="L37">        this.algorithms[2] =  &quot;GRIA&quot;;</span>
-<span class="nc" id="L38">    }</span>
-    
+<span class="nc" id="L36">        this.algorithms = new String[3];</span>
+<span class="nc" id="L37">        this.algorithms[0] =  &quot;Naive&quot;;</span>
+<span class="nc" id="L38">        this.algorithms[1] =  &quot;TeitzBart&quot;;</span>
+<span class="nc" id="L39">        this.algorithms[2] =  &quot;GRIA&quot;;</span>
+<span class="nc" id="L40">    }</span>
+    /**
+     * Constuctor with given Arguments.
+     * @param args Parsed Arguments from cmd.
+     */
+<span class="nc" id="L45">    public Pmedian(final Arguments args) {</span>
+        
+
+<span class="nc" id="L48">        this.algorithms = new String[3];</span>
+<span class="nc" id="L49">        this.algorithms[0] =  &quot;Naive&quot;;</span>
+<span class="nc" id="L50">        this.algorithms[1] =  &quot;TeitzBart&quot;;</span>
+<span class="nc" id="L51">        this.algorithms[2] =  &quot;GRIA&quot;;</span>
+
+        
+<span class="nc" id="L54">        this.loadDemandlocations(args.getDemandLocationPath());</span>
+<span class="nc" id="L55">        this.loadPossiblelocations(args.getPossibleLocationPath());</span>
+<span class="nc" id="L56">        this.setP(args.getP());</span>
+
+<span class="nc" id="L58">        this.setSolver(args.getAlgorithm());</span>
+        
+<span class="nc" id="L60">        this.calculateCostMatrix();</span>
+
+
+<span class="nc" id="L63">    }</span>
+
+    public final void setP(final String inputP) {
+<span class="nc" id="L66">        this.p = Integer.parseInt(inputP);</span>
+<span class="nc" id="L67">    }</span>
 
     public final void setP(final int inputP) {
-<span class="nc" id="L42">        this.p = inputP;</span>
-<span class="nc" id="L43">    }</span>
+<span class="nc" id="L70">        this.p = inputP;</span>
+<span class="nc" id="L71">    }</span>
 
     public final int getP() {
-<span class="nc" id="L46">        return this.p;</span>
+<span class="nc" id="L74">        return this.p;</span>
     }
 
     public final String[] getAlgorithms() {
-<span class="nc" id="L50">        return this.algorithms;</span>
+<span class="nc" id="L78">        return this.algorithms;</span>
     }
 
     public final void loadDemandlocations(final String path) {
-<span class="nc" id="L54">        this.demandLocations = this.loadLocations(path);</span>
+<span class="nc" id="L82">        this.demandLocations = this.loadLocations(path);</span>
         
-<span class="nc" id="L56">    }</span>
+<span class="nc" id="L84">    }</span>
 
     public final int getNumberOfDemandLocations() {
-<span class="nc" id="L59">        return this.demandLocations.length;</span>
+<span class="nc" id="L87">        return this.demandLocations.length;</span>
     }
     
 
     public final void loadPossiblelocations(final String path) {
-<span class="nc" id="L64">        this.possibleLocations = this.loadLocations(path);</span>
-<span class="nc" id="L65">    }</span>
+<span class="nc" id="L92">        this.possibleLocations = this.loadLocations(path);</span>
+<span class="nc" id="L93">    }</span>
 
     public final int getNumberOfPossibleLocations() {
-<span class="nc" id="L68">        return this.possibleLocations.length;</span>
+<span class="nc" id="L96">        return this.possibleLocations.length;</span>
     }
     
     /** 
@@ -74,58 +102,62 @@ public class Pmedian {
      * @return Location[]
      */
     private Location[] loadLocations(final String path) {
-<span class="nc" id="L77">        LocationLoader data = new LocationLoader(path, true);</span>
-<span class="nc" id="L78">        Location[] locations = data.loadAsLocations();</span>
-<span class="nc" id="L79">        return locations;</span>
+<span class="nc" id="L105">        LocationLoader data = new LocationLoader(path, true);</span>
+<span class="nc" id="L106">        Location[] locations = data.loadAsLocations();</span>
+<span class="nc" id="L107">        return locations;</span>
     }
 
 
     public final void calculateCostMatrix() {
 
-<span class="nc" id="L85">        this.costs = new CostMatrix(this.possibleLocations, this.demandLocations);</span>
+<span class="nc" id="L113">        this.costs = new CostMatrix(this.possibleLocations, this.demandLocations);</span>
         
-<span class="nc" id="L87">    }</span>
+<span class="nc" id="L115">    }</span>
 
 
     public final boolean costMatrixExists() {
-<span class="nc bnc" id="L91" title="All 2 branches missed.">        return this.costs != null;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        return this.costs != null;</span>
     }
 
 
 
     public final void setSolverToNaive() {
-<span class="nc" id="L97">        this.algorithm = new Naive();</span>
-<span class="nc" id="L98">    }</span>
+<span class="nc" id="L125">        this.algorithm = new Naive();</span>
+<span class="nc" id="L126">    }</span>
 
     public final void setSolverToGRIA() {
-<span class="nc" id="L101">        this.algorithm = new GRIA();</span>
-<span class="nc" id="L102">        this.algorithm.setPossibleLocations(this.possibleLocations);</span>
-<span class="nc" id="L103">    }</span>
+<span class="nc" id="L129">        this.algorithm = new GRIA();</span>
+<span class="nc" id="L130">        this.algorithm.setPossibleLocations(this.possibleLocations);</span>
+<span class="nc" id="L131">    }</span>
 
     public final void setSolverToTeitzBart() {
-<span class="nc" id="L106">        this.algorithm = new TeitzBart();</span>
-<span class="nc" id="L107">    }</span>
+<span class="nc" id="L134">        this.algorithm = new TeitzBart();</span>
+<span class="nc" id="L135">    }</span>
 
     public final void setSolver(final String chosenAlgorithm) {
-<span class="nc bnc" id="L110" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;Naive&quot;) {</span>
-<span class="nc" id="L111">            this.setSolverToNaive();</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        if (chosenAlgorithm.equals(&quot;Naive&quot;)) {</span>
+<span class="nc" id="L139">            this.setSolverToNaive();</span>
         }
-<span class="nc bnc" id="L113" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;GRIA&quot;) {</span>
-<span class="nc" id="L114">            this.setSolverToGRIA();</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">        if (chosenAlgorithm.equals(&quot;GRIA&quot;)) {</span>
+<span class="nc" id="L142">            this.setSolverToGRIA();</span>
         }
-<span class="nc bnc" id="L116" title="All 2 branches missed.">        if (chosenAlgorithm == &quot;TeitzBart&quot;) {</span>
-<span class="nc" id="L117">            this.setSolverToTeitzBart();</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">        if (chosenAlgorithm.equals(&quot;TeitzBart&quot;)) {</span>
+<span class="nc" id="L145">            this.setSolverToTeitzBart();</span>
         }
-<span class="nc" id="L119">    }</span>
+<span class="nc" id="L147">    }</span>
+
+    public final String getAlgorithmName() {
+<span class="nc" id="L150">        return this.algorithm.getName();</span>
+    }
 
 
     public final void solve() {
-<span class="nc" id="L123">        this.algorithm.solveWithParams(this.costs, this.p);</span>
+<span class="nc" id="L155">        this.algorithm.solveWithParams(this.costs, this.p);</span>
 
-<span class="nc" id="L125">    }</span>
+<span class="nc" id="L157">    }</span>
 
     public final double getResultCost() {
-<span class="nc" id="L128">        return this.algorithm.getResultCost();</span>
+<span class="nc" id="L160">        return this.algorithm.getResultCost();</span>
     }
 
     /**
@@ -133,7 +165,7 @@ public class Pmedian {
      * @return For each demand facility, the index of possible facility location it's allocated to.
      */
     public int[] getResultAllocations() {
-<span class="nc" id="L136">        return this.algorithm.getResultAllocations();</span>
+<span class="nc" id="L168">        return this.algorithm.getResultAllocations();</span>
     }
     /**
      * Write results (facility allocations) to a file.
@@ -142,38 +174,64 @@ public class Pmedian {
      */
     public void writeAllocationsToFile(final String filePathInput) {
 
-<span class="nc" id="L145">        int[] allocations = this.getResultAllocations();</span>
-<span class="nc" id="L146">        String[] lines = new String[allocations.length + 1];</span>
+<span class="nc" id="L177">        int[] allocations = this.getResultAllocations();</span>
+<span class="nc" id="L178">        String[] lines = new String[allocations.length + 1];</span>
 
         // Header
-<span class="nc" id="L149">        lines[0] = &quot;demandlocation;facility\n&quot;;</span>
+<span class="nc" id="L181">        lines[0] = &quot;demandlocation;facility\n&quot;;</span>
         
-<span class="nc bnc" id="L151" title="All 2 branches missed.">        for (int demandLocationIdx = 0; demandLocationIdx &lt; this.demandLocations.length; demandLocationIdx++) {</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">        for (int demandLocationIdx = 0; demandLocationIdx &lt; this.demandLocations.length; demandLocationIdx++) {</span>
 
-<span class="nc" id="L153">            int idx = allocations[demandLocationIdx];</span>
+<span class="nc" id="L185">            int idx = allocations[demandLocationIdx];</span>
 
-<span class="nc" id="L155">            String demandLocationId     = this.demandLocations[demandLocationIdx].getId();</span>
-<span class="nc" id="L156">            String facilityLocationId   = this.possibleLocations[idx].getId();</span>
+<span class="nc" id="L187">            String demandLocationId     = this.demandLocations[demandLocationIdx].getId();</span>
+<span class="nc" id="L188">            String facilityLocationId   = this.possibleLocations[idx].getId();</span>
 
-<span class="nc" id="L158">            String line = demandLocationId + &quot;;&quot; + facilityLocationId + &quot;\n&quot;;</span>
+<span class="nc" id="L190">            String line = demandLocationId + &quot;;&quot; + facilityLocationId + &quot;\n&quot;;</span>
 
-<span class="nc" id="L160">            lines[demandLocationIdx + 1] = line;</span>
+<span class="nc" id="L192">            lines[demandLocationIdx + 1] = line;</span>
         }
 
     
         
         try {
-<span class="nc" id="L166">            writeLines(filePathInput, lines);</span>
-<span class="nc" id="L167">            System.out.println(&quot;Wrote lines to &quot; + filePathInput);</span>
-<span class="nc" id="L168">        } catch (IOException e) { </span>
+<span class="nc" id="L198">            writeLines(filePathInput, lines);</span>
+<span class="nc" id="L199">            System.out.println(&quot;Wrote lines to &quot; + filePathInput);</span>
+<span class="nc" id="L200">        } catch (IOException e) { </span>
       
-<span class="nc" id="L170">            System.out.println(&quot;Problem with writing the results&quot;);</span>
-<span class="nc" id="L171">            e.printStackTrace(); </span>
-<span class="nc" id="L172">          } </span>
+<span class="nc" id="L202">            System.out.println(&quot;Problem with writing the results&quot;);</span>
+<span class="nc" id="L203">            e.printStackTrace(); </span>
+<span class="nc" id="L204">          } </span>
 
         
-<span class="nc" id="L175">    }</span>
+<span class="nc" id="L207">    }</span>
 
+
+     /**
+     * Check if everything required for solving exists.
+     * @return boolean. True if problem is specified.
+     */
+    
+    public final boolean solveRequirementsFulfilled() {
+<span class="nc" id="L216">        Boolean requirements = true;</span>
+
+<span class="nc bnc" id="L218" title="All 2 branches missed.">        if (!this.costMatrixExists()) {</span>
+<span class="nc" id="L219">            return false;</span>
+        }
+
+<span class="nc bnc" id="L222" title="All 2 branches missed.">        if (this.p &lt;= 0) {</span>
+<span class="nc" id="L223">            return false;</span>
+        }
+
+        // GRIA is the only algorithm that requires possible locations, so: 
+<span class="nc bnc" id="L227" title="All 4 branches missed.">        if (this.algorithm.getName().equals(&quot;GRIA&quot;) &amp; this.getNumberOfPossibleLocations() == 0) {</span>
+<span class="nc" id="L228">            return false;</span>
+        }       
+ 
+
+<span class="nc" id="L232">        return requirements;</span>
+    }
+    
 
 
 }

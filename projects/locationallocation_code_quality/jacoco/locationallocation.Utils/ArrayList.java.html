@@ -24,7 +24,7 @@ public class ArrayList {
 
 <span class="fc" id="L25">    public ArrayList() {</span>
         
-<span class="fc" id="L27">        this.increment = 10;</span>
+<span class="fc" id="L27">        this.increment = 1000;</span>
 <span class="fc" id="L28">        this.array = new String[this.increment];</span>
 <span class="fc" id="L29">        this.size = this.array.length;</span>
 <span class="fc" id="L30">        this.elementsInArray = 0;</span>
@@ -70,12 +70,12 @@ public class ArrayList {
      * @return Array.
      */
     public String[] getArray() {
-<span class="nc" id="L73">        String[] rtrn = new String[this.elementsInArray];</span>
+<span class="fc" id="L73">        String[] rtrn = new String[this.elementsInArray];</span>
 
-<span class="nc bnc" id="L75" title="All 2 branches missed.">        for (int i = 0; i &lt; this.elementsInArray; i++) {</span>
-<span class="nc" id="L76">            rtrn[i] = this.array[i];</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        for (int i = 0; i &lt; this.elementsInArray; i++) {</span>
+<span class="fc" id="L76">            rtrn[i] = this.array[i];</span>
         }
-<span class="nc" id="L78">        return rtrn;</span>
+<span class="fc" id="L78">        return rtrn;</span>
     }
     /**
      * Getter for a single value.

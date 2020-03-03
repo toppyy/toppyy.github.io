@@ -66,7 +66,7 @@ public final class CostMatrix {
 
     /** 
      * Returns the sum of costs for a given set of rows.
-     * For each row, the minumum cost is chosen.
+     * For each column, the minumum cost is chosen.
      * 
      * @param rowset set of rows for which to find sum of minimums of costs.
      * @return double
