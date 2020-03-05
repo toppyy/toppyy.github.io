@@ -8,6 +8,7 @@ import javax.swing.JRadioButton;
 
 import locationallocation.Domain.Pmedian;
 
+
  /**
  * Action listener for radio button choosing the algorithm to use.
  */
@@ -17,20 +18,23 @@ public class AlgorithmListener implements ActionListener {
     private JRadioButton button;
     private Pmedian app;
 
-<span class="nc" id="L20">    public AlgorithmListener(final Pmedian appInput, final JRadioButton buttonInput) {</span>
-<span class="nc" id="L21">        this.button = buttonInput;</span>
-<span class="nc" id="L22">        this.app = appInput;</span>
-<span class="nc" id="L23">    }</span>
+<span class="nc" id="L21">    public AlgorithmListener(final Pmedian appInput, final JRadioButton buttonInput) {</span>
+<span class="nc" id="L22">        this.button = buttonInput;</span>
+<span class="nc" id="L23">        this.app = appInput;</span>
+<span class="nc" id="L24">    }</span>
     /**
      * Sets solver based on clicked (radio-)button.
      * @param e Event.
      */
     public void actionPerformed(final ActionEvent e) {
 
-<span class="nc" id="L30">        String command = button.getActionCommand();</span>
-                
-<span class="nc" id="L32">        this.app.setSolver(command);</span>
-<span class="nc" id="L33">    }</span>
+<span class="nc" id="L31">        String command = button.getActionCommand();</span>
+        try {                  
+<span class="nc" id="L33">            this.app.setSolver(command);</span>
+<span class="nc" id="L34">        } catch (Exception error) {</span>
+<span class="nc" id="L35">            System.out.println(error);</span>
+<span class="nc" id="L36">        }</span>
+<span class="nc" id="L37">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -103,30 +103,30 @@ public final class CostMatrix {
     public int[] allocateColumnsToRows(final int[] rowset) {
 
         double minCost, cost;
-<span class="nc" id="L106">        int minRow = 0;</span>
-<span class="nc" id="L107">        int[] rtrn = new int[this.costs[0].length];</span>
+<span class="fc" id="L106">        int minRow = 0;</span>
+<span class="fc" id="L107">        int[] rtrn = new int[this.costs[0].length];</span>
 
         
-<span class="nc bnc" id="L110" title="All 2 branches missed.">        for (int col = 0; col &lt; this.costs[0].length; col++) {</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        for (int col = 0; col &lt; this.costs[0].length; col++) {</span>
 
-<span class="nc" id="L112">            minCost = Double.MAX_VALUE;</span>
+<span class="fc" id="L112">            minCost = Double.MAX_VALUE;</span>
             
-<span class="nc bnc" id="L114" title="All 2 branches missed.">            for (int row : rowset) {</span>
-<span class="nc" id="L115">                cost = this.costs[row][col];</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">            for (int row : rowset) {</span>
+<span class="fc" id="L115">                cost = this.costs[row][col];</span>
 
-<span class="nc bnc" id="L117" title="All 2 branches missed.">                if (cost &lt; minCost) {</span>
-<span class="nc" id="L118">                    minCost = cost;</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">                if (cost &lt; minCost) {</span>
+<span class="fc" id="L118">                    minCost = cost;</span>
 
-<span class="nc" id="L120">                    minRow = row; </span>
+<span class="fc" id="L120">                    minRow = row; </span>
                     
                 }
             }
-<span class="nc" id="L124">            rtrn[col] = minRow;</span>
+<span class="fc" id="L124">            rtrn[col] = minRow;</span>
             
             
             
         }
-<span class="nc" id="L129">        return rtrn;</span>
+<span class="fc" id="L129">        return rtrn;</span>
 
     }
 

@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import locationallocation.Domain.Pmedian;
 import locationallocation.UI.GUI;
 
+
 /**
  * P-chooser listener.
  */
@@ -17,21 +18,21 @@ public class ChoosePListener implements ActionListener {
         private Pmedian app;
         private GUI ui;
 
-<span class="nc" id="L20">        public ChoosePListener(final GUI uiInput, final Pmedian appInput, final JTextField pInput) {</span>
-<span class="nc" id="L21">            this.pInputField = pInput;</span>
-<span class="nc" id="L22">            this.app = appInput;</span>
-<span class="nc" id="L23">            this.ui = uiInput;</span>
-<span class="nc" id="L24">        }</span>
+<span class="nc" id="L21">        public ChoosePListener(final GUI uiInput, final Pmedian appInput, final JTextField pInput) {</span>
+<span class="nc" id="L22">            this.pInputField    = pInput;</span>
+<span class="nc" id="L23">            this.app            = appInput;</span>
+<span class="nc" id="L24">            this.ui             = uiInput;</span>
+<span class="nc" id="L25">        }</span>
+
         /**
          * When clicked, parse input into a number and update app.
          * @param e Event.
          */
         public void actionPerformed(final ActionEvent e) {
+            
+<span class="nc" id="L33">            this.app.setP(this.pInputField.getText());</span>
+<span class="nc" id="L34">            this.ui.updateStatus(&quot;P&quot;);</span>
 
-<span class="nc" id="L31">            Integer chosenP = Integer.parseInt(this.pInputField.getText());</span>
-<span class="nc" id="L32">            this.app.setP(chosenP);</span>
-<span class="nc" id="L33">            this.ui.updateStatus(&quot;P&quot;);</span>
-
-<span class="nc" id="L35">        }</span>
-    }
+<span class="nc" id="L36">        }</span>
+}
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

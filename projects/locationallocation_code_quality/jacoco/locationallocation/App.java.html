@@ -26,106 +26,73 @@ public final class App {
 
 <span class="nc" id="L27">        Pmedian app = new Pmedian();</span>
 
-        // To run a simple example, try: gradle run --args &quot;example 8&quot;
-<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (args.length &gt; 0) {</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        if (args.length &gt; 0) {</span>
 
-<span class="nc bnc" id="L32" title="All 2 branches missed.">            if (args[0].equals(&quot;example&quot;)) {</span>
+            // Performance tests
+<span class="nc bnc" id="L32" title="All 2 branches missed.">            if (args[0].equals(&quot;perf&quot;)) {</span>
 
-<span class="nc" id="L34">                Integer p = Integer.parseInt(args[1]);</span>
-
-                // Set up
-<span class="nc" id="L37">                app.setP(p);</span>
-                
-<span class="nc" id="L39">                app.loadDemandlocations(&quot;src/test/resources/testdata_1_demand_locations.csv&quot;);</span>
-<span class="nc" id="L40">                app.loadPossiblelocations(&quot;src/test/resources/testdata_1_facility_locations.csv&quot;);</span>
-
-<span class="nc" id="L42">                app.calculateCostMatrix();</span>
-
-                // Solve with all algorithms
-<span class="nc" id="L45">                app.setSolverToTeitzBart();</span>
-<span class="nc" id="L46">                app.solve();</span>
-<span class="nc" id="L47">                double costTB = app.getResultCost();</span>
-
-<span class="nc" id="L49">                app.writeAllocationsToFile(&quot;RES_TB.csv&quot;);</span>
-
-<span class="nc" id="L51">                app.setSolverToGRIA();</span>
-<span class="nc" id="L52">                app.solve();</span>
-<span class="nc" id="L53">                double costGRIA = app.getResultCost();</span>
-
-<span class="nc" id="L55">                app.writeAllocationsToFile(&quot;RES_GRIA.csv&quot;);</span>
-
-<span class="nc" id="L57">                app.setSolverToNaive();</span>
-<span class="nc" id="L58">                app.solve();</span>
-<span class="nc" id="L59">                double costNaive = app.getResultCost();</span>
-
-<span class="nc" id="L61">                app.writeAllocationsToFile(&quot;RES_NAIVE.csv&quot;);</span>
-
-<span class="nc" id="L63">                System.out.println(&quot;Total cost of solution:&quot;);</span>
-<span class="nc" id="L64">                System.out.println(&quot;TB: &quot; + costTB);</span>
-<span class="nc" id="L65">                System.out.println(&quot;GRIA: &quot; + costGRIA);</span>
-<span class="nc" id="L66">                System.out.println(&quot;Naive: &quot; + costNaive);</span>
-                
-            }
-
-<span class="nc bnc" id="L70" title="All 2 branches missed.">            if (args[0].equals(&quot;perf&quot;)) {</span>
-
-<span class="nc" id="L72">                String outputfolder = args[1];                </span>
+<span class="nc" id="L34">                String outputfolder = args[1];                </span>
 
                 // Test quality and performance
-<span class="nc" id="L75">                System.out.println(&quot;Running performance tests..&quot;);</span>
+<span class="nc" id="L37">                System.out.println(&quot;Running performance tests..&quot;);</span>
 
-<span class="nc" id="L77">                Reporter report = new Reporter();</span>
+<span class="nc" id="L39">                Reporter report = new Reporter();</span>
 
                 // Large tests
                 
-<span class="nc" id="L81">                String[] algorithms = {&quot;TB&quot;, &quot;GRIA&quot;};</span>
-<span class="nc" id="L82">                int[] limits = {2, 25};</span>
+<span class="nc" id="L43">                String[] algorithms = {&quot;TB&quot;, &quot;GRIA&quot;};</span>
+<span class="nc" id="L44">                int[] limits = {2, 25};</span>
 
-<span class="nc" id="L84">                report.setPlimits(limits);</span>
-<span class="nc" id="L85">                Testresult[] largeTests = report.runTests(algorithms, 50, 300, 10);</span>
+<span class="nc" id="L46">                report.setPlimits(limits);</span>
+<span class="nc" id="L47">                Testresult[] largeTests = report.runTests(algorithms, 50, 300, 10);</span>
 
                 
-<span class="nc" id="L88">                report.writeResults(outputfolder + &quot;/large tests with iterations.txt&quot;);</span>
+<span class="nc" id="L50">                report.writeResults(outputfolder + &quot;/large tests with iterations.txt&quot;);</span>
 
             
                 // Small tests
 
 
-<span class="nc" id="L94">                String[] algorithmsSmall = {&quot;TB&quot;, &quot;GRIA&quot;, &quot;Naive&quot;};</span>
-<span class="nc" id="L95">                int[] limitsSmall = {2, 7};</span>
+<span class="nc" id="L56">                String[] algorithmsSmall = {&quot;TB&quot;, &quot;GRIA&quot;, &quot;Naive&quot;};</span>
+<span class="nc" id="L57">                int[] limitsSmall = {2, 7};</span>
 
-<span class="nc" id="L97">                report.setPlimits(limitsSmall);</span>
+<span class="nc" id="L59">                report.setPlimits(limitsSmall);</span>
 
-<span class="nc" id="L99">                Testresult[] smallTests = report.runTests(algorithmsSmall, 20, 300, 10);</span>
+<span class="nc" id="L61">                Testresult[] smallTests = report.runTests(algorithmsSmall, 20, 300, 10);</span>
                 
-<span class="nc" id="L101">                report.writeResults(outputfolder + &quot;/small tests with iterations.txt&quot;);</span>
+<span class="nc" id="L63">                report.writeResults(outputfolder + &quot;/small tests with iterations.txt&quot;);</span>
 
-<span class="nc" id="L103">                System.out.println(&quot;... tests done.&quot;);</span>
+<span class="nc" id="L65">                System.out.println(&quot;... tests done.&quot;);</span>
             
 
             }
 
-<span class="nc" id="L108">        Arguments arguments = new Arguments(args);</span>
 
-<span class="nc bnc" id="L110" title="All 2 branches missed.">        if (arguments.allRequiredArgumentsGiven()) {</span>
+            // Run application with CMD-arguments
+<span class="nc" id="L72">            Arguments arguments = new Arguments(args);</span>
 
-<span class="nc" id="L112">            Pmedian appFromArgs = new Pmedian(arguments);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">            if (arguments.allRequiredArgumentsGiven()) {</span>
 
-<span class="nc" id="L114">            appFromArgs.solve();</span>
+<span class="nc" id="L76">                Pmedian appFromArgs = new Pmedian(arguments);</span>
 
-<span class="nc" id="L116">            System.out.println(&quot;Solved with &quot; + arguments.getAlgorithm() + &quot;. Cost: &quot; + appFromArgs.getResultCost());</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">                if (appFromArgs.solve()) {</span>
 
-<span class="nc" id="L118">            appFromArgs.writeAllocationsToFile(arguments.getOutputPath());</span>
+<span class="nc" id="L80">                    System.out.println(&quot;Solved with &quot; + arguments.getAlgorithm() + &quot;. Cost: &quot; + appFromArgs.getResultCost());</span>
 
+<span class="nc" id="L82">                    appFromArgs.writeAllocationsToFile(arguments.getOutputPath());</span>
+                }
+
+<span class="nc" id="L85">            } else {</span>
+<span class="nc" id="L86">                System.out.println(&quot;All required arguments not given.&quot;);</span>
+            }
+
+
+<span class="nc" id="L90">        } else {</span>
+
+<span class="nc" id="L92">            GUI application = new GUI(app);</span>
+
+<span class="nc" id="L94">            application.start();</span>
         }
-
-
-<span class="nc" id="L123">        } else {</span>
-
-<span class="nc" id="L125">            GUI application = new GUI(app);</span>
-
-<span class="nc" id="L127">            application.start();</span>
-        }
-<span class="nc" id="L129">    }</span>
+<span class="nc" id="L96">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

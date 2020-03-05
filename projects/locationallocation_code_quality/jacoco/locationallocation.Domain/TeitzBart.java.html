@@ -79,7 +79,7 @@ public class TeitzBart extends Solver {
 
 
         // For each candidate
-        //  - Replace each facility on solution one by one
+        //  - Replace each facility in solution one by one
         //  - Find minimum cost
         //  - If lower than before any replacement, persist change
 

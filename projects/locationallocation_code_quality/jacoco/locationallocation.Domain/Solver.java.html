@@ -38,7 +38,7 @@ public abstract class Solver {
 <span class="fc" id="L38">    }</span>
 
     public final String getName() {
-<span class="nc" id="L41">        return this.nameOfAlgorithm;</span>
+<span class="fc" id="L41">        return this.nameOfAlgorithm;</span>
     }
 
 
@@ -51,26 +51,13 @@ public abstract class Solver {
 <span class="fc" id="L51">        this.costMatrix = inputCostMatrix;</span>
 <span class="fc" id="L52">    }</span>
 
-    public final void printResults() {
-
-<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (resultCost &lt; 0) {</span>
-<span class="nc" id="L57">            System.out.println(&quot;No results yet. Try .solve() first.&quot;);</span>
-<span class="nc" id="L58">            return;</span>
-        }
-
-<span class="nc bnc" id="L61" title="All 2 branches missed.">        for (int i : this.result) {</span>
-<span class="nc" id="L62">            System.out.print(i + &quot; &quot;);</span>
-        }
-<span class="nc" id="L64">        System.out.println(&quot;\nCostsum: &quot; + this.resultCost);</span>
-            
-<span class="nc" id="L66">    }</span>
 
     /**
      * Getter for result.
      * @return Result (a set of integers describing the indexes of chosen locations).
      */
     public final int[] getResult() {
-<span class="fc" id="L73">        return this.result;</span>
+<span class="fc" id="L60">        return this.result;</span>
     }
     /**
      * Getter for demand facility allocations.
@@ -78,7 +65,7 @@ public abstract class Solver {
      * @return  For each demand facility, the index of possible facility location it's allocated to.
      */
     public int[] getResultAllocations() {
-<span class="nc" id="L81">        return this.costMatrix.allocateColumnsToRows(this.result);</span>
+<span class="fc" id="L68">        return this.costMatrix.allocateColumnsToRows(this.result);</span>
     }
 
     /**
@@ -86,24 +73,24 @@ public abstract class Solver {
      * @param resultInput A set of integers.
      */
     public void setResult(final int[] resultInput) {
-<span class="fc" id="L89">        this.result = resultInput;</span>
-<span class="fc" id="L90">    }</span>
+<span class="fc" id="L76">        this.result = resultInput;</span>
+<span class="fc" id="L77">    }</span>
     /**
      * Setter for result as a IntegerSet.
      * @param resultInput A set of integers.
      */
     public void setResult(final IntegerSet resultInput) {
-<span class="fc" id="L96">        this.result = resultInput.getIntegers();</span>
-<span class="fc" id="L97">    }</span>
+<span class="fc" id="L83">        this.result = resultInput.getIntegers();</span>
+<span class="fc" id="L84">    }</span>
    
 
     public final double getResultCost() {
-<span class="fc" id="L101">        return this.resultCost;</span>
+<span class="fc" id="L88">        return this.resultCost;</span>
     }
   
     public final void setResultCost(final double resultCostInput) {
-<span class="fc" id="L105">        this.resultCost = resultCostInput;</span>
-<span class="fc" id="L106">    }</span>
+<span class="fc" id="L92">        this.resultCost = resultCostInput;</span>
+<span class="fc" id="L93">    }</span>
     
     
     /**
