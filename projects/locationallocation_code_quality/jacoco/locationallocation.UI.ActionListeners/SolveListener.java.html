@@ -13,17 +13,21 @@ public class SolveListener implements ActionListener {
     private Pmedian app;
     private GUI ui;
 
-<span class="nc" id="L16">    public SolveListener(final GUI uiInput, final Pmedian inputApp) {</span>
-<span class="nc" id="L17">        this.app = inputApp;</span>
-<span class="nc" id="L18">        this.ui = uiInput;</span>
-<span class="nc" id="L19">    }</span>
+<span class="fc" id="L16">    public SolveListener(final GUI uiInput, final Pmedian inputApp) {</span>
+<span class="fc" id="L17">        this.app = inputApp;</span>
+<span class="fc" id="L18">        this.ui = uiInput;</span>
+<span class="fc" id="L19">    }</span>
     /**
      * When clicked, solve problem and update app.
      * @param e Event.
      */
-    public void actionPerformed(final ActionEvent e) {    
-<span class="nc" id="L25">        this.app.solve();</span>
-<span class="nc" id="L26">        this.ui.updateStatus(&quot;cost&quot;);        </span>
-<span class="nc" id="L27">    }</span>
+    public void actionPerformed(final ActionEvent e) {   
+        
+        // Empty results before run
+<span class="fc" id="L27">        this.app.deleteResult();</span>
+<span class="fc" id="L28">        this.ui.updateStatus(&quot;cost&quot;);</span>
+<span class="fc" id="L29">        this.app.solve();</span>
+<span class="fc" id="L30">        this.ui.updateStatus(&quot;cost&quot;);        </span>
+<span class="fc" id="L31">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

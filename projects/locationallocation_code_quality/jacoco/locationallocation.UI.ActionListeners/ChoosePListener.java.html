@@ -18,11 +18,11 @@ public class ChoosePListener implements ActionListener {
         private Pmedian app;
         private GUI ui;
 
-<span class="nc" id="L21">        public ChoosePListener(final GUI uiInput, final Pmedian appInput, final JTextField pInput) {</span>
-<span class="nc" id="L22">            this.pInputField    = pInput;</span>
-<span class="nc" id="L23">            this.app            = appInput;</span>
-<span class="nc" id="L24">            this.ui             = uiInput;</span>
-<span class="nc" id="L25">        }</span>
+<span class="fc" id="L21">        public ChoosePListener(final GUI uiInput, final Pmedian appInput, final JTextField pInput) {</span>
+<span class="fc" id="L22">            this.pInputField    = pInput;</span>
+<span class="fc" id="L23">            this.app            = appInput;</span>
+<span class="fc" id="L24">            this.ui             = uiInput;</span>
+<span class="fc" id="L25">        }</span>
 
         /**
          * When clicked, parse input into a number and update app.
@@ -30,9 +30,9 @@ public class ChoosePListener implements ActionListener {
          */
         public void actionPerformed(final ActionEvent e) {
             
-<span class="nc" id="L33">            this.app.setP(this.pInputField.getText());</span>
-<span class="nc" id="L34">            this.ui.updateStatus(&quot;P&quot;);</span>
+<span class="fc" id="L33">            this.app.setP(this.pInputField.getText());</span>
+<span class="fc" id="L34">            this.ui.updateStatus(&quot;P&quot;);</span>
 
-<span class="nc" id="L36">        }</span>
+<span class="fc" id="L36">        }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
