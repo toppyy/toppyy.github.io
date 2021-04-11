@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml"><head>
+<title>SankeyID6d4e1c67d5c8</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+body {
+  color: #444444;
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 75%;
+  }
+  a {
+  color: #4D87C7;
+  text-decoration: none;
+}
+</style>
+<script type="text/javascript" charset="UTF-8" src="virta1_files/loader.js"></script><link id="load-css-0" rel="stylesheet" type="text/css" href="virta1_files/tooltip.css"><link id="load-css-1" rel="stylesheet" type="text/css" href="virta1_files/util.css"><script type="text/javascript" charset="UTF-8" src="virta1_files/jsapi_compiled_default_module.js"></script><script type="text/javascript" charset="UTF-8" src="virta1_files/jsapi_compiled_graphics_module.js"></script><script type="text/javascript" charset="UTF-8" src="virta1_files/jsapi_compiled_ui_module.js"></script><script type="text/javascript" charset="UTF-8" src="virta1_files/jsapi_compiled_fw_module.js"></script><script type="text/javascript" charset="UTF-8" src="virta1_files/d3_002.js"></script><script type="text/javascript" charset="UTF-8" src="virta1_files/d3.js"></script><script type="text/javascript" charset="UTF-8" src="virta1_files/jsapi_compiled_sankey_module.js"></script></head>
+<body>
+ <!-- Sankey generated in R 4.0.4 by googleVis 0.6.10 package -->
+<!-- Sun Apr 11 19:31:43 2021 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataSankeyID6d4e1c67d5c8 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"Työllinen",
+"Työttömät 73519",
+73519
+],
+[
+"Työllinen",
+"Opiskelijat, koululaiset 53716",
+53716
+],
+[
+"Työllinen",
+"Eläkeläiset  52396",
+52396
+],
+[
+"Työllinen",
+"Varusmiehet, siviilipalvelusmiehet 2996",
+2996
+],
+[
+"Työllinen",
+"Muut työvoiman ulkopuolella olevat 31513",
+31513
+],
+[
+"Työllinen",
+"Ei väestössä 7990",
+7990
+] 
+];
+data.addColumn('string','From');
+data.addColumn('string','To');
+data.addColumn('number','Weight');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartSankeyID6d4e1c67d5c8() {
+var data = gvisDataSankeyID6d4e1c67d5c8();
+var options = {};
+options["width"] = 300;
+options["height"] = 400;
+options["sankey"] = {
+                                    node: { colors: ['#252525','#252525','#252525','#252525','#252525','#252525' ],
+                                    nodePadding: 40}};
+
+
+    var chart = new google.visualization.Sankey(
+    document.getElementById('SankeyID6d4e1c67d5c8')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "sankey";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartSankeyID6d4e1c67d5c8);
+})();
+function displayChartSankeyID6d4e1c67d5c8() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="virta1_files/jsapi"></script>
+ 
+<!-- divChart -->
+  
+<div id="SankeyID6d4e1c67d5c8" style="width: 300; height: 400;"><div style="position: relative;"><div style="position: relative; width: 300px; height: 400px;" dir="ltr"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;" aria-label="A chart."><svg width="300" height="400" style="overflow: hidden;" aria-label="A chart."><defs id="_ABSTRACT_RENDERER_ID_0"></defs><g><path d="M10,54.020078332508014C103.33333333333333,54.020078332508014,196.66666666666666,9.947598300641403e-14,290,9.947598300641403e-14L290,64.53970647818855C196.66666666666666,64.53970647818855,103.33333333333333,118.55978481069647,10,118.55978481069647Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#aaaaaa"></path><path d="M10,118.55978481069646C103.33333333333333,118.55978481069646,196.66666666666666,104.53970647818856,290,104.53970647818856L290,151.69506595237036C196.66666666666666,151.69506595237036,103.33333333333333,165.71514428487825,10,165.71514428487825Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#aaaaaa"></path><path d="M10,165.71514428487825C103.33333333333333,165.71514428487825,196.66666666666666,191.69506595237033,290,191.69506595237033L290,237.69164453248106C196.66666666666666,237.69164453248106,103.33333333333333,211.71172286498899,10,211.71172286498899Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#aaaaaa"></path><path d="M10,246.38999684869222C103.33333333333333,246.38999684869222,196.66666666666666,392.3699185161843,290,392.3699185161843L290,395.0000000000001C196.66666666666666,395.0000000000001,103.33333333333333,249.020078332508,10,249.020078332508Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#aaaaaa"></path><path d="M10,211.71172286498899C103.33333333333333,211.71172286498899,196.66666666666666,277.69164453248106,290,277.69164453248106L290,305.3557826497998C196.66666666666666,305.3557826497998,103.33333333333333,239.37586098230767,10,239.37586098230767Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#aaaaaa"></path><path d="M10,239.37586098230767C103.33333333333333,239.37586098230767,196.66666666666666,345.3557826497998,290,345.3557826497998L290,352.3699185161843C196.66666666666666,352.3699185161843,103.33333333333333,246.38999684869222,10,246.38999684869222Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#aaaaaa"></path></g><g><text text-anchor="start" x="16" y="155.02007833250804" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Työllinen</text><text text-anchor="end" x="284" y="35.769853239094324" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Työttömät 73519</text><text text-anchor="end" x="284" y="131.61738621527942" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Opiskelijat, koululaiset 53716</text><text text-anchor="end" x="284" y="218.1933552424257" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Eläkeläiset  52396</text><text text-anchor="end" x="284" y="397.1849592580922" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Varusmiehet, siviilipalvelusmiehet 2996</text><text text-anchor="end" x="284" y="295.02371359114045" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Muut työvoiman ulkopuolella olevat 31513</text><text text-anchor="end" x="284" y="352.36285058299205" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Ei väestössä 7990</text><rect x="0" y="54.02007833250801" width="10" height="195.00000000000006" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#252525"></rect><rect x="290" y="9.947598300641403e-14" width="10" height="64.53970647818845" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#454545"></rect><rect x="290" y="104.53970647818855" width="10" height="47.15535947418175" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#252525"></rect><rect x="290" y="191.69506595237033" width="10" height="45.996578580110736" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#454545"></rect><rect x="290" y="392.3699185161843" width="10" height="2.6300814838157294" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#252525"></rect><rect x="290" y="277.69164453248106" width="10" height="27.664138117318714" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#454545"></rect><rect x="290" y="345.3557826497998" width="10" height="7.0141358663845494" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#252525"></rect></g><g></g><g></g><g></g><g></g><g></g></svg><div aria-label="A tabular representation of the data in the chart." style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;"><table><thead><tr><th>From</th><th>To</th><th>Weight</th></tr></thead><tbody><tr><td>Työllinen</td><td>Työttömät 73519</td><td>73,519</td></tr><tr><td>Työllinen</td><td>Opiskelijat, koululaiset 53716</td><td>53,716</td></tr><tr><td>Työllinen</td><td>Eläkeläiset  52396</td><td>52,396</td></tr><tr><td>Työllinen</td><td>Varusmiehet, siviilipalvelusmiehet 2996</td><td>2,996</td></tr><tr><td>Työllinen</td><td>Muut työvoiman ulkopuolella olevat 31513</td><td>31,513</td></tr><tr><td>Työllinen</td><td>Ei väestössä 7990</td><td>7,990</td></tr></tbody></table></div></div></div><div style="display: none; position: absolute; top: 410px; left: 310px; white-space: nowrap; font-family: Arial; font-size: 8px;" aria-hidden="true">-._.-*^*-._.-*^*-._.-</div><div></div></div></div>
+ <div><span>Data: dat • Chart ID: <a href="http://127.0.0.1:19757/custom/googleVis/Chart_SankeyID6d4e1c67d5c8.html">SankeyID6d4e1c67d5c8</a> • <a href="https://github.com/mages/googleVis">googleVis-0.6.10</a></span><br> 
+<!-- htmlFooter -->
+<span> 
+  R version 4.0.4 (2021-02-15) 
+  • <a href="https://developers.google.com/terms/">Google Terms of Use</a> • <a href="https://developers.google.com/chart/interactive/docs/gallery/sankey">Documentation and Data Policy</a>
+</span></div>
+
+
+</body></html>
