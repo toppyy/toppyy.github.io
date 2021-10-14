@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml"><head>
+<title>SankeyID188d239cd736</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+body {
+  color: #444444;
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 75%;
+  }
+  a {
+  color: #4D87C7;
+  text-decoration: none;
+}
+</style>
+<script type="text/javascript" charset="UTF-8" src="virta_3_files/loader.js"></script><link id="load-css-0" rel="stylesheet" type="text/css" href="virta_3_files/tooltip.css"><link id="load-css-1" rel="stylesheet" type="text/css" href="virta_3_files/util.css"><script type="text/javascript" charset="UTF-8" src="virta_3_files/jsapi_compiled_default_module.js"></script><script type="text/javascript" charset="UTF-8" src="virta_3_files/jsapi_compiled_graphics_module.js"></script><script type="text/javascript" charset="UTF-8" src="virta_3_files/jsapi_compiled_ui_module.js"></script><script type="text/javascript" charset="UTF-8" src="virta_3_files/jsapi_compiled_fw_module.js"></script><script type="text/javascript" charset="UTF-8" src="virta_3_files/d3_002.js"></script><script type="text/javascript" charset="UTF-8" src="virta_3_files/d3.js"></script><script type="text/javascript" charset="UTF-8" src="virta_3_files/jsapi_compiled_sankey_module.js"></script></head>
+<body>
+ <!-- Sankey generated in R 4.1.1 by googleVis 0.6.10 package -->
+<!-- Thu Oct 14 18:43:46 2021 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataSankeyID188d239cd736 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"Venäjä 20000",
+"Työllistyminen 14740",
+20000
+],
+[
+"Viro 12000",
+"Työllistyminen 8844",
+12000
+],
+[
+"Muu Eurooppa 24000",
+"Työllistyminen 17688",
+24000
+],
+[
+"Muu Maailma 44000",
+"Työllistyminen 32428",
+44000
+],
+[
+"Työllistyminen 14740",
+"100 000 työllistä",
+14740
+],
+[
+"Työllistyminen 8844",
+"100 000 työllistä",
+8844
+],
+[
+"Työllistyminen 17688",
+"100 000 työllistä",
+17688
+],
+[
+"Työllistyminen 32428",
+"100 000 työllistä",
+32428
+],
+[
+"Vieraskieliset työttömät ja työvoiman ulkopuoliset 91002",
+"Työllistyminen 30031",
+91002
+],
+[
+"Työllistyminen 30031",
+"100 000 työllistä",
+30031
+] 
+];
+data.addColumn('string','From');
+data.addColumn('string','To');
+data.addColumn('number','Weight');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartSankeyID188d239cd736() {
+var data = gvisDataSankeyID188d239cd736();
+var options = {};
+options["width"] = 600;
+options["height"] = 400;
+options["sankey"] = {
+                                    node: { colors: ['#252525','#252525','#252525','#252525','#252525','#252525' ],
+                                    nodePadding: 30}};
+
+
+    var chart = new google.visualization.Sankey(
+    document.getElementById('SankeyID188d239cd736')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "sankey";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartSankeyID188d239cd736);
+})();
+function displayChartSankeyID188d239cd736() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="virta_3_files/jsapi"></script>
+ 
+<!-- divChart -->
+  
+<div id="SankeyID188d239cd736" style="width: 600; height: 400;"><div style="position: relative;"><div style="position: relative; width: 600px; height: 400px;" dir="ltr"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;" aria-label="A chart."><svg width="600" height="400" style="overflow: hidden;" aria-label="A chart."><defs id="_ABSTRACT_RENDERER_ID_0"></defs><g><path d="M10,318.92718400854426C105,318.92718400854426,200,318.92718400854443,295,318.92718400854443L295,347.7226940032042C200,347.7226940032042,105,347.722694003204,10,347.722694003204Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#aaaaaa"></path><path d="M10,377.7226940032041C105,377.7226940032041,200,377.72269400320414,295,377.72269400320414L295,395C200,395,105,394.99999999999994,10,394.99999999999994Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#aaaaaa"></path><path d="M10,254.37257201495254C105,254.37257201495254,200,254.37257201495277,295,254.37257201495277L295,288.9271840085445C200,288.9271840085445,105,288.92718400854426,10,288.92718400854426Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#aaaaaa"></path><path d="M10,161.02245002670122C105,161.02245002670122,200,161.02245002670136,295,161.02245002670136L295,224.3725720149528C200,224.3725720149528,105,224.37257201495265,10,224.37257201495265Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#aaaaaa"></path><path d="M305,318.92718400854443C400,318.92718400854443,495,246.552318889324,590,246.552318889324L590,267.7746097553882C495,267.7746097553882,400,340.14947487460864,305,340.14947487460864Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#aaaaaa"></path><path d="M305,377.72269400320414C400,377.72269400320414,495,267.77460975538827,590,267.77460975538827L590,280.5079842750268C495,280.5079842750268,400,390.45606852284266,305,390.45606852284266Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#aaaaaa"></path><path d="M305,254.3725720149528C400,254.3725720149528,495,221.08556985004694,590,221.08556985004694L590,246.552318889324C495,246.552318889324,400,279.83932105422986,305,279.83932105422986Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#aaaaaa"></path><path d="M305,161.02245002670136C400,161.02245002670136,495,174.39652994470563,590,174.39652994470563L590,221.08556985004694C495,221.08556985004694,400,207.71148993204267,305,207.71148993204267Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#aaaaaa"></path><path d="M10,-5.684341886080802e-14C105,-5.684341886080802e-14,200,-5.684341886080802e-14,295,-5.684341886080802e-14L295,131.02245002670122C200,131.02245002670122,105,131.02245002670122,10,131.02245002670122Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#aaaaaa"></path><path d="M305,-5.684341886080802e-14C400,-5.684341886080802e-14,495,131.1586319122243,590,131.1586319122243L590,174.39652994470563C495,174.39652994470563,400,43.237898032481276,305,43.237898032481276Z" stroke="none" stroke-width="0" fill-opacity="0.6" fill="#aaaaaa"></path></g><g><text text-anchor="start" x="16" y="336.82493900587417" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Venäjä 20000</text><text text-anchor="start" x="311" y="336.8249390058743" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Työllistyminen 14740</text><text text-anchor="start" x="16" y="389.86134700160204" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Viro 12000</text><text text-anchor="start" x="311" y="389.8613470016021" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Työllistyminen 8844</text><text text-anchor="start" x="16" y="275.1498780117484" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Muu Eurooppa 24000</text><text text-anchor="start" x="311" y="275.1498780117486" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Työllistyminen 17688</text><text text-anchor="start" x="16" y="196.19751102082688" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Muu Maailma 44000</text><text text-anchor="start" x="311" y="196.19751102082708" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Työllistyminen 32428</text><text text-anchor="end" x="584" y="209.33330809362553" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">100 000 työllistä</text><text text-anchor="start" x="16" y="69.01122501335058" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Vieraskieliset työttömät ja työvoiman ulkopuoliset 91002</text><text text-anchor="start" x="311" y="69.01122501335065" font-family="sans-serif" font-size="10" stroke="none" stroke-width="0" fill="#000000">Työllistyminen 30031</text><rect x="0" y="318.92718400854426" width="10" height="28.795509994659824" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#252525"></rect><rect x="295" y="318.92718400854443" width="10" height="28.79550999465971" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#454545"></rect><rect x="0" y="377.7226940032041" width="10" height="17.277305996795917" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#252525"></rect><rect x="295" y="377.72269400320414" width="10" height="17.27730599679586" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#454545"></rect><rect x="0" y="254.37257201495254" width="10" height="34.55461199359172" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#252525"></rect><rect x="295" y="254.3725720149528" width="10" height="34.554611993591635" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#454545"></rect><rect x="0" y="161.02245002670122" width="10" height="63.35012198825132" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#252525"></rect><rect x="295" y="161.02245002670136" width="10" height="63.35012198825143" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#454545"></rect><rect x="590" y="131.1586319122243" width="10" height="149.34935236280242" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#252525"></rect><rect x="0" y="-5.684341886080802e-14" width="10" height="131.02245002670128" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#454545"></rect><rect x="295" y="-5.684341886080802e-14" width="10" height="131.02245002670142" stroke="none" stroke-width="0" fill-opacity="0.8" fill="#252525"></rect></g><g></g><g></g><g></g><g></g><g></g></svg><div aria-label="A tabular representation of the data in the chart." style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;"><table><thead><tr><th>From</th><th>To</th><th>Weight</th></tr></thead><tbody><tr><td>Venäjä 20000</td><td>Työllistyminen 14740</td><td>20,000</td></tr><tr><td>Viro 12000</td><td>Työllistyminen 8844</td><td>12,000</td></tr><tr><td>Muu Eurooppa 24000</td><td>Työllistyminen 17688</td><td>24,000</td></tr><tr><td>Muu Maailma 44000</td><td>Työllistyminen 32428</td><td>44,000</td></tr><tr><td>Työllistyminen 14740</td><td>100 000 työllistä</td><td>14,740</td></tr><tr><td>Työllistyminen 8844</td><td>100 000 työllistä</td><td>8,844</td></tr><tr><td>Työllistyminen 17688</td><td>100 000 työllistä</td><td>17,688</td></tr><tr><td>Työllistyminen 32428</td><td>100 000 työllistä</td><td>32,428</td></tr><tr><td>Vieraskieliset työttömät ja työvoiman ulkopuoliset 91002</td><td>Työllistyminen 30031</td><td>91,002</td></tr><tr><td>Työllistyminen 30031</td><td>100 000 työllistä</td><td>30,031</td></tr></tbody></table></div></div></div><div style="display: none; position: absolute; top: 410px; left: 610px; white-space: nowrap; font-family: Arial; font-size: 16px;" aria-hidden="true">32428</div><div></div></div></div>
+ 
+
+
+</body></html>
