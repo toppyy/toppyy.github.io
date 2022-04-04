@@ -1,0 +1,62 @@
+<html>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<div id="sankey_basic" style="width: 900px; height: 300px;"></div>
+
+<br>
+<br>
+<textarea rows="10" cols="50" id="datainput"></textarea>
+<br>
+<br>
+<div id="error-container" style="color: red"></div>
+<script>
+
+    const placeholder = (
+        [
+            [ 'A', 'X', 5 ],
+            [ 'A', 'Y', 7 ],
+            [ 'A', 'Z', 6 ],
+            [ 'B', 'X', 2 ],
+            [ 'B', 'Y', 9 ],
+            [ 'B', 'Z', 4 ]           
+        ]
+    )
+
+
+    google.charts.load('current', {'packages':['sankey']});
+    google.charts.setOnLoadCallback(() => drawChart( placeholder ) )
+
+    function drawChart(rows) {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'From');
+        data.addColumn('string', 'To');
+        data.addColumn('number', 'Weight');
+        data.addRows(rows);
+
+        // Sets chart options.
+        var options = {
+            width: 600,
+        };
+
+        // Instantiates and draws our chart, passing in some options.
+        var chart = new google.visualization.Sankey(document.getElementById('sankey_basic'));
+        chart.draw(data, options);  
+    }
+
+    function setErrorMessage(msg) {
+        document.getElementById('error-container').innerHTML = msg
+    }
+    const datainput = document.getElementById('datainput')
+    datainput.value = JSON.stringify( placeholder ).replaceAll('],','],\n')
+
+    datainput.onkeyup = (e) => {
+        setErrorMessage('')
+        try {
+            drawChart(JSON.parse(e.target.value))
+        } catch(err) {
+            setErrorMessage(err)
+        }
+    }
+    
+</script>
+</html>
