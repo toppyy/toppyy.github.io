@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <style>
+            body {
+                font-family: 'times';
+            }
+            img {
+                width: 75%;
+                height: 70%;
+            }
+
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+
+            #tbl-container {
+            
+                width: 60%;
+                margin-left: 15%;
+            }
+            .container {
+                margin-left: 20%;
+                width: 60%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        <h1>Lapin hyvinvointialue</h1>
+
+            <ul>
+                <li>Terveysasemat ja -keskukset poimittu <a href="https://koodistopalvelu.kanta.fi/codeserver/pages/classification-view-page.xhtml?classificationKey=421&versionKey=501">SOTE-organisaatiorekisteristä</a></li>
+                <li>Joutui käsin kuratoimaan listan kunnittain. Rekisteriin on kirjattu terveyskeskusten alle kaikenlaisten kouluterveydenhuollosta eteenpäin</li>
+                
+            </ul>
+            
+            <h3>Kuvio 1. Väestö ja terveysasemat</h3>
+            
+            <img src = "hvalue_vaestoruudut_20.png"/>
+            
+            <ul>
+                <li>Laskettu etäisyys kuhunkin väestöruutuun ja valittu lähin terveysasema/-keskus kullekin väestöruudulle</li>
+                <li>Mitä punaisempi ruutu, sitä pidempi matka</li>
+            </ul>
+
+            <h3>Kuvio 2. Etäisyys lähimpään terveysasemaan</h3>
+            <img src = "terveysasema_distance_20.png"/>
+            
+            <table id="asema-tbl"></table>
+        
+        </div>        
+    </body>
+    <script src="vaestoa_etaisyydella_terveysasemasta_20.js"></script>
+    <script>
+
+        // Prep data
+        terveysasemat = terveysasemat[0]
+        asema_str = []
+        names       = Object.values(terveysasemat.longname)
+        kunnat      = Object.values(terveysasemat.asijaintikunta)
+        vaesto      = Object.values(terveysasemat.vaesto)
+
+
+        n = names.length
+
+        for (i = 0; i < n; i++) {
+            asema_str.push(
+                [ names[i] , kunnat[i], vaesto[i] ]
+            )
+        }
+        
+        // Pop table
+        tbl = document.getElementById('asema-tbl')
+
+        make = (tag,val) => {
+            elem = document.createElement(tag)
+            elem.innerHTML = val
+            return(elem)
+        }
+
+        makeTd = val => make('td',val)
+        makeTr = val => make('tr',val)
+
+
+        tr = make('tr','')
+        tr.appendChild(make('th','Nimi'))
+        tr.appendChild(make('th','Sijaintikunta'))
+        tr.appendChild(make('th','Väestöä 50km säteellä'))
+        tbl.appendChild(tr)
+        
+        for (asema of asema_str) {
+            tr = makeTr('')
+            for (val of asema) {
+                td = makeTd(val)
+                tr.appendChild(td)
+            }
+            tbl.appendChild(tr)
+        }
+
+
+
+    </script>
+</html>
