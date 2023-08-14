@@ -8,3 +8,17 @@ body {
     width: 60%;
 }
 
+#cluecontainer {
+  background-color: lightgray;
+  width: auto;
+}
+
+#clue {
+  padding-left: 5%;
+  opacity: 0;
+}
+
+#clue:hover {
+  opacity: 100;
+}
+
