@@ -5,20 +5,34 @@ body {
 #container {
     padding: 10px;
     margin-left: 20%;
-    width: 60%;
+    width: 40%;
 }
 
-#cluecontainer {
+.cluecontainer {
   background-color: lightgray;
-  width: auto;
+  width: fit-content;
 }
 
-#clue {
-  padding-left: 5%;
+.clue {
   opacity: 0;
 }
 
-#clue:hover {
+.clue:hover {
   opacity: 100;
 }
 
+
+#secret, #answer {
+  border: 1px solid black;
+  padding: 15px;
+}
+
+button  {
+  font-size: 100%;
+  padding: 10px;
+}
+
+#result {
+  font-size:150px;
+
+}

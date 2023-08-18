@@ -1,22 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Arvoitus</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <title>&#129382;</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="container">
-        <h2>Arvoitus</h2>
-        <p>Tässä on viesti, mutta mikä on sen sisältö?</p>
-        <div contenteditable="true" id="container.secret"></div>
+    <div id="container">
+
+        <h4>Arvoitus: Mikä tämä luku on kymmenjärjestelmässä?</h4>
+        <p>Kyse ei ole binäärijärjestelmässä esitetystä luvusta. Ratkaisu liittyy jotenkin Turun Energiaan.. </p>
+        <div contenteditable="true" id="secret">10101000100000010000101001010100101001000001001000001</div>
+
+        <h4>Vastauksesi:</h4>
+        <input type="number" id="answer" placeholder="123"></input>
+
+        <button onClick="checkAnswer()">Tarkista</button>
         <br>
-        <br>
-        <p>Vihje (onmouseover paljastaa) </p>
-        <div id="cluecontainer">
-          <img id="clue" src="clue.png" />
+        <span id="result"></span>
+        
+        <h5>Vihje 1</h5>
+        <div class="cluecontainer">
+            <img class="clue" src="https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_auto/w_4000,h_4000,c_crop,x_909,y_0/w_400/v1572600261/39-6069035dbbf23649aed.jpg"/>
         </div>
-  </div>
-<script src="script.js"></script>
+
+        <h5>Vihje 2</h5>
+        <div class="cluecontainer">
+            <p class="clue">Ko. lukujärjestelmässä esitettynä esimerkiksi 9 on 10001.</p>
+        </div>
+
+        <h5>Vihje 3</h5>
+        <div class="cluecontainer">
+            <a href="https://r-knott.surrey.ac.uk/Fibonacci/fibrep.html#section4.1" class="clue">Fibonacci base system</a>
+        </div>
+
+    </div>
+    <script>
+
+        // Enteriä painamalla voipi tarkistaa
+        const answerInput = document.getElementById('answer');
+        answerInput.addEventListener('keyup', e => {
+            if (e.keyCode == 13) {
+                checkAnswer();
+            }
+        })
+
+        // Lähde: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
+        async function digestMessage(message) {
+            const msgUint8 = new TextEncoder().encode(message);                 // encode as (utf-8) Uint8Array
+            const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8); // hash the message
+            const hashArray = Array.from(new Uint8Array(hashBuffer));           // convert buffer to byte array
+            const hashHex = hashArray
+                .map((b) => b.toString(16).padStart(2, "0"))
+                .join("");                                                      // convert bytes to hex string
+            return hashHex;
+        }
+
+        const checkAnswer = async function() {
+
+            const answer        = document.getElementById('answer').value;
+            const correctHash   = 'e6ab7ac1fdc77203d5bc297142922d09902425fe22b64ff049066a4a96e18e53';
+            const answerHash    = await digestMessage(answer)
+
+            updateResult(correctHash == answerHash)
+        }
+
+        const updateResult = function(answerIsCorrect) {
+            const resultContainer = document.getElementById('result');
+
+            let content = "&#128169;"
+            if (answerIsCorrect) {
+                content = "&#127870;&#127881;";
+            }
+            resultContainer.innerHTML = content;
+        }
+
+    </script>
 </body>
 </html>
