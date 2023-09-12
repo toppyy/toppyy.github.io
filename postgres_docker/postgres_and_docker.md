@@ -1,6 +1,6 @@
 # Postgres + docker
 
-`docker-compose.yml`:n sisältö:
+`docker-compose.yml`:n sisältö. Tietokannan data tallennetaan polkuun `./pgdata`.
 
     version: '3.1'
 
@@ -13,6 +13,9 @@
         POSTGRES_PASSWORD: example
         ports:
         - 8000:5432
+        volumes:
+        - ./pgdata:/var/lib/postgresql/data
+
 
 
 Käynnistä:
