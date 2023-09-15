@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Alueluokitukset</title>
+        <meta charset="UTF-8">
+        <script src="src/utils.js"></script>
+        <script src="src/classification.js"></script>
+        <script src="src/get_classification.js"></script>
+        <script src="src/get_classification_map.js"></script>
+
+        <style>
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                
+                font-size: small;
+            }
+
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+        </style>
+    </head>
+
+    <body>    
+        <div id="container">
+            <label for="year">Alueluokituksen vuosi:</label>
+            <input type="number" id="year" name="year">
+            <div id="stats"></div>
+            <div id="requestCounter"></div>
+            <table id="resultTable">
+            </table>
+        </div>
+    </body>
+
+    <script>
+        let REQUESTS = 1;
+        let REQUESTS_COMPLETE = 0;
+        const updateRequestCounter = () => document.getElementById('requestCounter').innerHTML = `Luokituksia haettu: ${REQUESTS_COMPLETE}/${REQUESTS}`;
+        const incrementRequestCounter = () => REQUESTS_COMPLETE++;
+
+        const STATFIN_API_URL = "https://data.stat.fi/api/classifications/v2";
+
+    
+        // Default year to current
+        const yearInput = document.getElementById("year");
+        yearInput.value = 2023; // TODO
+
+        yearInput.addEventListener('keyup', e => {
+            if (e.keyCode == 13) {
+                build_table(e.target.value);
+            }
+        })
+
+
+        // Workhorse
+
+        const build_table = async function(requestedYear) {
+
+            const MAPS = [
+                `kunta_1_${requestedYear}0101#avi_1_${requestedYear}0101`,
+                `kunta_1_${requestedYear}0101#ely_1_${requestedYear}0101`,
+                `kunta_1_${requestedYear}0101#hyvinvointialue_1_${requestedYear}0101`,
+                `kunta_1_${requestedYear}0101#tyossakayntial_1_${requestedYear}0101`,
+                `kunta_1_${requestedYear}0101#kuntaryhmitys_1_${requestedYear}0101`,
+                `kunta_1_${requestedYear}0101#maakunta_1_${requestedYear}0101`,
+                `kunta_1_${requestedYear}0101#seutukunta_1_${requestedYear}0101`,
+                `kunta_1_${requestedYear}0101#kielisuhde_1_${requestedYear}0101`,
+                `kunta_1_${requestedYear}0101#suuralue_1_${requestedYear}0101`,
+                `kunta_1_${requestedYear}0101#vaalipiiri_1_${requestedYear}0101`,
+                `kunta_1_${requestedYear}0101#nuts_2_${requestedYear}0101`
+            ]
+
+            REQUESTS = MAPS.length;
+
+            const municipalities = await get_classification(`kunta_1_${requestedYear}0101`)
+
+
+            const maps = []
+            for (m of MAPS) {
+                maps.push(await get_classification_map(m))
+            }
+
+            // Make a list of lists to turn into table rows
+            // Each sublist start with the municipality code and is followed by other classifications that map to it
+            let code_map = [];
+            for (municipality of municipalities) {
+                let row = [municipality];
+                for (map of maps) {
+                    row.push(map['map'][municipality]);
+                }
+                code_map.push(row);
+            }
+
+            // -------------------- DOM-manipulation --------------------
+
+            const statsContainer = document.getElementById('stats');
+
+            stats.innerHTML = `Kuntia: ${municipalities.length}`;
+
+            // Add stats
+
+            // Result table
+            const resultTbl = document.getElementById('resultTable');
+
+            // Build header
+            const header = html_elem('thead');
+            header.appendChild(html_elem('th','Kuntakoodi'));
+
+            for (h of maps.map(m => m['name'])) {
+                header.appendChild(html_elem('th',h));
+            }
+            resultTbl.appendChild(header);
+
+            // Init table body
+            const tbody = html_elem('tbody');
+
+            // Make a row for each municipality
+            
+            for (code_pair of code_map) {
+                let row = html_elem('tr');
+                for (cell of array_to_array_of_tds(code_pair)) {
+                    row.appendChild(cell);
+                }
+                tbody.appendChild(row);
+            }
+
+            // Add the body
+            resultTbl.appendChild(tbody)
+
+
+            
+        }
+
+        build_table(yearInput.value);
+
+    
+
+       
+
+    </script>
+</html>
+
+
