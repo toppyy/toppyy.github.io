@@ -1,6 +1,6 @@
 
 
-const get_classification = async function(classification) {
+const getClassification = async function(classification) {
     // Returns a classification from the Statistics Finland API
     // https://data.stat.fi/api/classifications/v2/#!/classifications/classifications_read
 
@@ -17,9 +17,13 @@ const get_classification = async function(classification) {
     try {
         response = await fetch(URL);
     } catch(e) {
-        console.log(`Requested to ${URL} failed with error: ${e}`);
-        return undefined;
+        throw Error(`Requested to ${URL} failed with error: ${e}`);
     }
     response = await response.json();
+
+    if (response.length == 0) {
+        throw Error(`Statfin returned an empty classification for ${classification}`)
+    }
+
     return response.map((url) => url.substring(url.length - 3, url.length));
 }
