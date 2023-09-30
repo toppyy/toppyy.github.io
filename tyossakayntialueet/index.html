@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <script src="features.js"></script>
+  <script src="../src/misc.js"></script>
+  <script src="../src/scale.js"></script>
+  <script src="../src/to_svg.js"></script>
+
+  <style>
+      #svg-container {
+        width: 60%;
+		float: left;
+        height: 800px;
+      }
+        polygon {
+        stroke:black;
+        stroke-width:1;
+      }
+  </style>
+
+</head>
+<body>
+    <svg id="svg-container"></svg>
+	<div id="center-container"></div>
+</body>
+<script>
+
+
+    // Scale features
+    // FEATURES contains finnish provinces in GeoJSON-format
+    features = scaleFeatures(FEATURES)
+    console.log(features)
+
+    // Create SVGs
+    polygons = features.map(featureToSVG)//.flat()
+
+    // Join feature properties and polygons into a single object
+    featurePolygons = []
+    for (i = 0; i < features.length; i++) {
+
+		featurePolygons.push({
+			'id': features[i].id,
+			'properties': features[i].properties,
+			'polygons': polygons[i]
+		})
+
+    }
+
+	// Municipality code vs nam
+	const municipalities = new Map();
+	for (feature of features) {
+		municipalities.set(feature.properties.kunta, feature.properties.name);
+	}
+
+	// Changes outlook of polygons belonging to selected area
+
+	const paintSelectedRegion = selectedCenterCode => {
+
+		SVGcontainer = document.getElementById('svg-container');
+
+		for (polygon of SVGcontainer.childNodes) {
+			if (polygon.getAttribute('center') == selectedCenterCode) {
+				polygon.style["stroke-width"] = 3;
+			
+			} else {
+				polygon.style.stroke = "black";
+				polygon.style["stroke-width"] = 1;
+			
+			}
+		}
+	}
+
+	const listSelectedRegion = selectedCenterCode => {
+		
+		if (!centers.has(selectedCenterCode)) {
+			console.log(`Cannot list center members as center ${selectedCenterCode} does not exist. Here's the centers:`, centers)
+			return;
+		}
+
+		const center = centers.get(selectedCenterCode);
+
+		// Clear children
+		const container = document.getElementById('center-container');
+
+		container.innerHTML = "";
+	
+		const header = document.createElement('h3');
+		header.innerText = municipalities.get(selectedCenterCode);
+		container.appendChild(header);
+
+		const list = document.createElement('ul');
+
+		center.members.forEach(member => {
+			let listItem = document.createElement('li');
+			listItem.innerText = member;
+			list.appendChild(listItem);
+		});
+
+		container.appendChild(list);
+	}
+
+	// Build table of centers
+
+	const centers = new Map();
+	for (featurePolygon of featurePolygons) {
+		const center = featurePolygon['properties']['center'][0];
+		const name = municipalities.get(center[0]);
+
+		if (centers.has(center)) {
+			let current = centers.get(center)
+			current.members.push(featurePolygon['properties']['nimi'])
+
+		} else {
+			centers.set(
+				center,
+				{
+					'centerName': municipalities.get(center),
+					'members': [featurePolygon['properties']['nimi']]
+				}
+			);
+		}
+	}
+
+
+    // Insert into container
+    SVGcontainer = document.getElementById('svg-container')
+
+    
+    for (featurePolygon of featurePolygons) {
+
+		for (polygon of featurePolygon['polygons']) {
+			const center = featurePolygon['properties']['center'][0];
+			polygon.setAttribute('center', center);
+
+			polygon.addEventListener('click',(e) => {
+				console.log('Selected ', center)
+				paintSelectedRegion(center);
+				listSelectedRegion(center);
+			})
+
+			SVGcontainer.appendChild(polygon)
+
+		}   
+    }
+
+
+</script>
+
+</html>
