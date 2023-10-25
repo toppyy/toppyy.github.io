@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <script>
+    // Dimensions of SVG to scale to
+    const PARAMS = {
+        WIDTH: 600,
+        HEIGHT: 700,
+        PADDING: 20
+    }
+  </script>
+  <script src="municipalities.js"></script>
+  <script src="./src/misc.js"></script>
+  <script src="./src/scale.js"></script>
+  <script src="./src/to_svg.js"></script>
+
+  <style>
+	#container {
+		margin-left: 5%;
+		width: 90%;
+		text-align: justify;
+  		text-justify: inter-word;
+		
+	}
+	#svg-container {
+        width: 650px;
+        height: 750px;
+        border: 1px solid grey;
+        float: left;
+	}
+	polygon {
+		stroke:black;
+		stroke-width:1;
+	}
+
+    #input-container {
+        width: 25%;
+        float: left;
+    }
+
+    #input {
+        border: 1px solid grey;
+    }
+
+
+  </style>
+</head>
+<body>
+	<div id="container">
+		
+		<div id="map">
+			<svg id="svg-container"></svg>
+			<div id="center-container"></div>
+		</div>
+        <div id="input-container">
+            <textarea id="input" type="text" rows="25" cols="50" placeholder="Syötä.."></textarea>
+            
+        </div>
+
+	</div>
+    <br>
+    <input type="radio" id="vartype1" name="vartype" value="continuous">
+    <label for="vartype1">Jatkuva (esim. työllisyysaste)</label><br>
+    <input type="radio" id="vartype2" name="vartype" value="discrete">
+    <label for="vartype2">Luokittelu (esim. maaseutu-kaupunki jne.)</label><br>  
+    <button id="button-paint">Maalaa kartta</button>
+</body>
+<script>
+    // Scale features
+    // FEATURES contains finnish municipalities in GeoJSON-format
+    features = scaleFeatures(MUNICIPALITIES)
+
+    // Create SVGs
+    polygons = features.map(featureToSVG)
+
+    // Join feature properties and polygons into a single object
+    featurePolygons = []
+    for (i = 0; i < features.length; i++) {
+
+		featurePolygons.push({
+			'id': features[i].id,
+			'properties': features[i].properties,
+			'polygons': polygons[i]
+		})
+
+    }
+
+	// Municipality code vs name
+	const municipalities = new Map();
+	for (feature of features) {
+		municipalities.set(feature.properties.kunta, feature.properties.name);
+	}
+
+
+    // Insert into container
+    SVGcontainer = document.getElementById('svg-container')
+
+    
+    for (featurePolygon of featurePolygons) {
+		for (polygon of featurePolygon['polygons']) {
+			polygon.setAttribute('fill', randomColor());
+			polygon.setAttribute('code', featurePolygon.properties.kunta);
+			polygon.setAttribute('name', featurePolygon.properties.name);
+			 polygon.addEventListener('click',(e) => {
+			    	console.log('Kunta: ' + e.target.getAttribute('name') + ' (' + e.target.getAttribute('code') + ')');
+			    });
+			SVGcontainer.appendChild(polygon);
+			
+		}   
+    }
+
+    // Handle input ------------------------------------------------------------------------------------------------------------------------------------
+
+    const usedColors = new Set();
+    const getNewRandomColor = () => {
+        do {
+            color = randomColor();
+        } while (usedColors.has(color));
+        usedColors.add(color);
+        return color;
+    }
+
+ 
+    const handlePaint = () => {
+        const inputText = document.getElementById('input').value;
+        const varTypeOptions = document.getElementsByName('vartype');
+
+        let varType = "continuous";
+        for (opt of varTypeOptions) {
+            if (opt.checked) {
+                varType = opt.value;
+            }
+        }
+
+    
+        
+        // Split into lines
+        const lines = inputText.split('\n');
+        if (lines.length <= 1) {
+            alert("Vain yksi rivi!? Kuntien tietojen pitää olla eri riveillä.");
+            return;
+        }
+
+        // Find delimiter
+        const delimiterRegex = /[\s;\t]/    
+        const delimiter = lines[0][ lines[0].search(delimiterRegex) ]
+        
+        // Split into code + group pairs
+        const pairs = lines.map(line => line.split(delimiter));
+
+        let codeToColor = undefined;
+        if (varType == "discrete") {
+            codeToColor = colorsForDiscreteVariable(pairs);
+        }
+        if (varType == "continuous") {
+            codeToColor = colorsForContinuousVariable(pairs,10);
+        }
+
+        if (!codeToColor) {
+            alert("Unknown variable type: '" + varType + "'!");
+            return;
+        }
+
+
+
+        // Iterate over polygons assigning the color attr
+        const SVGcontainer = document.getElementById('svg-container')
+
+        for (polygon of SVGcontainer.childNodes) {
+            const code = polygon.getAttribute('code');
+            const color = codeToColor.get(code);
+            polygon.setAttribute('fill', color);
+            
+        
+        }
+    }
+
+    const colorsForContinuousVariable = (pairs,classes) => {
+        const codeToColor = new Map();
+
+        // Try conversion to numeric
+        for (pair of pairs) {
+            tmp = pair[1]
+            pair[1] = Number(tmp)
+            if (isNaN(pair[1])) {
+                alert(`Arvon '${tmp}' muuntaminen numeroksi ei onnistunut! Onko kyseessä jatkuva muuttuja?'`);
+                return undefined
+            }
+            
+        }
+        // Sort by variable value
+        pairs = pairs.sort((a,b) => a[1] < b[1]);
+
+        // Generate n colors
+        const colors = ['#a50026','#d73027','#f46d43','#fdae61','#fee08b','#d9ef8b','#a6d96a','#66bd63','#1a9850','#006837'];
+
+
+
+        // Calculate how many per class
+
+        const howManyInClass = pairs.length / classes
+        
+        let colorIdx = 0, obsInClass = 0, code, color;
+
+        for (pair of pairs) {
+            code = pair[0];
+            color = colors[colorIdx];
+
+ 
+            codeToColor.set(code, color);
+            obsInClass++;
+            if (obsInClass > howManyInClass) {
+                obsInClass = 0;
+                colorIdx++;
+            }
+        }
+
+  
+        return codeToColor
+    }
+
+    const colorsForDiscreteVariable = pairs => {
+        // Find groups
+        const groupReducer = (p,c) => {
+            code = c[0]
+            group = c[1]
+
+            if (group in p) {
+                p[group].members.push(code);
+                return p;
+            }
+
+            p[group] = {
+                'members': [code],
+                'group': group,
+                 // Assign colors to groups
+                'color': getNewRandomColor()
+            }
+            return p;
+        }
+        const groups = pairs.reduce(groupReducer, {})
+
+        // Create map of code to color
+
+        const codeToColor = new Map();
+
+        for (groupKey of Object.keys(groups)) {
+            let group = groups[groupKey];
+            for (member of group.members) {
+                codeToColor.set(member, group.color);
+            }
+        }
+
+    
+        return codeToColor;
+
+
+    }
+
+    document.getElementById('button-paint').addEventListener('click', handlePaint);
+
+    // Vartype radiogroup default
+
+    const varTypeOptions = document.getElementsByName('vartype');
+    varTypeOptions[0].click() // Set default
+
+
+
+
+</script>
+
+</html>
