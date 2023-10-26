@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>A puzzle</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		
+    </head>
+    <body>
+
+		<div class="jumbotron text-center">
+			<h1>What are the magic numbers?</h1>
+		  </div>
+		<div class="container">
+			<div class="row" >
+				<div class="col-sm-2"></div>
+				
+				<div class="col-sm-3">
+					<div class="input-group">
+						<span class="input-group-addon">Magic number 1</span>
+						<input id="answer-input-1" class="form-control"  type="number"></input>
+					</div>
+				</div>
+				<div class="col-sm-1"></div>
+				<div class="col-sm-3">
+					<div class="input-group">
+						<span class="input-group-addon">Magic number 2</span>
+						<input id="answer-input-2" class="form-control"  type="number"></input>
+					</div>
+				</div>
+				<div class="col-sm-3"></div>
+			</div>
+
+			
+			<div class="row" style="margin-top: 2%">
+				<div class="col-sm-5"></div>
+				<div class="col-sm-2" style="padding-left: 0;">
+					<button type="button" id="answer-btn" class="btn btn-primary btn-lg">Guess!</button>
+				</div>
+				<div class="col-sm-5"></div>
+			</div>
+			<div class="row" style="margin-top: 2%;">
+				<div class="col-sm-5"></div>
+				<div class="col-sm-1">
+					<h1 id="result" class="text-center" style="font-size: 85px;" ></h1>
+				</div>
+				<div class="col-sm-5"></div>
+					
+			
+			</div>
+		</div>
+    </body>
+    <script>
+		// State (ie. proble solved or not)
+		let SOLVED = 0;
+
+		// Load the wasm and bind the exported function to a javascript object
+		let isAnswerOk;
+		WebAssembly.instantiateStreaming(fetch("./puzzle.wasm")).then(
+			(res) => {
+				isAnswerOk = res.instance.exports.check
+			}
+		);
+
+		// Easy way to set & clear the result
+		const setResult = (newResult = '') => {
+			document.getElementById('result').innerHTML = newResult;
+
+			// Clear the result after a few seconds
+			// unless the problem is solved
+			if (newResult != '' && !SOLVED) {
+				// Quite crappy if someone presses the button continuously, but..
+				window.setTimeout(setResult,3000);
+			}
+		}
+
+		// Check the answer when user presses enter
+		const handleAnswer = () => {
+			const answer1 = document.getElementById('answer-input-1').value;
+			const answer2 = document.getElementById('answer-input-2').value;
+
+			SOLVED = isAnswerOk(answer1,answer2);
+
+			const result = SOLVED == 1 ? "&#127870;" : "&#128169;";
+
+			setResult(result);
+		}
+
+		const handleKeyPress = e => {
+			if (e.key == 'Enter') {
+				handleAnswer()
+			}
+		}
+        
+		// Test an answer on pressing enter on either input or clicking the button
+		document.getElementById('answer-btn').addEventListener('click', handleAnswer);
+		document.getElementById('answer-input-1').addEventListener('keydown', handleKeyPress);
+		document.getElementById('answer-input-2').addEventListener('keydown', handleKeyPress);
+
+
+    </script>
+</html>
