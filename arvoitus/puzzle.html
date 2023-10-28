@@ -54,6 +54,9 @@
     <script>
 		// State (ie. proble solved or not)
 		let SOLVED = 0;
+		
+		// Array for timeouts
+		let TIMEOUTS = [];
 
 		// Load the wasm and bind the exported function to a javascript object
 		let isAnswerOk;
@@ -69,9 +72,11 @@
 
 			// Clear the result after a few seconds
 			// unless the problem is solved
-			if (newResult != '' && !SOLVED) {
-				// Quite crappy if someone presses the button continuously, but..
-				window.setTimeout(setResult,3000);
+			if (newResult != '') {
+				TIMEOUTS.map(window.clearTimeout)
+				if (!SOLVED) {
+					TIMEOUTS.push(window.setTimeout(setResult,3000));
+				}
 			}
 		}
 
