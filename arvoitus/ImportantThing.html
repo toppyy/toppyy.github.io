@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>&#129382;</title>
+    <style>
+        #container {
+            font-family: 'monospace';
+            margin-left: 25%;
+            width: 50%;
+        }
+        .function {
+            color: steelblue;
+        }
+        li {
+            margin: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h3>Mission:</h3>
+        <p>Calculate the important thing <i>measurably</i> faster the base solution within your browser. Can't give time limits 'cause it depends on your machine.</p>
+        <h3>Rules and regulations:</h3>
+        <ul>
+            <li>The result must be 1535704607</li> 
+            <li><span class="function">ImportantTimeConsumingFunction()</span> must be used to calculate result</li>
+            <li>Arguments to <span class="function">ImportantTimeConsumingFunction()</span> must not be altered</li>
+            <li><span class="function">ImportantTimeConsumingFunction()</span> must not be altered</li>
+            <li>Use <span class="function">startTimer()</span> and <span class="function">stopTimer()</span> to measure execution time</li>
+            <li>Use <span class="function">setResult()</span> to display result</li>
+            <li><span class="function">ImportantTimeConsumingFunction()</span> makes no sense - it's a placeholder</li>
+        </ul>
+        <h3>How to</h3>
+        <p>
+            Alter the baseline-implementation below and press CTRL + ENTER to run the code (or use an IDE and paste your code or whatever).
+        </p>
+        <textarea
+            type="text"
+            id="input"
+            rows="30"
+            cols="100"
+        >
+        </textarea>
+        <div id="result">Result:</div>
+        <div id="timer">Execution time:</div>
+    </div>
+</body>
+    <script>
+
+        let CTRL_DOWN   = false;
+        let START       = 0;
+
+        /* -------------------------- */
+
+        const handleKeyUp = e => {
+            if (e.keyCode == 17) CTRL_DOWN = false;
+        }
+
+        const handleKeyDown = e => {
+            if (e.keyCode == 17) CTRL_DOWN = true;
+            if (e.keyCode == 13 && CTRL_DOWN) runCode();
+        }
+
+        const getInput  = () => {
+            const value = document.getElementById('input').value;
+            return value ? value : '';
+        }
+
+        const setOutput     = (output,id) => document.getElementById(id).innerHTML = output;
+
+        const runCode       = () => eval(getInput());
+
+        const setResult     = result => setOutput(`Result: ${result}`,'result');
+
+        const startTimer    = () => START = Date.now();
+
+        const stopTimer     = () =>  setOutput(`Execution time: ${Date.now() - START} ms`,'timer');
+
+        /* -------------------------- */
+
+        const ImportantTimeConsumingFunction = number => {
+
+            let result = 0;
+            for (let i = 0; i < number; i++) {
+                if (i == (number/2)) {
+                    result = i;
+                }
+            };
+            console.log(`With number ${number} result is ${result}`);
+            return result;
+
+        }
+
+        /* -------------------------- */
+
+        const INPUT     = document.getElementById('input');
+        INPUT.addEventListener('keyup',handleKeyUp)
+        INPUT.addEventListener('keydown',handleKeyDown)
+
+        INPUT.value = `
+        startTimer();
+        let ImportantThing = 0;
+        const numbers = [100500204, 1000303004, 990303004, 980303002];
+        for (number of numbers) ImportantThing += ImportantTimeConsumingFunction(number);
+        setResult(ImportantThing);
+        stopTimer();
+        `
+    </script>
+</html>
