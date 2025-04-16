@@ -1,0 +1,47 @@
+body {
+    background-color: #FFFFF0; /* Black background for terminal look */
+    color: hsl(0, 0%, 0%); /* Bright green text color */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: flex-start; /* Align items to the top */
+    height: 100vh; /* Full viewport height */
+}
+.container {
+    max-width: 850px; /* Maximum width for the content */
+    width: 100%; /* Full width up to the max */
+    background-color: #FFFFF0; /* Black background for the container */
+    padding: 20px; /* Padding inside the container */
+    border: 2px solid black; /* Green border for the container */
+    box-shadow: 0 0 10px FFFFF0; /* Glow effect */
+    margin-top: 50px; /* Space from the top of the viewport */
+}
+h1, h2, h3 {
+    margin: 20px 0 10px; /* Margin for headers */
+    font-weight: bold; /* Bold headers */
+}
+p {
+    margin: 10px 0; /* Margin for paragraphs */
+    margin-top: 20px;
+}
+
+
+.log {
+    background-color: black;
+    color: white;
+}
+
+.inline-code {
+    color: #4476e4; /* Bright green text color for contrast */
+    font-family: 'Courier New', Courier, monospace; /* Monospace font */
+    padding: 2px 4px; /* Padding around the code */
+    border-radius: 3px; /* Rounded corners */
+    font-size: 90%; /* Slightly smaller font size */
+    display: inline; /* Ensure it stays inline with text */
+    font-weight: bold;
+}
+
+.footnote {
+    font-size: 70%;
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Title</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        .img-container {
+            width: 100%;
+            text-align: center;
+            margin: 2%;
+        }
+        .parquet-container {
+            text-align: center;
+            margin-left: 20%;
+            width: 60%;
+            font-family: monospace;
+            background-color: #FFFFF0;
+            color: #333;
+            padding: 20px;
+            border: 1px solid #333;
+            background-color: #fff;
+        }
+
+        .parquet-header, .parquet-footer {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
+
+        .parquet-row-group {
+            border: 1px dashed #333;
+            margin: 10px 0;
+            padding: 10px;
+        }
+
+        .row-group-title {
+            font-weight: bold;
+            margin-bottom: 10px; /* Space between title and column chunks */
+        }
+
+        .parquet-column-chunk {
+            display: flex; /* Use flexbox for layout */
+            justify-content: center; /* Center column chunks */
+            gap: 10px; /* Space between column chunks */
+        }
+
+        .parquet-data {
+            border: 1px solid #ccc; /* Border for individual column chunks */
+            background-color: #fff; /* White background for data */
+            border-radius: 3px; /* Rounded corners for data boxes */
+            height: 120px; /* Set a higher height for column chunks */
+            width: 90px; /* Set a smaller width for column chunks */
+            display: flex; /* Use flexbox for centering text */
+            justify-content: center; /* Center text horizontally */
+            align-items: center; /* Center text vertically */
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>What is a Delta Table?</h1>
+    </header>
+
+    <main>
+        <h2>The Definition</h2>
+	<p>
+		Databricks <a href="https://docs.databricks.com/aws/en/delta/">defines</a> Delta Lake as 
+		<i>"open source software that extends Parquet data files with a file-based transaction log for ACID transactions and scalable metadata handling"</i>. This is a lot to unpack so let's take it apart.
+	</p>
+
+    <p>
+        There are three distinct areas in the definition I want to elaborate on:
+        <ol>
+            <li>Parquet files</li>
+            <li>File-based transactions for ACID transactions</li>
+            <li>Scalable metadata handling</li>
+        </ol>
+    </p>
+
+    <p>
+        I know the definition and a lot of the material talks about Delta Lake and I don't care. A table is a nice, concrete thing which is what we really care about. So let's look into that, forget the lake.
+    </p>
+		
+        
+    <h2>1. Parquet files?</h2>
+	<p>
+		So were are told that Delta Lake extends Parquet files, but what are Parquet files? Parquet is a file format with the following attributes:
+		<ul>
+			<li>The data is stored in a column-oriented manner</li>
+			<li>The data is compressed</li>
+		</ul>
+        You should really read the <a href="https://parquet.apache.org/docs/file-format/">documention</a>, but I'll try to illustrate key points of the file format.
+        
+        The figure below show the internal layout of the file format. It's bit dense, but for me the key takeaway is the idea of splitting the data into smaller groups and the amount 
+        of metadata stored.
+
+        <div class="img-container">
+
+            <img src="FileLayout.gif"></img>
+            <p>Source: <a href="https://parquet.apache.org/docs/file-format/">https://parquet.apache.org/docs/file-format/</a></p>
+        </div>
+
+        <p>Below is simplified version of the layout describing a table with two columns and <i>N</i> row groups. Now imagine the table has 100 rows and, for example, 4 row groups. 
+        Each row group might contain the data of 25 rows. The data is stored in column batches <i>within</i> the row group.
+        </p>
+
+        <div class="parquet-container">
+            <div class="parquet-header">Parquet File</div>
+            <div class="parquet-row-group">
+                <div>File Header (Magic Number: "PAR1")</div>
+            </div>
+            <div class="parquet-row-group">
+                <div class="row-group-title">Row Group 1</div>
+                <div class="parquet-column-chunk">
+                    <div class="parquet-data">Column Chunk (Column 1)</div>
+                    <div class="parquet-data">Column Chunk (Column 2)</div>
+                </div>
+            </div>
+            <div class="parquet-row-group">
+                <div class="row-group-title">Row Group 2</div>
+                <div class="parquet-column-chunk">
+                    <div class="parquet-data">Column Chunk (Column 1)</div>
+                    <div class="parquet-data">Column Chunk (Column 2)</div>
+                </div>
+            </div>
+            <div class="parquet-row-group">
+                <div class="row-group-title">Row Group N</div>
+                <div class="parquet-column-chunk">
+                    <div class="parquet-data">Column Chunk (Column 1)</div>
+                    <div class="parquet-data">Column Chunk (Column 2)</div>
+                </div>
+            </div>
+            <div class="parquet-footer">File Footer (Magic Number: "PAR1")</div>
+            <div>Metadata (Schema, etc.)</div>
+        </div>
+        
+        
+
+        <p>This is contrary to what you'd except if of a naive interpretation of the concept of storing data in a column-oriented fashion. 
+        </p>
+
+        <p>
+            What I found exhilarating about the idea is that you have collect statistics on row groups and column chunks which allow for skipping data when reading the file. 
+            The column chunks are actually further divided into pages which have statisctics of the minimum and maximum values for that specific column and page. 
+        </p>
+        <p>
+            Now, say you query data with a filter <span class="inline-code">WHERE myColumn >= 100</span>. A Parquet reader can skip column chunks where the maximum value of <i>myColumn</i> is less than 100
+            which is kinda cool.
+        </p>
+        <p>
+            We'll learn later on that Delta Tables utilize the same idea with <i>partitions</i>.
+        </p>
+
+        <h2>2. File-based transactions for ACID transactions</h2>
+
+        <p>Could not be bothered yet.</p>
+
+        <h2>3. Scalable metadata handling</h2>
+        <p>Could not be bothered yet.</p>
+    </main>
+    
+</div>
+
+</body>
+</html>
