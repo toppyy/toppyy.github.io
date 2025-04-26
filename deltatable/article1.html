@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Article Title</title>
+    <title>What is a Delta table?</title>
     <link rel="stylesheet" href="styles.css" />
     <style>
         .img-container {
@@ -57,6 +57,7 @@
         }
 
     </style>
+    <link href="prism.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -76,7 +77,7 @@
         There are three distinct areas in the definition I want to elaborate on:
         <ol>
             <li>Parquet files</li>
-            <li>File-based transactions for ACID transactions</li>
+            <li>File-based transaction log for ACID transactions</li>
             <li>Scalable metadata handling</li>
         </ol>
     </p>
@@ -155,9 +156,75 @@
             We'll learn later on that Delta Tables utilize the same idea with <i>partitions</i>.
         </p>
 
-        <h2>2. File-based transactions for ACID transactions</h2>
+        <h2>2. File-based transaction log for ACID transactions</h2>
 
-        <p>Could not be bothered yet.</p>
+
+        <h4>Transactions</h4>
+    
+        <p>
+            To discuss ACID or what the acronym even means, we need to first understand what transactions are transactions. 
+            I understand a transaction as a set of operations. The canonical example of a transaction is a bank transfer for which you need multiple operations. Consider a transfer where 
+            we need to transfer 100$ from account A to account B. The transfer consists of these operations:
+            <ol>
+                <li>Substract 100$ from the balance of account A</li>
+                <li>Add 100$ to the balance of account B</li>
+            </ol>
+            These two operations can be considered as a single transaction.
+
+        </p>
+        <p>
+            Typically in a relational database you can start and stop a transaction with a specific statement. The above operation might look something like this (depending on what database you use)
+
+        </p>
+<pre>
+<code class="language-sql">
+    BEGIN TRAN;
+
+    UPDATE account
+    SET balance = balance - 100
+    WHERE account_id = 'A';
+
+    UPDATE account
+    SET balance = balance + 100
+    WHERE account_id = 'B';
+
+    END TRAN;
+</code>
+</pre>
+
+    <p>
+        According to the documention <a href="https://docs.databricks.com/aws/en/lakehouse/acid">Databricks does not support this</a>. You cannot start and stop a transaction. 
+        If you want to do multiple operations, your only options is to use MERGE INTO. 
+    </p>
+    <p>
+        This means that with Databricks the transactions are somewhat limited. The set of operations must be such that in can be expressed in a single MERGE INTO statement and must touch only a single table.
+    </p>
+    <p>
+        Now, obviously this is a somewhat unfair observation as Delta tables and Databricks are not tools meant for transactions such as the transfer outlined above. They are designed for analytical workflows
+        rather than transactional workflows. Still, it's worth noting since the product is advertised to provide ACID guarantees which one tends to interpret as something else than Databricks currently provides.
+    </p>
+
+    <h4>Atomicity</h4>
+
+    <p>Atomicity is the <b>A</b> in ACID-transactions. It means that either all the operations in a transaction succeed or none succeed. In the transfer-example above, you either update the balance of both accounts or update neither. 
+    Without atomicity, the results might be disasterous. If the first UPDATE succeeds and the second fails, 100$ has disappeared. </p>
+
+    <p>
+        Databrick's  <a href="https://docs.databricks.com/aws/en/lakehouse/acid">definition</a> states that atomicity "<i>means that all transactions either succeed or fail completely</i>".
+        In databricks, this basically guarantees that any single operation must either succeed or fail completely. A series of operations cannot be considered as an atomic transaction. 
+    </p>
+    <p>
+        How are, for example, updates guaranteed to fail or succeed completely? A partially failing UPDATE-operation would only change a subset of the values I intended to change. This is undesirable.
+
+    </p>
+    <p>
+        Delta tables maintain a transaction log that keeps tabs on each version of the table (see <a href="article2.html">for more detail on persisting versions of the data</a>) and has a reference to the current version. When a table 
+        is updated, a new version of the data is written to disk. If the write fails, the transaction log is not updated and current version of the table is not changed. Thus, the failed update has 
+        no effect on the table. This guarantees amotic updates and other operations.
+    </p>
+
+
+
 
         <h2>3. Scalable metadata handling</h2>
         <p>Could not be bothered yet.</p>
