@@ -68,13 +68,21 @@
 
     <main>
         <h2>The Definition</h2>
-	<p>
-		Databricks <a href="https://docs.databricks.com/aws/en/delta/">defines</a> Delta Lake as 
-		<i>"open source software that extends Parquet data files with a file-based transaction log for ACID transactions and scalable metadata handling"</i>. This is a lot to unpack so let's take it apart.
-	</p>
 
     <p>
-        There are three distinct areas in the definition I want to elaborate on:
+        The <a href="https://www.databricks.com/resources/ebook/delta-lake-the-definitive-guide-by-oreilly">definite guide</a> to Delta lake states that 
+        <i>Delta Lake is an open source storage layer that supports ACID transactions, scalable metadata handling, and unification of streaming and batch data processing</i>.
+
+    </p>
+	<p>
+		Databricks <a href="https://docs.databricks.com/aws/en/delta/">defines</a> Delta Lake as 
+		<i>"open source software that extends Parquet data files with a file-based transaction log for ACID transactions and scalable metadata handling"</i>.
+	</p>
+
+    <p>Both definitions leave the reading yearning for something more concrete. Personally, I'm none the wiser after reading them. I'll to try understand the latter by the divide-and-qonquer -method. </p>
+
+    <p>
+        There are thee distinct areas in the definition which I'll go through:
         <ol>
             <li>Parquet files</li>
             <li>File-based transaction log for ACID transactions</li>
@@ -83,9 +91,13 @@
     </p>
 
     <p>
-        I know the definition and a lot of the material talks about Delta Lake and I don't care. A table is a nice, concrete thing which is what we really care about. So let's look into that, forget the lake.
+        I know the definition and a lot of the material talks about Delta Lake and I don't care. A table is a nice, concrete thing which is what one really cares about. So I'll look into that while forgetting the lake.
     </p>
-		
+
+    <p>
+        Throughout the text, I'll be referring to Databrick's documentation and the way they use Delta lake. The two are not synonymous, but Databricks 
+        is the largest(?) vendor of Delta lake technology, so they pretty much define the way it is used at the moment.
+    </p>
         
     <h2>1. Parquet files?</h2>
 	<p>
@@ -204,7 +216,26 @@
         rather than transactional workflows. Still, it's worth noting since the product is advertised to provide ACID guarantees which one tends to interpret as something else than Databricks currently provides.
     </p>
 
-    <h4>Atomicity</h4>
+
+    <h4>ACID</h4>
+
+    <p>
+
+        Here's a brief explanation of the ACID-acronym in case you've forgotten.
+
+        <ul>
+            <li><strong>Atomicity.</strong> Ensures that all operations within a transaction are completed successfully. If any operation fails, the entire transaction is aborted, and the database remains unchanged.</li>
+            <li><strong>Consistency:</strong> Guarantees that a transaction brings the database from one valid state to another, maintaining all predefined rules, including constraints and triggers.</li>
+            <li><strong>Isolation:</strong> Ensures that transactions are executed in isolation from one another. The intermediate state of a transaction is not visible to other transactions until it is committed.</li>
+            <li><strong>Durability:</strong> Guarantees that once a transaction has been committed, it will remain so, even in the event of a system failure. Changes made by the transaction are permanently recorded in the database.</li>
+        </ul>
+        
+        Next, I'll briefly compare Databrick's documentation to these guarantees and see how (and if) they are actually implemented by Databricks.
+    </p>
+
+
+
+    <h5>Atomicity</h5>
 
     <p>Atomicity is the <b>A</b> in ACID-transactions. It means that either all the operations in a transaction succeed or none succeed. In the transfer-example above, you either update the balance of both accounts or update neither. 
     Without atomicity, the results might be disasterous. If the first UPDATE succeeds and the second fails, 100$ has disappeared. </p>
@@ -223,7 +254,53 @@
         no effect on the table. This guarantees amotic updates and other operations.
     </p>
 
+    <h5>Consistency</h5>
 
+    <p>
+        According to <a href="https://en.wikipedia.org/wiki/Consistency_(database_systems)">wikipedia</a> consistency can mean either or both of the following:
+        <ol>
+            <li>The guarantee that database constraints are not violated, particularly once a transaction commits</li>
+            <li>The guarantee that any transactions started in the future necessarily see the effects of other transactions committed in the past</li>
+        </ol>
+        These are not mutually exclusive so systems can implement both.
+    </p>
+    <p>
+        The first definition uses the term database constraints. These are sort of rules a system imposes on the data (some values in a column must be unique etc.).
+        You can define a constraint on a Delta table column with an SQL-expression. Operations fail if the constraint is not met, so this defition holds up.
+    </p>
+    <p>
+        The second one is a bit more tricky. Databrick's <a href="https://docs.databricks.com/aws/en/lakehouse/acid#how-does-databricks-implement-consistency">documentation</a> says that Delta Lake uses '<i>optimistic concurrency control to provide transactional guarantees between writes</i>'.
+        Optimistic concurrency control basically means that when an transaction starts, it notes the start time and tentatively writes the data. Before committing, 
+        a check if made to see if another transaction has made conflicting changes to the same data, and if so, the transaction fails.
+    </p>
+    <p>
+        Using optimistic concurrency control Delta lake guarantees that writes do not conlict each other. Read-operations see a consistent snapshot of the data thanks to the transaction log. A 
+        read operation will start by making note which files represent the latest version of the data and then reads those files. If the table is updated during the read operation, 
+        it won't affect the result as the modifications create new files.
+    </p>
+    <p>
+        Delta lake seems to fullfill also the second definition of consistency.
+    </p>
+
+    <h5>Isolation</h5>
+
+    <p>
+        Isolation refers to the degree in which concurrent transactions are executed in isolation of each other. This means simply that if two transactions are being executed simultaneously,
+        they should produce the same result as if they were ran one after each other.
+    </p>
+    <p>
+        In databricks, read operations use something called snapshot isolation. This is what I described in the last chapter on consistency - read operations read a specific snapshot/version of the table.
+    </p>
+    <p>
+        Write operations are ran in an isolation mode called 'WriteSerializable'. This guarantees that write-operations are serializable. A schedule of transactions is serializable,
+        if the result is equivalent to a serial schedule. A serial schedule describes an ordered set of transactions (= the operations are ran on after another).
+    </p>
+
+    <h5>Durability</h5>
+    <p>
+        Durability in ACI<b>D</b> refers to the guarantee that once the data is committed, it is persisted. This is guaranteed as the data is persisted on disk upon commits. 
+        I can imagine that Databricks has a rather robust backup-system in place to address system and hardware failures.
+    </p>
 
 
         <h2>3. Scalable metadata handling</h2>
