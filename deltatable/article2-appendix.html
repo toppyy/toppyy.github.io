@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Title</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="prism.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Setting up penguins and other stuff you'd need</h1>
+    </header>
+
+    <main>
+   
+    <p>
+        Below you'll find the code to download the penguins dataset, defining paths etc. Click <a href="article2.html">here</a> if you want to go back.
+    </p>
+
+        <pre>
+            <code class="language-python">
+import shutil
+import os
+import duckdb
+import pyarrow as pa
+from deltalake import write_deltalake, DeltaTable, Schema, Field
+from utils import logger_factory
+
+con = duckdb.connect()
+
+penguins_url        = "https://raw.githubusercontent.com/allisonhorst/palmerpenguins/refs/heads/main/inst/extdata/penguins.csv"
+penguins_file       = "penguins.csv"
+delta_table         = "delta_penguins"
+logfile             = "log.txt"
+
+# Simple logger to store info on the delta table internals at intervals
+log = logger_factory(logfile, delta_table)
+
+# Read the penguins dataset over the internet and store it so 
+# we don't have to do it for every iteration
+# (obviously you can just download the file with wget or smth)
+
+if not os.path.exists(penguins_file):
+    con.execute(f"""
+        COPY (SELECT * FROM '{penguins_url}') TO '{penguins_file}' (FORMAT 'csv')
+    """)
+
+
+# Turn the raw parquet file into a Delta Table
+# Delete the table if it already exists as we want to start from scratch
+if os.path.exists(delta_table):
+    shutil.rmtree(delta_table)
+        </code></pre>
+
+    
+    <h4>utils.py</h4>
+    <pre>
+        <code class="language-python">
+    import os
+        
+    def logger_factory(logfile, path, printer=None):
+    
+        with open(logfile, "w+") as f:
+            f.write('')
+    
+        def log(op=None):
+            files = []
+            for filename in os.listdir(path):
+                file_path = os.path.join(path, filename)
+    
+                if os.path.isfile(file_path):
+                    file_size   = os.path.getsize(file_path) / 1024
+                    ctime       = os.path.getmtime(file_path)
+                    files.append((file_path,file_size, ctime))
+    
+            files = sorted(files, key = lambda x: x[2], reverse=False)
+    
+            files = [
+                f"{f[0]}, size: " + str(round(f[1],1)) + " Kb"
+                for f in files
+            ] 
+    
+            with open(logfile, "a") as f:
+                f.write('\n')
+                if op is not None:
+                    f.write(f"--- {op} ---\n")
+                f.write('\n'.join(files))
+                f.write('\n')
+            return files
+        return log
+        </code>
+    </pre>
+</main>
+
+</div>
+<script src="prism.js"></script>
+</body>
+</html>

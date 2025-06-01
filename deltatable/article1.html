@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is a Delta table?</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        .img-container {
+            width: 100%;
+            text-align: center;
+            margin: 2%;
+        }
+        .parquet-container {
+            text-align: center;
+            margin-left: 20%;
+            width: 60%;
+            font-family: monospace;
+            background-color: #FFFFF0;
+            color: #333;
+            padding: 20px;
+            border: 1px solid #333;
+            background-color: #fff;
+        }
+
+        .parquet-header, .parquet-footer {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
+
+        .parquet-row-group {
+            border: 1px dashed #333;
+            margin: 10px 0;
+            padding: 10px;
+        }
+
+        .row-group-title {
+            font-weight: bold;
+            margin-bottom: 10px; /* Space between title and column chunks */
+        }
+
+        .parquet-column-chunk {
+            display: flex; /* Use flexbox for layout */
+            justify-content: center; /* Center column chunks */
+            gap: 10px; /* Space between column chunks */
+        }
+
+        .parquet-data {
+            border: 1px solid #ccc; /* Border for individual column chunks */
+            background-color: #fff; /* White background for data */
+            border-radius: 3px; /* Rounded corners for data boxes */
+            height: 120px; /* Set a higher height for column chunks */
+            width: 90px; /* Set a smaller width for column chunks */
+            display: flex; /* Use flexbox for centering text */
+            justify-content: center; /* Center text horizontally */
+            align-items: center; /* Center text vertically */
+        }
+
+    </style>
+    <link href="prism.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>What is a Delta Table?</h1>
+    </header>
+
+    <main>
+        <h2>The Definition</h2>
+
+    <p>
+        The <a href="https://www.databricks.com/resources/ebook/delta-lake-the-definitive-guide-by-oreilly">definite guide</a> to Delta lake states that 
+        <i>Delta Lake is an open source storage layer that supports ACID transactions, scalable metadata handling, and unification of streaming and batch data processing</i>.
+
+    </p>
+	<p>
+		Databricks <a href="https://docs.databricks.com/aws/en/delta/">defines</a> Delta Lake as 
+		<i>"open source software that extends Parquet data files with a file-based transaction log for ACID transactions and scalable metadata handling"</i>.
+	</p>
+
+    <p>Both definitions leave the reading yearning for something more concrete. Personally, I'm none the wiser after reading them. I'll to try understand the latter by the divide-and-qonquer -method. </p>
+
+    <p>
+        There are thee distinct areas in the definition which I'll go through:
+        <ol>
+            <li>Parquet files</li>
+            <li>File-based transaction log for ACID transactions</li>
+            <li>Scalable metadata handling</li>
+        </ol>
+    </p>
+
+    <p>
+        I know the definition and a lot of the material talks about Delta Lake and I don't care. A table is a nice, concrete thing which is what one really cares about. So I'll look into that while forgetting the lake.
+    </p>
+
+    <p>
+        Throughout the text, I'll be referring to Databrick's documentation and the way they use Delta lake. The two are not synonymous, but Databricks 
+        is the largest(?) vendor of Delta lake technology, so they pretty much define the way it is used at the moment.
+    </p>
+        
+    <h2>1. Parquet files?</h2>
+	<p>
+		So were are told that Delta Lake extends Parquet files, but what are Parquet files? Parquet is a file format with the following attributes:
+		<ul>
+			<li>The data is stored in a column-oriented manner</li>
+			<li>The data is compressed</li>
+		</ul>
+        You should really read the <a href="https://parquet.apache.org/docs/file-format/">documention</a>, but I'll try to illustrate key points of the file format.
+        
+        The figure below show the internal layout of the file format. It's bit dense, but for me the key takeaway is the idea of splitting the data into smaller groups and the amount 
+        of metadata stored.
+
+        <div class="img-container">
+
+            <img src="FileLayout.gif"></img>
+            <p>Source: <a href="https://parquet.apache.org/docs/file-format/">https://parquet.apache.org/docs/file-format/</a></p>
+        </div>
+
+        <p>Below is simplified version of the layout describing a table with two columns and <i>N</i> row groups. Now imagine the table has 100 rows and, for example, 4 row groups. 
+        Each row group might contain the data of 25 rows. The data is stored in column batches <i>within</i> the row group.
+        </p>
+
+        <div class="parquet-container">
+            <div class="parquet-header">Parquet File</div>
+            <div class="parquet-row-group">
+                <div>File Header (Magic Number: "PAR1")</div>
+            </div>
+            <div class="parquet-row-group">
+                <div class="row-group-title">Row Group 1</div>
+                <div class="parquet-column-chunk">
+                    <div class="parquet-data">Column Chunk (Column 1)</div>
+                    <div class="parquet-data">Column Chunk (Column 2)</div>
+                </div>
+            </div>
+            <div class="parquet-row-group">
+                <div class="row-group-title">Row Group 2</div>
+                <div class="parquet-column-chunk">
+                    <div class="parquet-data">Column Chunk (Column 1)</div>
+                    <div class="parquet-data">Column Chunk (Column 2)</div>
+                </div>
+            </div>
+            <div class="parquet-row-group">
+                <div class="row-group-title">Row Group N</div>
+                <div class="parquet-column-chunk">
+                    <div class="parquet-data">Column Chunk (Column 1)</div>
+                    <div class="parquet-data">Column Chunk (Column 2)</div>
+                </div>
+            </div>
+            <div class="parquet-footer">File Footer (Magic Number: "PAR1")</div>
+            <div>Metadata (Schema, etc.)</div>
+        </div>
+        
+        
+
+        <p>This is contrary to what you'd except if of a naive interpretation of the concept of storing data in a column-oriented fashion. 
+        </p>
+
+        <p>
+            What I found exhilarating about the idea is that you have collect statistics on row groups and column chunks which allow for skipping data when reading the file. 
+            The column chunks are actually further divided into pages which have statisctics of the minimum and maximum values for that specific column and page. 
+        </p>
+        <p>
+            Now, say you query data with a filter <span class="inline-code">WHERE myColumn >= 100</span>. A Parquet reader can skip column chunks where the maximum value of <i>myColumn</i> is less than 100
+            which is kinda cool.
+        </p>
+        <p>
+            We'll learn later on that Delta Tables utilize the same idea with <i>partitions</i>.
+        </p>
+
+        <h2>2. File-based transaction log for ACID transactions</h2>
+
+
+        <h4>Transactions</h4>
+    
+        <p>
+            To discuss ACID or what the acronym even means, we need to first understand what transactions are transactions. 
+            I understand a transaction as a set of operations. The canonical example of a transaction is a bank transfer for which you need multiple operations. Consider a transfer where 
+            we need to transfer 100$ from account A to account B. The transfer consists of these operations:
+            <ol>
+                <li>Substract 100$ from the balance of account A</li>
+                <li>Add 100$ to the balance of account B</li>
+            </ol>
+            These two operations can be considered as a single transaction.
+
+        </p>
+        <p>
+            Typically in a relational database you can start and stop a transaction with a specific statement. The above operation might look something like this (depending on what database you use)
+
+        </p>
+<pre>
+<code class="language-sql">
+    BEGIN TRAN;
+
+    UPDATE account
+    SET balance = balance - 100
+    WHERE account_id = 'A';
+
+    UPDATE account
+    SET balance = balance + 100
+    WHERE account_id = 'B';
+
+    END TRAN;
+</code>
+</pre>
+
+    <p>
+        According to the documention <a href="https://docs.databricks.com/aws/en/lakehouse/acid">Databricks does not support this</a>. You cannot start and stop a transaction. 
+        If you want to do multiple operations, your only options is to use MERGE INTO. 
+    </p>
+    <p>
+        This means that with Databricks the transactions are somewhat limited. The set of operations must be such that in can be expressed in a single MERGE INTO statement and must touch only a single table.
+    </p>
+    <p>
+        Now, obviously this is a somewhat unfair observation as Delta tables and Databricks are not tools meant for transactions such as the transfer outlined above. They are designed for analytical workflows
+        rather than transactional workflows. Still, it's worth noting since the product is advertised to provide ACID guarantees which one tends to interpret as something else than Databricks currently provides.
+    </p>
+
+
+    <h4>ACID</h4>
+
+    <p>
+
+        Here's a brief explanation of the ACID-acronym in case you've forgotten.
+
+        <ul>
+            <li><strong>Atomicity.</strong> Ensures that all operations within a transaction are completed successfully. If any operation fails, the entire transaction is aborted, and the database remains unchanged.</li>
+            <li><strong>Consistency:</strong> Guarantees that a transaction brings the database from one valid state to another, maintaining all predefined rules, including constraints and triggers.</li>
+            <li><strong>Isolation:</strong> Ensures that transactions are executed in isolation from one another. The intermediate state of a transaction is not visible to other transactions until it is committed.</li>
+            <li><strong>Durability:</strong> Guarantees that once a transaction has been committed, it will remain so, even in the event of a system failure. Changes made by the transaction are permanently recorded in the database.</li>
+        </ul>
+        
+        Next, I'll briefly compare Databrick's documentation to these guarantees and see how (and if) they are actually implemented by Databricks.
+    </p>
+
+
+
+    <h5>Atomicity</h5>
+
+    <p>Atomicity is the <b>A</b> in ACID-transactions. It means that either all the operations in a transaction succeed or none succeed. In the transfer-example above, you either update the balance of both accounts or update neither. 
+    Without atomicity, the results might be disasterous. If the first UPDATE succeeds and the second fails, 100$ has disappeared. </p>
+
+    <p>
+        Databrick's  <a href="https://docs.databricks.com/aws/en/lakehouse/acid">definition</a> states that atomicity "<i>means that all transactions either succeed or fail completely</i>".
+        In databricks, this basically guarantees that any single operation must either succeed or fail completely. A series of operations cannot be considered as an atomic transaction. 
+    </p>
+    <p>
+        How are, for example, updates guaranteed to fail or succeed completely? A partially failing UPDATE-operation would only change a subset of the values I intended to change. This is undesirable.
+
+    </p>
+    <p>
+        Delta tables maintain a transaction log that keeps tabs on each version of the table (see <a href="article2.html">for more detail on persisting versions of the data</a>) and has a reference to the current version. When a table 
+        is updated, a new version of the data is written to disk. If the write fails, the transaction log is not updated and current version of the table is not changed. Thus, the failed update has 
+        no effect on the table. This guarantees amotic updates and other operations.
+    </p>
+
+    <h5>Consistency</h5>
+
+    <p>
+        According to <a href="https://en.wikipedia.org/wiki/Consistency_(database_systems)">wikipedia</a> consistency can mean either or both of the following:
+        <ol>
+            <li>The guarantee that database constraints are not violated, particularly once a transaction commits</li>
+            <li>The guarantee that any transactions started in the future necessarily see the effects of other transactions committed in the past</li>
+        </ol>
+        These are not mutually exclusive so systems can implement both.
+    </p>
+    <p>
+        The first definition uses the term database constraints. These are sort of rules a system imposes on the data (some values in a column must be unique etc.).
+        You can define a constraint on a Delta table column with an SQL-expression. Operations fail if the constraint is not met, so this defition holds up.
+    </p>
+    <p>
+        The second one is a bit more tricky. Databrick's <a href="https://docs.databricks.com/aws/en/lakehouse/acid#how-does-databricks-implement-consistency">documentation</a> says that Delta Lake uses '<i>optimistic concurrency control to provide transactional guarantees between writes</i>'.
+        Optimistic concurrency control basically means that when an transaction starts, it notes the start time and tentatively writes the data. Before committing, 
+        a check if made to see if another transaction has made conflicting changes to the same data, and if so, the transaction fails.
+    </p>
+    <p>
+        Using optimistic concurrency control Delta lake guarantees that writes do not conlict each other. Read-operations see a consistent snapshot of the data thanks to the transaction log. A 
+        read operation will start by making note which files represent the latest version of the data and then reads those files. If the table is updated during the read operation, 
+        it won't affect the result as the modifications create new files.
+    </p>
+    <p>
+        Delta lake seems to fullfill also the second definition of consistency.
+    </p>
+
+    <h5>Isolation</h5>
+
+    <p>
+        Isolation refers to the degree in which concurrent transactions are executed in isolation of each other. This means simply that if two transactions are being executed simultaneously,
+        they should produce the same result as if they were ran one after each other.
+    </p>
+    <p>
+        In databricks, read operations use something called snapshot isolation. This is what I described in the last chapter on consistency - read operations read a specific snapshot/version of the table.
+    </p>
+    <p>
+        Write operations are ran in an isolation mode called 'WriteSerializable'. This guarantees that write-operations are serializable. A schedule of transactions is serializable,
+        if the result is equivalent to a serial schedule. A serial schedule describes an ordered set of transactions (= the operations are ran on after another).
+    </p>
+
+    <h5>Durability</h5>
+    <p>
+        Durability in ACI<b>D</b> refers to the guarantee that once the data is committed, it is persisted. This is guaranteed as the data is persisted on disk upon commits. 
+        I can imagine that Databricks has a rather robust backup-system in place to address system and hardware failures.
+    </p>
+
+
+        <h2>3. Scalable metadata handling</h2>
+        <p>Could not be bothered yet.</p>
+    </main>
+    
+</div>
+
+</body>
+</html>
