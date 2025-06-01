@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HLASM</title>
+    <style>
+        body {
+            background-color: #ffffff; /* Bright yellow background */
+            color: #000000; /* Black text */
+            font-family: 'Courier New', Courier, monospace; /* Monospace font */
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff; /* White background for content */
+        }
+        h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+        .header-box {
+            padding-bottom: 5%;
+            border-bottom: 1px solid #eee
+        }
+        
+        .main-content {
+            display: flex;
+        }
+        .blog-posts {
+            flex: 3;
+            padding: 20px;
+        }
+
+        .blog-post {
+            padding: 10px;
+            margin: 20px 0;
+        }
+        img {
+            width: 60%;
+            height: auto;
+            border: 5px solid #000000; /* Black border around images */
+        }
+        .code {
+            color: #0f0;
+            display: inline;
+            background-color: black;
+            padding: 1px;
+        }
+        .code-block {
+            color: #0f0;
+            background-color: black;
+            padding: 1px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-box">
+            <h1>Doin' stuff with the mainframe</h1>
+        </div>
+        <div class="main-content">
+            <div class="blog-post">
+    <h2>Getting started with HLASM</h2>
+
+    <h3>Your first assembler program (with bells and whistles)</h3>
+    <p>It won't be a useful program, but it will be our first program.</p>
+    <p>
+        The program tests whether numbers '101' and '100' are equal.
+        <ul>
+            <li>If they are not equal, the program will exit with a non-zero return code (or in MVS parlance it will "abnormally terminate")</li>
+            <li>If they are equal, the program will exit gracefully</li>
+        </ul>
+    </p>
+    <p>Here's the program in all it's glory:</p>
+    <img src="../images/screenshot-2-hlasm-ex1.png">
+    <p><a href="../hlasm/ex1.hlasm">(here's the source code)</a></p>
+    <p>I lied. There's actually more happening there than just comparing two numbers. Everything in between BEGIN and END is assembler, but the rest is JCL which stands for <b>J</b>ob</b> <b>C</b>ontrol <b>L</b>anguage.
+        The source code above actually describes a <i>job</i> that contains our program (in assembler).</p>
+    <p>The job compiles and links assembler code creating an executable and then proceeds to run it. We'll soon look into what everything is, but as you're anxious to try this, here's what you need to do:</p>
+    <ol>
+        <li>Allocate a new dataset with utilities/dataset (for easy access use command `=3.2`). I used a FB (Fixed Blocked) record format.</li>
+        <li>Copy the source into the dataset using edit mode (`=2`)</li>
+        <li>Type `sub`/`submit` command</li>
+        <li>Look at the job output under utilities/job output (`=3.8`)</li>
+    </ol>
+    <h3>On to the good stuff</h3>
+    <p>Ok. Let's dive into the source code starting with the assembler (the <i>interesting</i> stuff first!).</p>
+    <p>
+        The first line says <span class="code">BEGIN BASR 6,0</span> which immediately throws us in the deep end of the pool. BEGIN is a label and can be whatever, but BASR is something else.
+    </p>
+    <p>
+        BASR is a machine instruction and comes from <i>Branch And Save Register</i>. While it can (and apparently is) used for branching in programs, here it is used to establish a <i>base register</i>.
+        Details of why BASR works the way it does are a bit out of our scope, but what it does here is that it places the address of the next instruction into register 6. In the context of our program,
+        this means that register 6 is our base register and now holds the base address of the program. Basically it's the address of the first instruction of the program during execution.
+    </p>
+    <p>To understand the next instruction <span class="code">USING BEGIN,0</span> we need to understand about base-displacement addressing which is one of three addressing modes.
+        When using base-displacement addressing, the effective address of an instruction or data in memory is calculated by adding the <i>the base address</i> and the <i>displacement</i> together.
+        The base address is what is stored inside the base register and the displacement is the offset of an instruction from it's base address. 
+        So what "USING BEGIN,0" does is that it tells the assembler that, during execution, the base register will hold the address of the instruction labeled "BEGIN".
+    </p>
+    <p>To make matters easier, we can look at the output of the assembler. we see that it was calculated the offsets from BEGIN into to the column.
+        For example, the offset of the instruction <span class="code">CR 2,3</span> is <span class="code">00000A</span> which is 10 in decimal numbers. This means that the instruction is ten bytes off from BEGIN.
+        Armed with this info the program can execute correctly regardless of it's exact location in memory after loading. It just needs to calculate the effective address of the instructions.
+    </p>
+    <img src="../images/screenshot-2-hlasm-ex2.png">
+    <h3>"Business logic": Comparing integers and branching</h3>
+    <p>Now that addressing gibberish is behind us, let's keep on diggin'. The next instruction is easy-peasy compared to the previous:
+        <span class="code">L 2,NUMBER</span> simply states that we should load a full-word from the address denoted by label "NUMBER" into register 2.
+        In the mainframe world a fullword is 4 bytes or 32 bits. A half-word is 16 bits and a double word is 64 bits (note that it is not a double <i>full</i>word).
+    </p> 
+    <p>
+        This is also easy: <span class="code">CR 2,3</span> says "compare the value of registers 2 and 3". CR comes from "<b>C</b>ompare <b>R</b>egisters". The result of the comparison is placed into what is called a condition code.
+        The condition code is a 4-bit part of the Program Status Word (PSW) which is an internal register.
+    </p>
+    <p>
+        To interpret the condition code, new terms are needed. In <span class="code">CR 2,3</span> "CR" is an operation code (typically shortened to opcode) and 2 and 3 and the first and second operand.
+    </p>
+    <p>
+        Given that we've issued a comparison between registers, we can now use the condition code in the PSW which is what <span class="code">BC 8,LBLERR</span> does. BC is basically an if-statement: if the value 
+        of the condidition code is "something", go to the address defined by the label "LBLERR". We define something by giving a 4-bit mask as the first operand - here it is the number 8 or 1000 as bits. The bit mask 
+        represents the value "EQUAL" in the condition code. 
+    </p>
+    <p>
+        Together <span class="code">CR 2,3</span> and <span class="code">BC 8,LBLERR</span> mean that: "if the value of register 2 and 3 are equal, fetch instruction from whatever address label LBLERR denotes"
+    </p>
+    <p>
+        <span class="code">XR 15,15</span> is neat trick: it's xor of register 15 with itself effictively making it zero. Now, register fifteen holds a special purpose: it contains 
+        the return code of the program. So this set us up for returning zero as the return code.
+    </p>
+    <p>
+        Next up is <span class="code">BR 14</span>. BR stands for Branch Register. In this case we jump to the memory address stored in register 14. Register 14 is a special register: 
+        it contains the memory address of the caller. So we're exiting the program here. Note the location of this instruction - it is never reached if we jump to LBLERR in the previous instruction. 
+        Together with the previous instruction this is instrumental to the program's logic. 
+    </p>
+
+    <p>
+        Next up is <span class="code">LBLERR L 15,1</span>. We've seen this before. We will load the value 1 into register 15. In this situation we want exit on a non-zero status (because 100 is not equal to 101) so we set the value to 1 
+        before returning to the caller using BR 14. LBLERR is just a label and can be whatever.
+    </p>
+    <p>
+        With <span class="code">NUMBER DC F'101'</span> we define a fullword constant with the value 100 and assign the label NUMBER to it (you've seen it used before).
+    </p>
+    <p>
+        And that's all folks. You and I now share a superficial understanding of some HLASM instructions. I'll leave it to you to think what to do with this information.
+    </p>
+
+</div>
+
+</div>
+
+
+
+
+
+        </div>
+    </div>
+</body>
+</html>

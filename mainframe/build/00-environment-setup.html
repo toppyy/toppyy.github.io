@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The greatest MF</title>
+    <style>
+        body {
+            background-color: #ffffff; /* Bright yellow background */
+            color: #000000; /* Black text */
+            font-family: 'Courier New', Courier, monospace; /* Monospace font */
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff; /* White background for content */
+        }
+        h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+        .header-box {
+            padding-bottom: 5%;
+            border-bottom: 1px solid #eee
+        }
+        
+        .main-content {
+            display: flex;
+        }
+        .blog-posts {
+            flex: 3;
+            padding: 20px;
+        }
+
+        .blog-post {
+            padding: 10px;
+            margin: 20px 0;
+        }
+        img {
+            width: 60%;
+            height: auto;
+            border: 5px solid #000000; /* Black border around images */
+        }
+        .code {
+            color: #0f0;
+            display: inline;
+            background-color: black;
+            padding: 1px;
+        }
+        .code-block {
+            color: #0f0;
+            background-color: black;
+            padding: 1px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-box">
+            <h1>Doin' stuff with the mainframe</h1>
+        </div>
+        <div class="main-content">
+            <div class="blog-post">
+    
+    <h2>Setting up the environment</h2>
+    <p>So you've decided to get into mainframes and are puzzled on where and how to start. I am also puzzled which is why made these notes.</p>
+    What you'll need
+    <ul>    
+        <li>A mainframe emulator. I'll be using the <a href="http://www.hercules-390.org/">Hercules</a> emulator</li>
+        <li>An operating system, here it'll be <a href="https://www.prince-webdesign.nl/tk5">MVS Tk5</a></li>
+        <li>A terminal emulator for interacting with the mainframe emulator. I'll be using <a href="https://x3270.bgp.nu">x3270</a></li>
+    </ul>
+    <p><a href="https://github.com/toppyy/mvs-tk5-hercules">Here'll</a> you'll find a containerized version of MVS Tk5 running on Hercules. If you have a linux-machine, but no docker, you can just follow the commands in the dockerfile.
+    If you're on windows/mac OS and do not have a docker installation, you're on your own.</p>
+
+    <p>For getting started with MVS Tk5, read something like <a href="https://bradricorigg.medium.com/run-your-own-mainframe-using-hercules-mainframe-emulator-and-mvs-3-8j-tk4-55fa7c982553">this</a>. I won't be going through the UI so the rest you'll have to google/figure out.</p>
+
+    <p>If you see this after running `docker compose up` and logging in, you're good to go.</p>
+    <img src="../images/screenshot-1.png" alt="Tk5 login view">
+</div>
+        </div>
+    </div>
+</body>
+</html>

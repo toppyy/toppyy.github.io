@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The greatest MF</title>
+    <style>
+        body {
+            background-color: #ffffff; /* Bright yellow background */
+            color: #000000; /* Black text */
+            font-family: 'Courier New', Courier, monospace; /* Monospace font */
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff; /* White background for content */
+        }
+        h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+        .header-box {
+            padding-bottom: 5%;
+            border-bottom: 1px solid #eee
+        }
+        
+        .main-content {
+            display: flex;
+        }
+        .blog-posts {
+            flex: 3;
+            padding: 20px;
+        }
+
+        .blog-post {
+            padding: 10px;
+            margin: 20px 0;
+        }
+        img {
+            width: 60%;
+            height: auto;
+            border: 5px solid #000000; /* Black border around images */
+        }
+        .code {
+            color: #0f0;
+            display: inline;
+            background-color: black;
+            padding: 1px;
+        }
+        .code-block {
+            color: #0f0;
+            background-color: black;
+            padding: 1px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-box">
+            <h1>Doin' stuff with the mainframe</h1>
+        </div>
+        <div class="main-content">
+            <div class="blog-post">
+    <h2>Passing parameters to COBOL-procedures</h2>
+    <h3>Adding a parameter</h3>
+    <p>
+        Below is a JCL that contains COBOL-code for computing the sum of numbers from 0 to 10.
+    </p>
+    <p>
+       What we need to do is parametrize it to accept the number to count as a parameter.
+    </p>
+    <pre>
+    <div class="code-block">
+        //COBPROC  PROC
+        //BUILD    EXEC COBUCG,
+        //         PARM.COB='FLAGW,LOAD,SUPMAP,SIZE=2048K,BUF=1024K'
+        //COB.SYSPUNCH DD DUMMY
+        //COB.SYSIN    DD *
+           10  IDENTIFICATION DIVISION.
+           20  PROGRAM-ID. 'MYFIRSTCBL'.
+           30  ENVIRONMENT DIVISION.
+           40  DATA DIVISION.
+           50  WORKING-STORAGE SECTION.
+           60    01  CNT   PIC 9(5) VALUE 0.
+           70    01  MYSUM PIC 9(5) VALUE 0.
+           80  PROCEDURE DIVISION.
+           90      PERFORM ADDITION UNTIL CNT = 10.
+           100      DISPLAY 'MYSUM: ' MYSUM.
+           110      STOP RUN.
+           120  ADDITION.
+           130      ADD 1 TO CNT.
+           140      ADD CNT TO MYSUM.
+        //COB.SYSLIB   DD DSNAME=SYS1.COBLIB,DISP=SHR
+        //GO.SYSOUT   DD SYSOUT=*
+    </div>
+    </pre>
+
+    <p>
+        Just because we can, we'll store the COBOL-code in a separate dataset and compile and execute it from another dataset containing only the JCL and the input.
+    </p>
+    <p>
+        Here's the COBOL-code that accepts a parameter through SYSIN. It is stored into a dataset called <i>MYCBL4</i>.
+        Note that the conversion of character input (PIC X) into a numeric value (PIC 9) is implicit.
+    </p>
+    <pre>
+    <div class="code-block">
+        10  IDENTIFICATION DIVISION.
+        20  PROGRAM-ID. 'MYFIRSTCBL'.
+        30  ENVIRONMENT DIVISION.
+        40  DATA DIVISION.
+        50  WORKING-STORAGE SECTION.
+        60    01  CNT     PIC 9(5) VALUE 0.
+        70    01  MYSUM   PIC 9(5) VALUE 0.
+        71    01  N-INPUT PIC X(5).
+        72    01  N       PIC 9(5).
+        80  PROCEDURE DIVISION.
+        90      ACCEPT N-INPUT FROM SYSIN.
+       100      DISPLAY 'INPUT: ' N-INPUT.
+       110      MOVE N-INPUT TO N.
+       120      DISPLAY 'N: ' N.
+       130      PERFORM ADDITION UNTIL CNT = N.
+       140      DISPLAY 'MYSUM ' MYSUM.
+       150      STOP RUN.
+       160  ADDITION.
+       170      ADD 1 TO CNT.
+       180      ADD CNT TO MYSUM.
+    </div>
+    </pre>
+    <p>
+       Next up is the JCL for compiling the COBOL and executing it whilst passing the value 30 through SYSIN.
+    </p>
+    <pre>
+        <div class="code-block">
+            //MYCOBJOB JOB  CLASS=A,
+            //             MSGCLASS=X,
+            //             MSGLEVEL=(1,1)
+            //*
+            //BUILD EXEC COBUCG,
+            //         PARM.COB='FLAGW,LOAD,SUPMAP,SIZE=2048K,BUF=1024K'
+            //COB.SYSPUNCH DD DUMMY
+            //COB.SYSIN    DD DSNAME=HERC01.MYCBL4,DISP=SHR
+            //COB.SYSLIB   DD DSNAME=SYS1.COBLIB,DISP=SHR
+            //GO.SYSOUT    DD SYSOUT=*
+            //GO.SYSIN     DD *
+               30
+        </div>
+    </pre>
+    <p>
+        Note the three spaces in front of 30. The input is actually '   30'. This is because the COBOL-program reads five characters from SYSIN. Passing '30  ' leads 
+        to unexpected behaviour. A COBOL-programmer worth his salt would fix this, but we won't care.
+    </p>
+    <p>
+        The expected output is below. The sum of numbers from 0 to 30 is 465.
+    </p>
+    <pre>
+        <div class="code-block" style="color: rgb(4, 159, 255)">
+        INPUT:    30
+        N:    30    
+        MYSUMX 00465
+        </div>
+    </pre>
+</div>
+        </div>
+    </div>
+</body>
+</html>

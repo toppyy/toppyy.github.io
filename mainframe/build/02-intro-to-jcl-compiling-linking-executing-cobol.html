@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HLASM</title>
+    <style>
+        body {
+            background-color: #ffffff; /* Bright yellow background */
+            color: #000000; /* Black text */
+            font-family: 'Courier New', Courier, monospace; /* Monospace font */
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff; /* White background for content */
+        }
+        h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+        .header-box {
+            padding-bottom: 5%;
+            border-bottom: 1px solid #eee
+        }
+        
+        .main-content {
+            display: flex;
+        }
+        .blog-posts {
+            flex: 3;
+            padding: 20px;
+        }
+
+        .blog-post {
+            padding: 10px;
+            margin: 20px 0;
+        }
+        img {
+            width: 60%;
+            height: auto;
+            border: 5px solid #000000; /* Black border around images */
+        }
+        .code {
+            color: #0f0;
+            display: inline;
+            background-color: black;
+            padding: 1px;
+        }
+        .code-block {
+            color: #0f0;
+            background-color: black;
+            padding: 1px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-box">
+            <h1>Doin' stuff with the mainframe</h1>
+        </div>
+        <div class="main-content">
+            <div class="blog-post">
+    <h2>Intro to JCL: Compiling linking and executing COBOL</h2>
+    <p>(We'll be using the environment described in a previous <a href="00-environment-setup.html">post</a>)</p>
+    <h3>Mission statement</h3>
+    <p>
+        Below is a JCL that contains COBOL-code for computing the sum of numbers from 0 to 10.
+    </p>
+    <p>
+        Our <b>mission</b> is store the COBOL-code in a different dataset and modify the JCL to point to that dataset
+        instead of inlining the code. To accomplish this, we must plough through the JCL and see which parts need to be modified and how.
+    </p>
+    <pre>
+    <div class="code-block">
+        //MYCOBJOB JOB CLASS=A,
+        //             MSGCLASS=X,
+        //             MSGLEVEL=(1,1)
+        //*
+        //*
+        //BUILD    EXEC COBUCG,
+        //         PARM.COB='FLAGW,LOAD,SUPMAP,SIZE=2048K,BUF=1024K'
+        //COB.SYSPUNCH DD DUMMY
+        //COB.SYSIN    DD *
+        10  IDENTIFICATION DIVISION.
+        20  PROGRAM-ID. 'MYFIRSTCBL'.
+        30  ENVIRONMENT DIVISION.
+        40  DATA DIVISION.
+        50  WORKING-STORAGE SECTION.
+        60    01  CNT   PIC 9(5) VALUE 0.
+        70    01  MYSUM PIC 9(5) VALUE 0.
+        80  PROCEDURE DIVISION.
+        90      PERFORM ADDITION UNTIL CNT = 10.
+        100      DISPLAY 'MYSUM: ' MYSUM.
+        110      STOP RUN.
+        120  ADDITION.
+        130      ADD 1 TO CNT.
+        140      ADD CNT TO MYSUM.
+        //COB.SYSLIB   DD DSNAME=SYS1.COBLIB,DISP=SHR
+        //GO.SYSOUT   DD SYSOUT=*
+        //GO.SYSIN    DD *        
+    </div>
+    </pre>
+    <h3>Job declaration</h3>
+    <p>
+        The JCL starts with something that looks like job declaration of sorts. Turns out this is referred to as the the <i> job card</i>. CLASS, MSGCLASS and MSGLEVEL
+        are parameters for the job that define how the job is run and where and what it will produce as output.
+    </p>
+    <p>
+        Critical to our mission is the EXEC job step. Each job comprises of 1-N steps - here we only have one called "BUILD".
+    </p>
+    <p>
+        The program to execute is COBUCG which turns out to be a procedure in the system that calls the actual compiler (IKFCBL00) and loads the compiled program. 
+        The called procedure is a member of the dataset SYS2.PROCLIB.
+    </p>
+    <p>
+        What we're interested in is the DD-statements. DD stands for <b>D</b>ata <b>D</b>efinition. The JCL defines two datasets: a dummy called "COB.SYSPUNCH" 
+        and another called "COB.SYSIN. The latter is involved in passing the inlined COBOL to the compiler. The purpose of COB.SYSPUNCH remains unclear.
+    </p>
+    <h3>It's so easy</h3>
+    <p>
+        Turns out all you need to change is pass the name of the dataset containing the COBOL-code to the compiler using the DSNAME-parameter.
+        The examples below assumes You've stored the COBOL-code in a sequential dataset name "HERC01.MYCBL".
+        I've also specified the dataset is shared ("SHR") - meaning other jobs can also access it - to avoid issues it being reserved.
+    </p>
+    <pre>
+    <div class="code-block">
+        //MYCOBJOB JOB  CLASS=A,
+        //             MSGCLASS=X,
+        //             MSGLEVEL=(1,1)
+        //*
+        //BUILD EXEC COBUCG,
+        //         PARM.COB='FLAGW,LOAD,SUPMAP,SIZE=2048K,BUF=1024K'
+        //COB.SYSPUNCH DD DUMMY
+        //COB.SYSIN    DD DSNAME=HERC01.MYCBL,DISP=SHR
+        //COB.SYSLIB   DD DSNAME=SYS1.COBLIB,DISP=SHR
+        //GO.SYSOUT    DD SYSOUT=*
+    </div>
+    </pre>
+    <p>
+        What if you wanted to call the compiler directly and not use the wrapper procedure COBUCG? It requires a bit more DD-statements, but is doable with the following spells.
+        Apparently, a lot the DD-statements are there for declaring temporary datasets for the compiler and loader.
+    </p>
+    <pre>
+    <div class="code-block">
+        //MYCOBJOB JOB CLASS=A,                                          
+        //             MSGCLASS=X,                                    
+        //             MSGLEVEL=(1,1)                                 
+        //*                                                           
+        //*                                                           
+        //COB EXEC PGM=IKFCBL00,                                      
+        //         PARM='LOAD,SIZE=2024K,BUF=1024K'                   
+        //SYSPRINT DD SYSOUT=*                                        
+        //SYSPUNCH DD DUMMY                                           
+        //SYSIN    DD DSNAME=HERC01.MYCBL,DISP=OLD                   
+        //SYSLIB DD DSNAME=SYS1.COBLIB,DISP=SHR                       
+        //SYSUT1 DD UNIT=SYSDA,SPACE=(460,(700,100))                  
+        //SYSUT2 DD UNIT=SYSDA,SPACE=(460,(700,100))                  
+        //SYSUT3 DD UNIT=SYSDA,SPACE=(460,(700,100))                  
+        //SYSUT4 DD UNIT=SYSDA,SPACE=(460,(700,100))                  
+        //SYSLIN DD DSNAME=&LOADSET,DISP=(MOD,PASS),                  
+        //             UNIT=SYSDA,SPACE=(80,(500,100))                
+        //GO EXEC PGM=LOADER,PARM='MAP,LET',COND=(5,LT,COB)           
+        //SYSLIN DD DSNAME=*.COB.SYSLIN,DISP=(OLD,DELETE)             
+        //SYSLOUT DD SYSOUT=*                                         
+        //SYSLIB DD DSNAME=SYS1.COBLIB,DISP=SHR                       
+        //SYSOUT   DD SYSOUT=*,DCB=(RECFM=FBA,LRECL=161,BLKSIZE=16100)
+    </div>
+    </pre>
+
+    <h3>Sources</h3>
+    <ul>
+        <li><a href="https://www.jaymoseley.com/hercules/compiling/how_to.htm">https://www.jaymoseley.com/hercules/compiling/how_to.htm</a></li>
+        <li><a href="http://www.simotime.com/jclone01.htm">http://www.simotime.com/jclone01.htm</a></li>
+    </ul>
+
+</div>
+        </div>
+    </div>
+</body>
+</html>

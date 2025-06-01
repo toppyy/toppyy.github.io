@@ -1,0 +1,47 @@
+<div class="blog-post">
+    <h2>Sum of a sequence of integers with Assembler</h2>
+    <p>
+        Below is an assembler program that counts the sum of first 10 integers (and the needed JCL to assemble and load it).
+    </p>
+    <pre>
+        <div class="code-block">
+            //MYSUM JOB CLASS=A,         
+            //        MSGCLASS=X,        
+            //             MSGLEVEL=(1,1)
+            //*                          
+            //*                          
+            //BUILD EXEC ASMFCG          
+            //ASM.SYSOUT DD SYSOUT=*     
+            //ASM.SYSIN  DD *            
+            PRIMASM  CSECT               
+                    BASR 6,0            
+                    USING *,6           
+                    L   2,=F'10'        
+                    L   3,=F'0'         
+                    L   4,=F'0'         
+            LOOP    CR  2,3             
+                    BE  DONE            
+                    AL  3,INCR          
+                    ALR 4,3             
+                    BNE LOOP            
+            DONE    XR  15,15           
+                    BR  14              
+            INCR    DC  F'1'            
+                    END PRIMASM         
+            //GO.SYSPRINT DD SYSOUT=*    
+            //GO.SYSOUT   DD SYSOUT=*    
+        </div>
+    </pre>
+    <p>
+        The program is rather straightforward. Use R2 to store the number to which to count to (10 in this example), R3 as the loop counter and
+        R4 to hold the sum of integers.
+    </p>
+    <p>
+        Then loop until registers 2 and 3 are equal. If they are not, increment R3 by INCR (1 in this example) and add the value of R3 to R4 to keep tabs on the sum 
+        of integers.
+    </p>
+    <p>
+        What's problematic is that we have no way of knowing the sum. Printing the sum is non-trivial compared to higher level languages that typically have print/console.log/whatever 
+        to print values to console.
+    </p>
+</div>
