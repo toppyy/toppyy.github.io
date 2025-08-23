@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1980s Stock Prices</title>
+    <style>
+        body {
+            background-color: #000; /* Black background */
+            color: #00FF00; /* Bright green text */
+            font-family: 'Consolas', Courier, monospace; /* Monospace font */
+            text-align: left; /* Align text to the left */
+            padding: 20px;
+            font-size: 16px; /* Base font size */
+        }
+        h1 {
+            font-size: 24px; /* Larger font for the title */
+            margin-bottom: 20px;
+            text-align: center; /* Center the title */
+        }
+        table {
+            width: 100%; /* Full width */
+            border-collapse: collapse; /* Collapse borders */
+        }
+        th, td {
+            border: 1px solid #00FF00; /* Bright green borders */
+            padding: 8px; /* Padding for cells */
+        }
+        th {
+            background-color: #003300; /* Dark green header */
+            text-align: center; /* Center header text */
+        }
+        .up {
+            color: #00FF00; /* Bright green for positive changes */
+        }
+        .down {
+            color: #FF0000; /* Bright red for negative changes */
+        }
+        .chart {
+            width: 100%;
+            height: 200px; /* Height for chart area */
+            background-color: #003300; /* Dark green for chart area */
+            border: 1px solid #00FF00; /* Bright green border */
+            margin-top: 20px; /* Space above chart */
+            position: relative; /* Positioning for chart */
+        }
+        .chart-text {
+            color: #00FF00; /* Bright green text for chart */
+            position: absolute; /* Absolute positioning */
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Adjust for centering */
+        }
+    </style>
+</head>
+<body>
+    <h1>OMXH</h1>
+    <table id="stonk-table">
+        <thead>
+            <tr>
+                <th>Yhtiö</th>
+                <th>Hinta</th>
+                <th>Muutos</th>
+                <th>Muutos, 10s</th>
+            </tr>
+        </thead>
+        <tbody id="stonk-table-body">
+            <tr>
+                <td>IBM</td>
+                <td>$120.50</td>
+                <td class="up">+2.00</td>
+            </tr>
+            <tr>
+                <td>Apple</td>
+                <td>$75.25</td>
+                <td class="down">-1.50</td>
+            </tr>
+            <tr>
+                <td>Microsoft</td>
+                <td>$90.00</td>
+                <td class="up">+3.00</td>
+            </tr>
+            <tr>
+                <td>General Electric</td>
+                <td>$60.75</td>
+                <td class="down">-0.75</td>
+            </tr>
+            <tr>
+                <td>Coca-Cola</td>
+                <td>$45.00</td>
+                <td class="up">+1.25</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+<script src="stonks.js"></script>
+</html>
