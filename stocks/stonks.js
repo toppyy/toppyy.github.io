@@ -1,5 +1,11 @@
 const UPDATEINTERVAL = 3;
-const INTERVALS = 10;
+const INTERVALS = 50;
+
+
+
+let chartedStonkName    = undefined;
+let CHART               = undefined;
+
 
 let STONKS = [
     {"name":"Nokia Oyj",	        "price":	39},
@@ -22,6 +28,80 @@ let STONKS = [
     {"name":"Atria Group",	        "price":	49}
     */
 ]
+
+
+const findStonkByName = name => {
+
+    const matches = STONKS.filter(s => s.name === name)
+
+    if (matches.length == 0) {
+        throw `Could not find stock by the name of '${name}'!`
+    }
+
+    return matches[0];
+}
+
+
+const handleStonkClick = stonkName => {
+
+    const stonk = findStonkByName(stonkName);
+
+    displayStockChart(stonk)
+
+}
+
+
+const updateChart = (newData, label) => {
+
+    CHART.data.labels.push(label);
+    CHART.data.datasets.forEach((dataset) => {
+        dataset.data.push(newData);
+    });
+
+    CHART.update();
+}
+
+const displayStockChart = stonk => {
+    const labels = stonk.prevprices.map((_, index) => `${index + 1}`);
+
+
+    if (CHART !== undefined) {
+        console.log('It is not undefined')
+        CHART.destroy();
+    }
+
+
+    const ctx = document.getElementById('stonkChart').getContext('2d');
+
+
+
+
+    const myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Sample Data',
+                data: stonk.prevprices,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderWidth: 2,
+                fill: true,
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: false
+                }
+            }
+        }
+    })
+
+    CHART = myLineChart;
+    chartedStonkName = stonk.name;
+}
 
 
 const round = num => {
@@ -76,7 +156,7 @@ const buildRowOfStonk = stonk => {
     const plusLong = changeLong >= 0 ? '+' : '-';
 
 
-    return `<tr><td>${stonk.name}</td><td>${stonk.price.toFixed(2)}</td><td class="${changeClass}">${plus}${change.toFixed(2)}</td><td class="${changeClassLong}">${plusLong}${changeLong} (${stonk.prevprices[0].toFixed(2)})</td></tr>`
+    return `<tr><td onClick="handleStonkClick('${stonk.name}')" >${stonk.name}</td><td>${stonk.price.toFixed(2)}</td><td class="${changeClass}">${plus}${change.toFixed(2)}</td><td class="${changeClassLong}">${plusLong}${changeLong} (${stonk.prevprices[0].toFixed(2)})</td></tr>`
 }
 
 
@@ -102,11 +182,17 @@ const updateTable = () => {
 
     tbody.innerHTML = rows.join('');
 
+    // Update chart with the latest figure 
+
+    if (CHART === undefined) return;
+
+    const chartedStonk = findStonkByName(chartedStonkName);
+
+    updateChart(getPrevPrice(chartedStonk), chartedStonk.prevprices.length + 1);
+
 }
 
 const initStonks = () => {
-
-    
 
     STONKS = STONKS.map(stonk => {
         stonk.prevprices = []
