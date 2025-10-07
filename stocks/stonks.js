@@ -1,4 +1,4 @@
-const UPDATEINTERVAL = 3;
+const UPDATEINTERVAL = 1;
 const INTERVALS = 50;
 const TITLE = "$$$";
 
@@ -30,108 +30,23 @@ let STONKS = [
 ]
 
 
-const findStonkByName = name => {
-
-    const matches = STONKS.filter(s => s.name === name)
-
-    if (matches.length == 0) {
-        throw `Could not find stock by the name of '${name}'!`
-    }
-
-    return matches[0];
-}
-
-
-const handleStonkClick = stonkName => {
-
-    const stonk = findStonkByName(stonkName);
-
-    displayStockChart(stonk)
-
-}
-
-
-const updateChart = (newData, label) => {
-
-    CHART.data.labels.push(label);
-    CHART.data.datasets.forEach((dataset) => {
-        dataset.data.push(newData);
-    });
-
-    CHART.update();
-}
-
-const displayStockChart = stonk => {
-    const labels = stonk.prevprices.map((_, index) => `${index + 1}`);
-
-
-    if (CHART !== undefined) {
-        console.log('It is not undefined')
-        CHART.destroy();
-    }
-
-
-    const ctx = document.getElementById('stonkChart').getContext('2d');
-
-
-
-
-    const myLineChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: stonk.name,
-                data: stonk.prevprices,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderWidth: 2,
-                fill: true,
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: false
-                }
-            }
-        }
-    })
-
-    CHART = myLineChart;
-    chartedStonkName = stonk.name;
-}
 
 
 const round = num => {
     return Math.round(num * 100) / 100;
 }
 
-const lastOfArray = arr => arr[arr.length - 1];
-
-const getPrevPrice = stonk => stonk.prevprices.length > 0 ? lastOfArray(stonk.prevprices) : stonk.price;
 
 const getStonks = () => { return STONKS; }
 
-
-
-const updatePrevPrices = stonk => {
-
-    stonk.prevprices.push(stonk.price);
-
-    if (stonk.prevprices.length > INTERVALS) {
-        stonk.prevprices.shift();
-    }
-
-}
-
-
-
 const updatePrice = stonk => {
 
-    const delta = Math.random() - 0.5;
+    stonk.prevPrice = stonk.price;
+
+    const delta = (Math.random() - 0.5) * 2;
     stonk.price += delta;
+    
+    if (stonk.price < 0) stonk.price = -1 * stonk.price;
 
     if (stonk.price > stonk.max) {
         stonk.max = stonk.price
@@ -141,14 +56,12 @@ const updatePrice = stonk => {
         stonk.min = stonk.price
     }
 
-    console.log(stonk.name, stonk.price.toFixed(2), stonk.prevprices[0].toFixed(2))
-
 }
 
 
 const buildRowOfStonk = stonk => {
 
-    const change = round(stonk.price - getPrevPrice(stonk));
+    const change = round(stonk.price - stonk.prevPrice);
     const changeClass = change < 0 ? 'down' : 'up';
     const plus = change >= 0 ? '+' : '';
 
@@ -156,14 +69,11 @@ const buildRowOfStonk = stonk => {
 
     const p_to_e = Math.round(stonk.price / stonk.earnings)
     
-
-    // onClick="handleStonkClick('${stonk.name}')"
     return `<tr><td>${stonk.name}</td><td>${stonk.price.toFixed(2)}</td><td class="${changeClass}">${plus}${change.toFixed(2)}</td><td>${spread}</td><td>${p_to_e}</td></tr>`
 }
 
 
 const updateStonks = () => {
-    STONKS.map(updatePrevPrices);
     STONKS.map(updatePrice) 
     return getStonks();
 }
@@ -182,28 +92,12 @@ const updateTable = () => {
     tbody = getStonkTableBody();
     tbody.innerHTML = '';
 
-
-
     rows = stonks.map(buildRowOfStonk);
-
     tbody.innerHTML = rows.join('');
-
-    // Update chart with the latest figure 
-
-    if (CHART === undefined) return;
-
-    const chartedStonk = findStonkByName(chartedStonkName);
-
-    updateChart(getPrevPrice(chartedStonk), chartedStonk.prevprices.length + 1);
-
-    sortTable(1)
-
 }
 
 const getRandomEarnings = price => {
-
     const pe = Math.random() * 40;
-
     return price/pe
 }
 
@@ -214,21 +108,33 @@ const initStonks = () => {
         stonk.min = stonk.price;
         stonk.max = stonk.price;
 
+        stonk.price = 100 + ( (stonk.price / 100)  * 10)
+
+        console.log(stonk.name, stonk.price)
+
         stonk.earnings = getRandomEarnings(stonk.price)
 
         return stonk;
     });
 
-    for (let i = 0; i < INTERVALS; i++) updateStonks();
 }
 
 initStonks();
 
 updateTable();
 
+
+let i = 100;
+while ((i--) > 0) {
+    updateTable()
+    // console.log(i)
+}
+
+
 setInterval(updateTable, UPDATEINTERVAL  * 1000);
 
 
+// Handle clicks
 
 
 const handlePause = () => {
