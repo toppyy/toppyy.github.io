@@ -9,7 +9,7 @@ let CHART               = undefined;
 
 let STONKS = [
     {"name":"Nokia Oyj",	        "price":	39},
-/*    {"name":"Kone Oyj",	            "price":	76},
+    {"name":"Kone Oyj",	            "price":	76},
     {"name":"Outokumpu Oyj",	    "price":	24},
     {"name":"Valmet Oyj",	        "price":	34},
     {"name":"Ahlstrom-Munksjö",	    "price":	40},
@@ -26,7 +26,7 @@ let STONKS = [
     {"name":"Wärtsilä Corporation",	"price":	9},
     {"name":"Kraft Foods Finland",	"price":	71},
     {"name":"Atria Group",	        "price":	49}
-    */
+    
 ]
 
 
@@ -81,7 +81,7 @@ const displayStockChart = stonk => {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Sample Data',
+                label: stonk.name,
                 data: stonk.prevprices,
                 borderColor: 'rgba(75, 192, 192, 1)',
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -115,13 +115,6 @@ const getPrevPrice = stonk => stonk.prevprices.length > 0 ? lastOfArray(stonk.pr
 const getStonks = () => { return STONKS; }
 
 
-const getNewDirection = prev => {
-
-    if (Math.random() < 0.01) {
-        return prev > 0 ? -1 : 1;
-    }
-    return prev;
-}
 
 const updatePrevPrices = stonk => {
 
@@ -136,10 +129,17 @@ const updatePrevPrices = stonk => {
 
 
 const updatePrice = stonk => {
-    
-    stonk.direction = getNewDirection(stonk.direction);
-    stonk.price += ( Math.random() * 0.05) * stonk.direction; 
-    stonk.price = round(stonk.price);
+
+    const delta = Math.random() - 0.5;
+    stonk.price += delta;
+
+    if (stonk.price > stonk.max) {
+        stonk.max = stonk.price
+    }
+
+    if (stonk.price < stonk.min) {
+        stonk.min = stonk.price
+    }
 
     console.log(stonk.name, stonk.price.toFixed(2), stonk.prevprices[0].toFixed(2), stonk.direction)
 
@@ -155,8 +155,10 @@ const buildRowOfStonk = stonk => {
     const changeClassLong = change < 0 ? 'down' : 'up';
     const plusLong = changeLong >= 0 ? '+' : '-';
 
+    const spread = `${stonk.min.toFixed(1)} - ${stonk.max.toFixed(1)}`
+    
 
-    return `<tr><td onClick="handleStonkClick('${stonk.name}')" >${stonk.name}</td><td>${stonk.price.toFixed(2)}</td><td class="${changeClass}">${plus}${change.toFixed(2)}</td><td class="${changeClassLong}">${plusLong}${changeLong} (${stonk.prevprices[0].toFixed(2)})</td></tr>`
+    return `<tr><td onClick="handleStonkClick('${stonk.name}')" >${stonk.name}</td><td>${stonk.price.toFixed(2)}</td><td class="${changeClass}">${plus}${change.toFixed(2)}</td><td>${spread}</td></tr>`
 }
 
 
@@ -196,8 +198,9 @@ const initStonks = () => {
 
     STONKS = STONKS.map(stonk => {
         stonk.prevprices = []
-        stonk.direction = Math.random() > 0.5 ? 1 : -1;
-        console.log(stonk)
+        stonk.min = stonk.price;
+        stonk.max = stonk.price;
+
         return stonk;
     });
 
