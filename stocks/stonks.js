@@ -1,8 +1,8 @@
 const UPDATEINTERVAL = 3;
 const INTERVALS = 50;
+const TITLE = "$$$";
 
-
-
+let paused              = false;
 let chartedStonkName    = undefined;
 let CHART               = undefined;
 
@@ -141,9 +141,10 @@ const updatePrice = stonk => {
         stonk.min = stonk.price
     }
 
-    console.log(stonk.name, stonk.price.toFixed(2), stonk.prevprices[0].toFixed(2), stonk.direction)
+    console.log(stonk.name, stonk.price.toFixed(2), stonk.prevprices[0].toFixed(2))
 
 }
+
 
 const buildRowOfStonk = stonk => {
 
@@ -151,14 +152,13 @@ const buildRowOfStonk = stonk => {
     const changeClass = change < 0 ? 'down' : 'up';
     const plus = change >= 0 ? '+' : '';
 
-    const changeLong = (stonk.price - stonk.prevprices[0]).toFixed(2);
-    const changeClassLong = change < 0 ? 'down' : 'up';
-    const plusLong = changeLong >= 0 ? '+' : '-';
-
     const spread = `${stonk.min.toFixed(1)} - ${stonk.max.toFixed(1)}`
+
+    const p_to_e = Math.round(stonk.price / stonk.earnings)
     
 
-    return `<tr><td onClick="handleStonkClick('${stonk.name}')" >${stonk.name}</td><td>${stonk.price.toFixed(2)}</td><td class="${changeClass}">${plus}${change.toFixed(2)}</td><td>${spread}</td></tr>`
+    // onClick="handleStonkClick('${stonk.name}')"
+    return `<tr><td>${stonk.name}</td><td>${stonk.price.toFixed(2)}</td><td class="${changeClass}">${plus}${change.toFixed(2)}</td><td>${spread}</td><td>${p_to_e}</td></tr>`
 }
 
 
@@ -174,11 +174,15 @@ const getStonkTableBody = () => {
 
 const updateTable = () => {
 
+    if (paused) return;
+
     updateStonks();
-    stonks = getStonks();
+    stonks = getStonks().sort((a,b) => b.price - a.price);
 
     tbody = getStonkTableBody();
     tbody.innerHTML = '';
+
+
 
     rows = stonks.map(buildRowOfStonk);
 
@@ -192,6 +196,15 @@ const updateTable = () => {
 
     updateChart(getPrevPrice(chartedStonk), chartedStonk.prevprices.length + 1);
 
+    sortTable(1)
+
+}
+
+const getRandomEarnings = price => {
+
+    const pe = Math.random() * 40;
+
+    return price/pe
 }
 
 const initStonks = () => {
@@ -200,6 +213,8 @@ const initStonks = () => {
         stonk.prevprices = []
         stonk.min = stonk.price;
         stonk.max = stonk.price;
+
+        stonk.earnings = getRandomEarnings(stonk.price)
 
         return stonk;
     });
@@ -212,3 +227,26 @@ initStonks();
 updateTable();
 
 setInterval(updateTable, UPDATEINTERVAL  * 1000);
+
+
+
+
+const handlePause = () => {
+    const modal = document.getElementById("myModal");
+    if (paused) {
+        document.title = TITLE;
+        modal.style.display = "none";
+    } else {
+        document.title = `${TITLE} paused`;
+
+        const highestPrice = getStonks()[0]
+
+        modal.childNodes[1].innerHTML = `<center><h2>${highestPrice.name}!</h2><div id="money-emoji">💰</div></center>`
+        modal.style.display = "block";
+    }
+    paused = !paused;
+
+}
+
+document.body.addEventListener('keypress', handlePause)
+document.body.addEventListener('click', handlePause)
