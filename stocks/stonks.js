@@ -16,7 +16,7 @@ let STONKS = [
     {"name":"Rautaruukki Oyj",	    "price":	28},
     {"name":"Sampo Group",	        "price":	41},
     {"name":"Kesko Oyj",	        "price":	66},
-    {"name":"Elisa Oyj",	        "price":	55},
+    {"name":"Ramirent Oyj",	        "price":	55},
     {"name":"Fortum Oyj",	        "price":	93},
     {"name":"Stora Enso",	        "price":	43},
     {"name":"UPM-Kymmene",	        "price":	56},
@@ -24,7 +24,7 @@ let STONKS = [
     {"name":"Pohjola Group",	    "price":	100},
     {"name":"YIT Corporation",	    "price":	17},
     {"name":"Wärtsilä Corporation",	"price":	9},
-    {"name":"Kraft Foods Finland",	"price":	71},
+    {"name":"Teollisuuden Voima",	"price":	71},
     {"name":"Atria Group",	        "price":	49}
     
 ]
