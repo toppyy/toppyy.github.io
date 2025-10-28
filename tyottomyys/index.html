@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Työttömyys</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            width: 45%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid #ccc;
+        }
+        h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+        h2 {
+            font-size: 2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px 0;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 10px 0;
+            border-top: 2px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Miksi työttömien määrä kasvaa?</h1>
+        </header>
+
+        <article>
+            <h2>Mysteeri</h2>
+            <p>Kuviossa 1. on esitetty työttömien määrä työnvälitystilaston mukaan. Kuviosta havaitaan, että tällä hetkellä työttömyys kasvaa, mutta 
+                työttömien määrä esim. n. 10 vuotta sitten ollut hieman suurempikin.
+            </p>
+            <h4>Kuvio 1. Työttömien määrä</h4>
+            <img src="output/tyottomien_maara.png" >
+            <p>
+                Kuviossa 2. on puolestaan esitetty alkaneiden työttömyysjaksojen määrä. Y-akseli on katkaistu havainnollisuuden nimissä ("koronapiikki" on täysin poikkeuksellinen ja sotkee mittakaavan).
+                Kuviosta nähdään, että alkaneiden työttömyysjaksojen määrän trendi on laskeva.
+
+                <h4>Kuvio 2. Alkaneet työttömyysjaksot ja trendi</h4>
+                <img src="output/alkaneet_tyottomyysjaksot_ilman_koronaa.png">
+            </p>
+
+            <p>
+                Miksi alkaneiden työttömyysjaksojen määärä on ennätysmatala, mutta työttömien määrä on keskimäärin kasvanut?
+            </p>
+            
+            <h2>Työttömyysjaksojen keston vaikutus työttömien määrään</h2>
+            <p>
+                Kuvitellaan kaksi eri skenaariota:
+                <ol>
+                    <li>Joka kuukausi alkaa 30 000 uutta työttömyysjaksoa. Jokainen jakso kestää 12 kuukautta.</li>
+                    <li>Joka kuukausi alkaa 70 000 uutta työttömyysjaksoa. Jokainen jakso kestää 6 kuukautta.</li>
+                </ol>
+            </p>
+            <p>Kuviossa 2. on esitetty työttömien määrä kuvitteellisissa skenaariossa</p>
+            <h4>Kuvio 2. Työttömien määrä kahdessa eri simulaatiossa</h4>
+            <img src="output/simulaatio.png">
+            <p>
+                Kuviosta nähdään, että työttömien määrä asettuu jokseenkin samalle tasolle huolimatta hyvin erilaisista oletuksista! 
+                Pelkästään työttömien määrää tuijottamalla tätä ei kuitenkaan havaitsisi.
+            </p>
+            <p>
+                Kunkin kuukauden työttömien määrä onkin seuraavien tekijöiden funktio:
+                <ol>
+                    <li>Edellisen kuukauden työttömät</li>
+                    <li>Uudet työttömyysjaksot</li>
+                    <li>Päättyvät työttömyysjaksot</li>
+                </ol>
+                Työttömien määrä on tiettynä kuukautena on: <i>edellisen kuukauden työttömät + uudet jaksot - päättyvät jaksot</i>.
+                Päättyvien jaksojen määrä on tietysti yhteydessä työttömyyden kestoon.
+            </p>
+
+            <h2>
+                Alkaneita työttömyysjaksoja on vähemmän, mutta ne kestävät kauemmin
+            </h2>
+            
+            <p>
+                Kuviossa 4. on esitetty työttömyysjaksojen keskimääräinen kesto viikoissa. Kuviosta nähdään, että keskimääräinen keston trendi on kasvava.
+                Työttömyyden keskimääräinen kesto on nyt pidempi kuin koskaan työnvälitystilaston mittausaikana (vuodesta 2008 eespäin).
+                <h4>Kuvio 4. Työttömyyden keskimääräinen kesto viikoissa ja trendi</h4>
+                <img src="output/keskim_kesto.png">
+            </p>
+            <p>
+                Ennätyspitkiä työttömyysjaksoja voi selittää se, että työvoimapalvelut siirtyivät työllisyysalueille, jotka eivät ole järjestäneet niin paljon 
+                työvoimapoliittisia palveluita. Työnvälitystilastossa työttömyyden katkaisee osallistuminen tiettyihin työvoimapoliittisiin palveluihin.
+            </p>
+            <p>
+                Tällä hetkellä ei tiedetä, missä määrin ennätyspitkät työttömyysjaksot johtuvat työttömyyden pitkittymisestä ja toisaalta työvoimapoliittisten palveluiden
+                järjestämisen muutoksista. Tätä varten tarvitsisi tilastoida työttömyyden kesto siten, että palvelujaksot eivät katkaise työttömyyttä.
+            </p>  
+
+            <h2>Keiden työttömyysjaksot ovat pidentyneet?</h2>
+            <p>
+                Tiedetään siis, että jaksot ovat pidentyneet yleisesti, mutta onko joidenkin tiettyjen työnhakijaryhmien jaksot pidentyneet muita enemmän?
+            </p>
+            <p>
+                Yksi tapa tarkastella asiaa on tutkia kuinka suuri osuus alkaneista työttömyysjaksoista jatkuu yli 12kk (kuvio 5).
+                <h4>Kuvio 5. Alkaneista työttömyysjaksoista jatkunut yli 12kk, %</h4>
+                <img src="output/ylittaa_12kk.png">
+
+            </p>
+            <p>
+                Kuviosta 5. havaitaan, että suurin muutos on tapahtunut nuorilla. Vuonna 2015 20-24-v. alkaneista työttömyysjaksoista keskimäärin noin viisi prosenttia kesti vähintään vuoden.
+                Vuonna 2025 vastaava osuus on lähes kolminkertainen (14%).
+            </p>
+
+        </article>
+        
+    </div>
+</body>
+</html>
