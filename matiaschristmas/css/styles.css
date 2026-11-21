@@ -1,0 +1,12 @@
+#grid {	
+	margin-top: 15%;
+}
+
+
+table {
+   border-collapse: collapse;
+}
+
+td {
+   border: 0.2px solid lightgrey;
+}
