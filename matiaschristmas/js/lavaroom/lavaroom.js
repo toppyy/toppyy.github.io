@@ -17,10 +17,8 @@ const EXIT = 'EXIT';
 const LEVER = 'LEVER';
 const LEVERDOWN = 'LEVERDOWN';
 const MATIAS = 'MATIAS'
-const LAVACOLOR = 'rgb(216, 33, 33)';
 const DRAINSPEED = 50;
 const FLOODSPEED = 100;
-
 
 // Globals, but not constants
 let MATIASLOC = [null,null];
@@ -29,22 +27,6 @@ let CALLBACK = () => { throw Error('No callback set!') };
 let ROWS = null;
 let COLS = null;
 let FLOODED = [];
-
-
-let renderType = type => {
-
-	if (type == WALL) return '#';
-	if (type == BLOCK) return blockSVG();
-	if (type == ENTRY) return '#';
-	if (type == LAVA) return lavaSVG();
-	if (type == EMPTY) return '';
-	if (type == EXIT) return exitSVG();
-	if (type == LEVER) return leverSVG();
-	if (type == LEVERDOWN) return leverDownSVG();
-	if (type == MATIAS) return matiasAvatarSVG();
-
-	throw Error("UNKNOWN TYPE '" + type + "'!");
-}
 
 let charToType = {
 	'#': WALL,
@@ -58,8 +40,6 @@ let charToType = {
 	' ': EMPTY,
 	'': EMPTY
 }
-
-
 
 let MAP = [
   '############E#########',
@@ -77,6 +57,20 @@ let MAP = [
   '##########X###########',
 ];
 
+let renderType = type => {
+
+	if (type == WALL) return '#';
+	if (type == BLOCK) return blockSVG();
+	if (type == ENTRY) return '#';
+	if (type == LAVA) return lavaSVG();
+	if (type == EMPTY) return '';
+	if (type == EXIT) return exitSVG();
+	if (type == LEVER) return leverSVG();
+	if (type == LEVERDOWN) return leverDownSVG();
+	if (type == MATIAS) return matiasAvatarSVG();
+
+	throw Error("UNKNOWN TYPE '" + type + "'!");
+}
 
 const elem = (tag,html='') => {	
 	let e = document.createElement(tag);
@@ -87,9 +81,6 @@ const elem = (tag,html='') => {
 const setNotification = (text) => {
 	document.getElementById('announcement').textContent = text;
 }
-
-
-
 
 const initMap = target => {
 
@@ -122,13 +113,14 @@ const initMap = target => {
 				e.setAttribute('lever','true');	
 
 			}
-			row.appendChild(e);
+
+            row.appendChild(e);
 		}
-	
-		tbody.appendChild(row);
+
+        tbody.appendChild(row);
 	}
 
-	target.appendChild(tbl);
+    target.appendChild(tbl);
 }
 
 const move = (dir) => {
@@ -168,7 +160,6 @@ const isValidCoord = (row,col) => {
 	return true;
 }
 
-
 const matiasHasValidCoords = () => isValidCoord(MATIASLOC[0],MATIASLOC[1]);
 
 const moveBlockTo = (r,c,dir) => {
@@ -191,6 +182,7 @@ const moveBlockTo = (r,c,dir) => {
 
 const getType = elem => elem.getAttribute('type');
 const setType = (elem,type) => elem.setAttribute('type',type);
+
 const changeType = (elem,type) => {
 	setType(elem,type);
 	elem.innerHTML = renderType(type);
@@ -198,13 +190,10 @@ const changeType = (elem,type) => {
 
 const updateMatiasLocation = dir => {
 
-
 	if (!matiasHasValidCoords()) {
 		console.log(MATIASLOC);
 		throw Error('MATIAS HAS INVALID COORDS!');
 	}
-
-	const tbl = document.getElementById('tbl').childNodes[0];
 
 	// Check if new coords would be OK
 	let proposed = [MATIASLOC[0] + dir[0], MATIASLOC[1] + dir[1]];
@@ -216,8 +205,6 @@ const updateMatiasLocation = dir => {
 
 	let cell = getCell(proposed[0], proposed[1]);
 	let type = getType(cell);
-
-
 
 	if (
 		type == WALL ||
@@ -262,26 +249,12 @@ const updateMatiasLocation = dir => {
 		matiasEscaped();
 	}
 
-
 	return true;
 }
-
 
 const getCell = (r,c) => {
 	if (!isValidCoord(r,c)) { return null; }
 	return document.getElementById('tbl').childNodes[0].childNodes[r].childNodes[c];
-}
-
-const getCellContent = (r,c) => {
-	let cell = getCell(r,c);
-	if (cell == null) return cell;
-	return cell.innerHTML;
-}
-
-
-const setColor = (e,color) => {
-	e.style.backgroundColor = color;
-	return e;
 }
 
 const startFlood = async () => {
@@ -302,11 +275,9 @@ const startFlood = async () => {
 	if (start == -1) throw Error('ENTRY CAN`T BE FOUND!');
 
 	flood(0,start);
-
 }
 
 const drain = async () => {
-
 	 
 	for (let r = 0; r < ROWS; r++) {
 
@@ -316,11 +287,8 @@ const drain = async () => {
 			changeType(getCell(r,c), EMPTY);
 			await sleep(DRAINSPEED);
 		}
-
 	}
 }
-
-
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -340,11 +308,9 @@ const flood = async (r,c) => {
 
 	if (cellType == LAVA) return;
 	if (cellType != EMPTY && cellType != ENTRY && cellType != EXIT) return;
-
 	
 	changeType(cell, LAVA);
 	FLOODED[r].push(c);
-
 	
 	// The first one to see exit starts the drain
 	if (cellType == EXIT) {
@@ -364,18 +330,16 @@ const flood = async (r,c) => {
 
 const setMsg = msg => document.getElementById('msg').innerHTML = `<h1>${msg}</h1>`;
 
-
-
 const matiasFailedAgain = () => {
 	GAMESTOPPED = true;
-    CALLBACK()
 	setMsg('MATIAS HAS FAILED!!');
+    CALLBACK();
 }
 
 const matiasEscaped = () => {
 	GAMESTOPPED = true;
-    CALLBACK();
 	setMsg('MATIAS HAS ESCAPED!!')
+    CALLBACK();
 }
 
 const getGrid = () => document.getElementById('grid')
@@ -388,7 +352,7 @@ export function startLavaRoom(onSolve) {
 	initMap(grid);
 	GAMESTOPPED = false;
     CALLBACK = onSolve;
-
+    
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('click', startLavaRoom);
 
