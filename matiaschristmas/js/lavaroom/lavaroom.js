@@ -22,6 +22,15 @@ const DRAINSPEED = 50;
 const FLOODSPEED = 100;
 
 
+// Globals, but not constants
+let MATIASLOC = [null,null];
+let GAMESTOPPED = false;
+let CALLBACK = () => { throw Error('No callback set!') };
+let ROWS = null;
+let COLS = null;
+let FLOODED = [];
+
+
 let renderType = type => {
 
 	if (type == WALL) return '#';
@@ -68,12 +77,7 @@ let MAP = [
   '##########X###########',
 ];
 
-// Globals, but not constants
-let MATIASLOC = [null,null];
-let GAMESTOPPED = false;
-let ROWS = null;
-let COLS = null;
-let FLOODED = [];
+
 const elem = (tag,html='') => {	
 	let e = document.createElement(tag);
 	e.innerHTML = html;
@@ -364,23 +368,26 @@ const setMsg = msg => document.getElementById('msg').innerHTML = `<h1>${msg}</h1
 
 const matiasFailedAgain = () => {
 	GAMESTOPPED = true;
+    CALLBACK()
 	setMsg('MATIAS HAS FAILED!!');
 }
 
 const matiasEscaped = () => {
 	GAMESTOPPED = true;
+    CALLBACK();
 	setMsg('MATIAS HAS ESCAPED!!')
 }
 
 const getGrid = () => document.getElementById('grid')
 
-export function startLavaRoom() {
+export function startLavaRoom(onSolve) {
 	const grid = getGrid(); 
 	grid.innerHTML = '';
 	setNotification("Oh no! Matias is trapped and needs to escape!");
 	setMsg('');
 	initMap(grid);
 	GAMESTOPPED = false;
+    CALLBACK = onSolve;
 
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('click', startLavaRoom);
