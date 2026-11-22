@@ -8,12 +8,13 @@ import {
 
 
 const moveToNextRoom = id => {
-	console.log('callback called')
+	console.log('moveToNextRoom()')
 	solveRoom(id);
 	startRoom();
 }
 
 const startRoom = () => {
+	console.log('startRoom()')
 	document.getElementById('app').innerHTML = '';
 
 	if (hasNextRoom()) {
