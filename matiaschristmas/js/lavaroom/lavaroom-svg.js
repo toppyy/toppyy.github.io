@@ -1,6 +1,6 @@
-export function matiasAvatarSVG() {
+export function matiasAvatarSVG(styles='') {
   return `
-<svg class="matias-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+<svg class="matias-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" ${styles}>
   <!-- long back hair, behind the shoulders -->
   <path d="M32 5C20.8 5 14 12.6 14 23.5v16c0 7 1.8 12.6 4.4 16.5h27.2c2.6-3.9 4.4-9.5 4.4-16.5v-16C50 12.6 43.2 5 32 5z" fill="#4e2c13"/>
   <!-- broad shoulders / festive sweater -->

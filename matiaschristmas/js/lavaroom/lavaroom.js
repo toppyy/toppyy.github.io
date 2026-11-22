@@ -48,12 +48,12 @@ let MAP = [
   '#            O       #',
   '#                    #',
   '#     O              #',
-  '# O                  #',
-  '#                O   #',
+  '# O        M         #',
+  '#     O           O  #',
   '#     OOO            #',
-  '#OOOOOO              #',
-  '#  M  O   O    OO    #',
-  '#  L  O              #',
+  '#O   O               #',
+  '#        O    OO     #',
+  '#  L                 #',
   '##########X###########',
 ];
 
@@ -345,6 +345,23 @@ const matiasEscaped = () => {
 const getGrid = () => document.getElementById('grid')
 
 export function startLavaRoom(onSolve) {
+
+    // init html
+    const app = document.getElementById('app');
+
+    app.innerHTML = `
+        <div id="announcement"></div>
+        <div id="grid"></div>
+        <div id="controls">
+            <button type="button" data-dir="left" aria-label="Move left">◀</button>
+            <button type="button" data-dir="up" aria-label="Move up">▲</button>
+            <button type="button" data-dir="down" aria-label="Move down">▼</button>
+            <button type="button" data-dir="right" aria-label="Move right">▶</button>
+        </div>
+        <button type="button" id="restart">Restart</button>
+        <div id="msg"></div>
+    `
+
 	const grid = getGrid(); 
 	grid.innerHTML = '';
 	setNotification("Oh no! Matias is trapped and needs to escape!");
