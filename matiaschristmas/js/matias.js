@@ -17,6 +17,10 @@ const elem = (tag,html='') => {
 	return e;
 }
 
+const setNotification = (text) => {
+	document.getElementById('announcement').textContent = text;
+}
+
 
 const blockSVG = () => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 90">
   <path d="M17 66 25 43 44 29 68 24 91 37 104 61 96 73 27 75Z"
@@ -101,15 +105,15 @@ let charToType = {
 let MAP = [
   '############E#########',
   '#                    #',
-  '#       O         O  #',
+  '#   OO  O         O  #',
   '#            O       #',
   '#                    #',
   '#     O              #',
-  '# O                  #',
+  '# O       M          #',
   '#                O   #',
   '#     OOO            #',
-  '#OOOOOO              #',
-  '#  M  O   O    OO    #',
+  '#O   OO              #',
+  '#         O    OO    #',
   '#  L  O              #',
   '##########X###########',
 ];
@@ -185,32 +189,6 @@ const handleKeyDown = (e) => {
 	move(dir);
 }
 
-let touchStart = null;
-
-const handleTouchStart = (e) => {
-	const t = e.changedTouches[0];
-	touchStart = [t.clientX, t.clientY];
-}
-
-const handleTouchEnd = (e) => {
-	if (touchStart === null) return;
-
-	const t = e.changedTouches[0];
-	const dx = t.clientX - touchStart[0];
-	const dy = t.clientY - touchStart[1];
-	touchStart = null;
-
-	const threshold = 20;
-	if (Math.abs(dx) < threshold && Math.abs(dy) < threshold) return;
-
-	if (Math.abs(dx) > Math.abs(dy)) {
-		move([0, dx > 0 ? 1 : -1]);
-	} else {
-		move([dy > 0 ? 1 : -1, 0]);
-	}
-}
-
-
 const isValidCoord = (row,col) => {
 
 	if (row <  0) { console.log('row < 0', row,col); return false; }
@@ -271,9 +249,10 @@ const updateMatiasLocation = dir => {
 	let cell = getCell(proposed[0], proposed[1]);
 	let type = getType(cell);
 
+
+
 	if (
 		type == WALL ||
-		type == EXIT ||
 		type == ENTRY
 	) {
 		return false;
@@ -298,6 +277,11 @@ const updateMatiasLocation = dir => {
 	// Check for special case
 	if (oldCell.getAttribute('lever') === 'true') {
 		changeType(oldCell, LEVERDOWN);
+	}
+
+	if (type == EXIT) { 
+		matiasFailedAgain();
+		return;
 	}
 
 	// Update new location
@@ -334,6 +318,8 @@ const setColor = (e,color) => {
 
 const startFlood = async () => {
 
+	setNotification('Oh no, dangerous lava! Skibidi rizz ohio!');
+
 	let start = -1;
 	let exit  = [0,0];
 	for (let i = 0; i < COLS; i++) {
@@ -349,56 +335,6 @@ const startFlood = async () => {
 
 	flood(0,start);
 
-}
-
-
-const drainOld = async (r,c) => {
-
-
-	console.log('drain', r, c, getType(getCell(r,c)))
-
-        await sleep(500);
-        
-        if (GAMESTOPPED) return false;
-        if (!isValidCoord(r,c)) return false;
-
-        let cell = getCell(r,c);
-        changeType(getCell(r,c),EMPTY);
-	
-	/*
-
-	dirs = [
-        	[r-1,c  ],
-        	[r-1,c-1],
-        	[r-1,c+1],
-        	[r,c-1  ],
-        	[r,c+1  ] 
-	]
-
-
-	for (let i = 0; i < dirs.length; i++) {
-		nr = dirs[i][0];
-		nc = dirs[i][1]
-		if (getType(getCell(nr,nc)) != LAVA) continue;
-		
-		// Make current back to lava 
-		changeType(cell, LAVA);
-		changeType(getCell(nr, nc), EMPTY);
-		drain(nr,nc);
-	}
-	*/
-
-	
-        if (drain(r-1,c))   return true;
-        if (drain(r+1,c))   return true;
-        if (drain(r,c-1))   return true;
-        if (drain(r,c+1))   return true;
-        if (drain(r-1,c-1)) return true;
-        if (drain(r+1,c+1)) return true;
-        if (drain(r+1,c-1)) return true;
-        if (drain(r-1,c+1)) return true;
-	
-	return false;
 }
 
 const drain = async () => {
@@ -487,6 +423,15 @@ const grid = document.getElementById('grid')
 
 initMap(grid);
 document.addEventListener('keydown', handleKeyDown)
-document.addEventListener('touchstart', handleTouchStart, { passive: true })
-document.addEventListener('touchend', handleTouchEnd, { passive: true })
+
+const controlDirs = {
+	up: [-1, 0],
+	down: [1, 0],
+	left: [0, -1],
+	right: [0, 1]
+}
+
+document.querySelectorAll('#controls button').forEach(button => {
+	button.addEventListener('click', () => move(controlDirs[button.dataset.dir]))
+})
 
