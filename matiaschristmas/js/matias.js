@@ -161,11 +161,18 @@ const initMap = target => {
 	target.appendChild(tbl);
 }
 
-const handleKeyDown = (e) => {
+const move = (dir) => {
 
 	if (MATIASLOC[0] === null) {
 	  throw Error('WHERE IS MATIAS!')
-	}	
+	}
+
+	if (dir[0] == 0 && dir[1] == 0) return;
+
+	updateMatiasLocation(dir);
+}
+
+const handleKeyDown = (e) => {
 
 	let key = e.keyCode;
 
@@ -175,11 +182,32 @@ const handleKeyDown = (e) => {
 	if (key == 37) { dir = [0,-1] } // Left
 	if (key == 39) { dir = [0, 1] } // Right
 
+	move(dir);
+}
 
-	if (dir[0] == 0 && dir[1] == 0) return;
+let touchStart = null;
 
-	updateMatiasLocation(dir);
-	
+const handleTouchStart = (e) => {
+	const t = e.changedTouches[0];
+	touchStart = [t.clientX, t.clientY];
+}
+
+const handleTouchEnd = (e) => {
+	if (touchStart === null) return;
+
+	const t = e.changedTouches[0];
+	const dx = t.clientX - touchStart[0];
+	const dy = t.clientY - touchStart[1];
+	touchStart = null;
+
+	const threshold = 20;
+	if (Math.abs(dx) < threshold && Math.abs(dy) < threshold) return;
+
+	if (Math.abs(dx) > Math.abs(dy)) {
+		move([0, dx > 0 ? 1 : -1]);
+	} else {
+		move([dy > 0 ? 1 : -1, 0]);
+	}
 }
 
 
@@ -459,4 +487,6 @@ const grid = document.getElementById('grid')
 
 initMap(grid);
 document.addEventListener('keydown', handleKeyDown)
+document.addEventListener('touchstart', handleTouchStart, { passive: true })
+document.addEventListener('touchend', handleTouchEnd, { passive: true })
 
