@@ -109,11 +109,11 @@ let MAP = [
   '#            O       #',
   '#                    #',
   '#     O              #',
-  '# O       M          #',
+  '# O                  #',
   '#                O   #',
   '#     OOO            #',
-  '#O   OO              #',
-  '#         O    OO    #',
+  '#OOOOOO              #',
+  '#  M  O   O    OO    #',
   '#  L  O              #',
   '##########X###########',
 ];
@@ -166,6 +166,8 @@ const initMap = target => {
 }
 
 const move = (dir) => {
+
+	if (GAMESTOPPED) return;
 
 	if (MATIASLOC[0] === null) {
 	  throw Error('WHERE IS MATIAS!')
@@ -341,11 +343,6 @@ const drain = async () => {
 
 	 
 	for (let r = 0; r < ROWS; r++) {
-		/*
-		for (let i = 0; i < FLOODED[r].length; i++) {
-			c = FLOODED[r][i];
-		}
-		*/
 
 		while (FLOODED[r].length > 0) {
 			let index = Math.floor(Math.random() * FLOODED[r].length);
@@ -363,22 +360,19 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const flood = async (r,c) => {
 
-	//console.log('flood',r,c, isValidCoord(r,c), getType(getCell(r,c)))
 	await sleep(FLOODSPEED);
 	
 	if (GAMESTOPPED) return;
 	if (!isValidCoord(r,c)) return;
 
 	let cell = getCell(r,c);
-	if (getType(cell) == LAVA) return;
-
+	let cellType = getType(cell);
 
 	if (r == MATIASLOC[0] && c == MATIASLOC[1]) {
 		matiasFailedAgain();
 	}
 
-	let cellType = getType(cell);
-
+	if (cellType == LAVA) return;
 	if (cellType != EMPTY && cellType != ENTRY && cellType != EXIT) return;
 
 	
@@ -406,23 +400,38 @@ const hasLava = (r,c) => {
 	return getCell(r,c).style.backgroundColor === LAVACOLOR;
 }
 
+const setMsg = msg => document.getElementById('msg').innerHTML = `<h1>${msg}</h1>`;
+
+
+
 const matiasFailedAgain = () => {
 	GAMESTOPPED = true;
-	document.getElementById('msg').innerHTML = '<h1>MATIAS HAS FAILED!!</h1>';
+	setMsg('MATIAS HAS FAILED!!');
 }
 
 const matiasEscaped = () => {
 	GAMESTOPPED = true;
-	document.getElementById('msg').innerHTML = '<h1>MATIAS HAS ESCAPED!!</h1>';
+	setMsg('MATIAS HAS ESCAPED!!')
 }
 
-const grid = document.getElementById('grid')
+const getGrid = () => document.getElementById('grid')
 
+const startGame = () => {
+	const grid = getGrid(); 
+	grid.innerHTML = '';
+	setNotification("Oh no! Matias is trapped and needs to escape!");
+	setMsg('');
+	initMap(grid);
+	GAMESTOPPED = false;
+
+}
 
 /* Start the game! */
 
-initMap(grid);
-document.addEventListener('keydown', handleKeyDown)
+startGame();
+
+document.addEventListener('keydown', handleKeyDown);
+document.addEventListener('click', startGame);
 
 const controlDirs = {
 	up: [-1, 0],
