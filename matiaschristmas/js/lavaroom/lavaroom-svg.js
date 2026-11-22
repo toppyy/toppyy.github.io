@@ -1,4 +1,4 @@
-const matiasAvatarSvg = () => {
+export function matiasAvatarSVG() {
   return `
 <svg class="matias-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
   <!-- long back hair, behind the shoulders -->
@@ -40,4 +40,54 @@ const matiasAvatarSvg = () => {
   <path d="M44.3 27.4c.5 2 .6 3.7.4 5.2l-1.8-.2c.3-1.5.3-3 0-4.6z" fill="#4e2c13"/>
 </svg>`;
 }
+
+export function blockSVG() { return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 90">
+  <path d="M17 66 25 43 44 29 68 24 91 37 104 61 96 73 27 75Z"
+        fill="#77736d" stroke="#514e49" stroke-width="3" stroke-linejoin="round"/>
+  <path d="m25 43 19-14 10 20-14 16-23 1Z" fill="#918c83"/>
+  <path d="m54 49 14-25 23 13-8 21-24 7Z" fill="#858078"/>
+  <path d="m41 65 13-16 29 9 11 15-67 2Z" fill="#68655f"/>
+  <path d="m44 34 8-4m30 6 8 5m-47 28 8-4" fill="none"
+        stroke="#aaa59c" stroke-width="3" stroke-linecap="round"/>
+</svg>`
+}
+
+export function leverSVG() { return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect fill="white"/>
+
+  <!-- Base bottom edge -->
+  <path d="M41 139v31c0 34 39 61 87 61s87-27 87-61v-31"
+        fill="#292929"/>
+  <ellipse cx="128" cy="139" rx="87" ry="52" fill="#aaa9ad"/>
+
+  <!-- Button's dark red side -->
+  <path d="M54 102v30c0 29 33 52 74 52s74-23 74-52v-30"
+        fill="#3b080b"/>
+  <ellipse cx="128" cy="102" rx="74" ry="43" fill="#d00008"/>
+
+  <!-- Red top -->
+  <path d="M54 102c0-24 33-43 74-43s74 19 74 43"
+        fill="none"/>
+</svg>
+`;
+}
+
+export function leverDownSVG() { return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect fill="white"/>
+
+  <!-- Base bottom edge -->
+  <path d="M41 139v31c0 34 39 61 87 61s87-27 87-61v-31"
+        fill="#294929"/>
+  <ellipse cx="128" cy="139" rx="87" ry="52" fill="#aaa9ad"/>
+
+  <!-- Short dark red side: button is pressed down -->
+  <path d="M54 119v13c0 29 33 52 74 52s74-23 74-52v-13"
+        fill="#3b080b"/>
+  <ellipse cx="128" cy="119" rx="74" ry="43" fill="darkblue"/>
+</svg>`
+}
+
+export function lavaSVG() { return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><rect width="100" height="100" fill="#e84a0c"/></svg>` }
+
+export function exitSVG() { return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#222" /></svg>`; }
 
