@@ -1,6 +1,7 @@
-import { matiasAvatarSVG } from "./svg.js";
 import { startLavaRoom } from "./rooms/lavaroom.js";
 import { startLabyrinthRoom } from "./rooms/labyrinth.js";
+import { startEnd } from "./rooms/end.js";
+import { matiasAvatarSVG } from "./svg.js";
 
 import {
 	setRooms, 
@@ -54,15 +55,20 @@ const start = () => {
 setRooms(
 	[
 		{
-            'id': 'labyrinth',
+			'id': 'labyrinth',
             'solved': false,
             'start': startLabyrinthRoom
         },
 		{
-            'id': 'lavaroom',
+			'id': 'lavaroom',
             'solved': false,
             'start': startLavaRoom
-        }
+        },
+		{
+			'id': 'end',
+			'solved': false,
+			'start': startEnd
+		},
 	]
 )
 
