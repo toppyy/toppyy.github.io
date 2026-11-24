@@ -1,6 +1,9 @@
 import { matiasAvatarSVG } from "./svg.js";
+import { startLavaRoom } from "./rooms/lavaroom.js";
+import { startLabyrinthRoom } from "./rooms/labyrinth.js";
 
-import { 
+import {
+	setRooms, 
 	hasNextRoom,
 	getNextRoom,
 	solveRoom
@@ -19,6 +22,7 @@ const startRoom = () => {
 
 	if (hasNextRoom()) {
 		let room = getNextRoom()
+		console.log(room)
 		let id = room['id'];
 		room['start'](() => {
 			console.log('calling callback')
@@ -47,4 +51,20 @@ const start = () => {
 }
 
 
-startRoom()
+setRooms(
+	[
+		{
+            'id': 'labyrinth',
+            'solved': false,
+            'start': startLabyrinthRoom
+        },
+		{
+            'id': 'lavaroom',
+            'solved': false,
+            'start': startLavaRoom
+        }
+	]
+)
+
+
+start()

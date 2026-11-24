@@ -1,15 +1,13 @@
 import { startLavaRoom } from "./rooms/lavaroom.js";
 
 
-const state = {
-    'rooms': [
-        {
-            'id': 'lavaroom',
-            'solved': false,
-            'start': startLavaRoom
-        }
-    ],
+let state = {
+    'rooms': [],
     'currentRoom': null
+}
+
+export function setRooms(rooms) {
+    state['rooms'] = rooms;
 }
 
 export function getState() {
