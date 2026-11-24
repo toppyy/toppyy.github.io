@@ -47,11 +47,6 @@ body {
 
 
 
-button:hover {
-	border: 3px solid #982215;
-	background: #3e2f24;
-}
-
 
 #controls button {
 	width: clamp(40px, 12vw, 52px);
