@@ -5,7 +5,7 @@ import {
     leverSVG,
     blockSVG,
     matiasAvatarSVG
- } from "./lavaroom-svg.js";
+ } from "../svg.js";
 
 
 const WALL = 'WALL';
@@ -330,16 +330,23 @@ const flood = async (r,c) => {
 
 const setMsg = msg => document.getElementById('msg').innerHTML = `<h1>${msg}</h1>`;
 
+const setupNextRoomButton = () => {
+
+	const btn = document.getElementById('next-room-btn');
+	btn.style = "display: block";
+	btn.addEventListener('click', CALLBACK);
+}
+
 const matiasFailedAgain = () => {
 	GAMESTOPPED = true;
 	setMsg('MATIAS HAS FAILED!!');
-    CALLBACK();
+	setupNextRoomButton();
 }
 
 const matiasEscaped = () => {
 	GAMESTOPPED = true;
-	setMsg('MATIAS HAS ESCAPED!!')
-    CALLBACK();
+	setMsg('MATIAS HAS ESCAPED!!');
+	setupNextRoomButton();
 }
 
 const getGrid = () => document.getElementById('grid')
@@ -360,6 +367,7 @@ export function startLavaRoom(onSolve) {
             <button type="button" id="right" aria-label="Move right">▶</button>
         </div>
         <button type="button" id="restart">Restart</button>
+		<button type="button" id="next-room-btn" style="display:none">Next room</button>
         <div id="msg"></div>
     `
 

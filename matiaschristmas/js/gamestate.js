@@ -1,4 +1,4 @@
-import { startLavaRoom } from "./lavaroom/lavaroom.js";
+import { startLavaRoom } from "./rooms/lavaroom.js";
 
 
 const state = {

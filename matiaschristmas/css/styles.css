@@ -45,20 +45,7 @@ body {
 	margin-top: 12px;
 }
 
-button {
 
-	padding: 15px;
-	border: 3px solid #881306;
-	border-radius: 8px;
-	background: #2b2019;
-	color: #f6efe6;
-	font-size: 20px;
-	line-height: 1;
-	touch-action: manipulation;
-	-webkit-user-select: none;
-	user-select: none;
-	cursor: pointer;
-}
 
 button:hover {
 	border: 3px solid #982215;
@@ -86,7 +73,7 @@ button:hover {
 	background: #4a3629;
 }
 
-#restart {
+button {
 	margin-top: 10px;
 	padding: 8px 20px;
 	border: 1px solid #514e49;

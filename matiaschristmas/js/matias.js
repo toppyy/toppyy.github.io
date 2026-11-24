@@ -1,4 +1,4 @@
-import { matiasAvatarSVG } from "./lavaroom/lavaroom-svg.js";
+import { matiasAvatarSVG } from "./svg.js";
 
 import { 
 	hasNextRoom,
@@ -47,4 +47,4 @@ const start = () => {
 }
 
 
-start()
+startRoom()
